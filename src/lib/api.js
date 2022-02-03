@@ -1,4 +1,4 @@
-var base_api = "https://x.glowman554.gq/api/v2"
+var base_api = "https://x.glowman554.gq/api/v2";
 
 export function start_login() {
 	return new Promise((resolve, reject) => {
@@ -62,7 +62,16 @@ export function wiki_delete(token, page_id) {
 	});
 }
 
-async export function login() {
+// to edit: wiki_editor, to delete wiki_delete
+export function has_permission(token, permission) {
+	return new Promise((resolve, reject) => {
+		fetch(base_api + "/has_permission?token=" + token + "&permission=" + permission).then(response => response.text()).then(response => {
+			resolve(response == "true");
+		});
+	});
+}
+
+export async function login() {
 	let login_id = await start_login();
 
 	console.log("-auth " + login_id)

@@ -1,11 +1,8 @@
 <script context="module">
+    import { wiki_list } from "$lib/api.js";
+
     export async function load() {
-        // const res = await fetch("https://x.glowman554.gq/api/v2/wiki/page/list"); // real api
-        // // const res = await fetch("https://api.adviceslip.com/advice"); // placeholer
-        // const data = await res.json();
-
-        const res = await wiki_get();
-
+        const res = await wiki_list();
         return {
             props: {
                 data: res // array of objects containing page_id and page_title
@@ -15,38 +12,93 @@
 </script>
 
 <script>
-    import SvelteMarkdown from 'svelte-markdown';
-    import {Render} from "$lib/render.js"
-    import { wiki_get } from "$lib/api.js"
     export let data;
-    const test_json = `{"page_id": "73457834657", "page_title": "test_t", "page_text": "# h1 header rendered. Fuck yeah"}`
+    let oldData = data;
+
+    let searchInput = "";
+
+    $: {  
+        data = []
+        if (searchInput !== "") {
+            for (let i in oldData) {
+                if (oldData[i].page_title.toLowerCase().includes(searchInput.toLowerCase())) {
+                    data = [...data, oldData[i]];
+                }
+            }
+        } else {
+            data = oldData;
+        }
+    }
 </script>
 
 <!--test for style-->
-<div class="wiki_post_urls">
-    <a class="wiki_post_url" href="redirect to new _blank and render by id">Test Post</a>
-</div>
-
 <body>
+    <form>
+        <input type="text" placeholder="search" bind:value={searchInput}>
+    </form>
     {#each data as page}
-        <a href={`/wiki/${page.id}`>
+        <div class="wiki_post_urls">
+            <button onclick="render lol">▶︎</button>
+            <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title} 🔗</a>
+        </div>
     {/each}
 </body>
 
 <style>
-    .wiki_post_urls {
-        border: 5px solid lightgray;
+    body {
+        margin: 0 1rem;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    input {
+        border-radius: 1rem;
+        padding: .3rem .5rem;
+        border: none;
+        font-size: 1.5rem;
+        margin-right: .5rem;
+    }
+
+    button {
+        border-radius: 1rem;
+        border: none;
+    }
+
+	.wiki_post_urls {
+        display: flex;
         border-radius: 5px;
-        background-color: lightgray;
+        background-color: #203647;
         font-size: large;
-        /* we need fucking jetbrains mono and apple font*/
-        padding: 25px;
-        margin-left: 10rem;
-        margin-right: 10rem;
+        margin: 1rem 0;
+        padding: .8rem 0;
         text-align: center;
     }
+
     .wiki_post_urls a {
-        padding-left: 25px;
-        padding-right: 25px;
+        text-decoration: none;
+        color: white;
+    }
+    
+    .wiki_post_urls a:hover {
+        text-decoration: underline;
+    }
+
+    .wiki_post_urls button {
+        background-color: #203647;
+        color: white;
+        font-size: larger;
+        border: none;
+        cursor: pointer;
+        margin-left: .2rem;
+        margin-right: .5rem;
+    }
+
+    .wiki_post_urls button:active:after {
+        content: "▼";
+        font-size: larger;
     }
 </style>
