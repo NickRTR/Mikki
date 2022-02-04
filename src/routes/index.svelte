@@ -29,16 +29,19 @@
             data = oldData;
         }
     }
+
+    const render = (id) => {
+        console.log(id);
+    }
 </script>
 
-<!--test for style-->
 <body>
     <form>
         <input type="text" placeholder="search" bind:value={searchInput}>
     </form>
     {#each data as page}
         <div class="wiki_post_urls">
-            <button onclick="render lol">▶︎</button>
+            <button onclick={() => {render(page.page_id)}}>▶︎</button>
             <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title} 🔗</a>
         </div>
     {/each}
@@ -93,12 +96,10 @@
         font-size: larger;
         border: none;
         cursor: pointer;
-        margin-left: .2rem;
-        margin-right: .5rem;
+        margin: 0 .5rem
     }
 
     .wiki_post_urls button:active:after {
         content: "▼";
-        font-size: larger;
     }
 </style>

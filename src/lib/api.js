@@ -14,7 +14,7 @@ export function status_login(login_id) {
 			resolve(response.token);
 		});
 	});
-}
+} 
 
 export function wiki_create(token, page_title, page_text) {
 	var page_title_encoded = btoa(page_title);
@@ -46,12 +46,14 @@ export function wiki_edit(token, page_id, page_title, page_text) {
 	});
 }
 
-export function wiki_list() {
-	return new Promise((resolve, reject) => {
-		fetch(base_api + "/wiki/page/list").then(response => response.json()).then(response => {
-			resolve(response);
-		});
-	});
+export async function wiki_list() {
+	// return new Promise((resolve, reject) => {
+	// 	fetch(base_api + "/wiki/page/list").then(response => response.json()).then(response => {
+	// 		resolve(response);
+	// 	});
+	// });
+	const res = await fetch(base_api + "/wiki/page/list");
+	return await res.json();
 }
 
 export function wiki_delete(token, page_id) {
@@ -62,7 +64,7 @@ export function wiki_delete(token, page_id) {
 	});
 }
 
-// to edit: wiki_editor, to delete wiki_delete
+// to edit: wiki_editor, to delete: wiki_delete
 export function has_permission(token, permission) {
 	return new Promise((resolve, reject) => {
 		fetch(base_api + "/has_permission?token=" + token + "&permission=" + permission).then(response => response.text()).then(response => {
