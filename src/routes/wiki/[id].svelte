@@ -16,4 +16,8 @@
     export let data;
 </script>
 
+<body>
+    <button><img src="button should go here"></button>
+</body>
+
 <SvelteMarkdown source={data.page_text}/>
