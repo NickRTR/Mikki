@@ -35,7 +35,6 @@
 
     const render = async (id) => {
         const res = await wiki_get(id);
-
         let checked = document.getElementById(id).checked;
 
         for (let i in data) {
@@ -57,7 +56,8 @@
     </form>
     {#each data as page}
         <div class="wiki_post_urls">
-            <input type="checkbox" id={page.page_id} on:change={() => {render(page.page_id)}}>
+            <input type="checkbox" class="toggle" id={page.page_id} on:change={() => {render(page.page_id)}}>
+            <label for={page.page_id}>></label>
             <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title} 🔗</a>
         </div>
         {#if page.text}
@@ -87,11 +87,6 @@
         margin-right: .5rem;
     }
 
-    button {
-        border-radius: 1rem;
-        border: none;
-    }
-
 	.wiki_post_urls {
         display: flex;
         border-radius: 5px;
@@ -111,6 +106,18 @@
         text-decoration: underline;
     }
 
+    .toggle {
+        display: none;
+    }
+
+    label {
+        margin: 0 .5rem;
+    }
+
+    .toggle:checked + label {
+        transform: rotate(90deg);
+    }
+
     /* .wiki_post_urls button {
         background-color: #203647;
         color: white;
@@ -119,8 +126,4 @@
         cursor: pointer;
         margin: 0 .5rem
     }
-
-    .wiki_post_urls button:active:after {
-        content: "▼";
-    } */
 </style>
