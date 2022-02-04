@@ -59,7 +59,7 @@
     {#each data as page}
         <div class="wiki_post_urls">
             <input type="checkbox" class="toggle" id={page.page_id} on:change={() => {render(page.page_id)}}>
-            <label for={page.page_id}>></label>
+            <label for={page.page_id}>▶︎</label>
             <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title} 🔗</a>
         </div>
         {#if page.text}

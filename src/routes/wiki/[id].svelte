@@ -1,5 +1,5 @@
 <script context="module">
-    import { wiki_get } from "$lib/api";
+    import { get_api_token, wiki_delete, wiki_get } from "$lib/api";
 
     export async function load(params) {
         const res = await wiki_get(params.params.id);
@@ -28,7 +28,7 @@
 
         <div class="buttons">
             <img src="/edit.svg" alt="edit" on:click={() => {alert("edit is not available for now")}}>
-            <img src="/trash.svg" alt="delete" on:click={() => {alert("delete is not available for now")}}>
+            <img src="/trash.svg" alt="delete" on:click={() => {wiki_delete(get_api_token(), data.page_id); window.location.href = "/"}}>
         </div>
     </nav>
 
