@@ -13,6 +13,8 @@
 
 <script>
     import SvelteMarkdown from 'svelte-markdown';
+    import {dateToString} from "$lib/helper.js";
+
     export let data;
 </script>
 
@@ -20,8 +22,8 @@
     <nav>
         <div class="info">
             <h2>Titel: {data.page_title}</h2>
-            <p>Erstellt: {new Date(data.page_created).toLocaleString()}</p>
-            <p>Bearbeitet: {new Date(data.page_edited).toLocaleString()}</p>
+            <p>Erstellt: {dateToString(data.page_created)}</p>
+            <p>Bearbeitet: {dateToString(data.page_edited)}</p>
         </div>
 
         <div class="buttons">

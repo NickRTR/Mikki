@@ -33,6 +33,15 @@
 
     a {
         font-size: 1.5rem;
+        text-decoration: none;
+    }
+
+    .links a {
+        border-bottom: 3px solid gray;
+    }
+
+    .links a:hover {
+        border-bottom: 3px solid white;
     }
 
     main {

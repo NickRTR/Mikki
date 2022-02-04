@@ -54,7 +54,7 @@
 
 <body>
     <form>
-        <input type="text" placeholder="search" bind:value={searchInput}>
+        <input type="text" placeholder="search" style="text-align: center;" bind:value={searchInput}>
     </form>
     {#each data as page}
         <div class="wiki_post_urls">
