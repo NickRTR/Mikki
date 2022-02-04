@@ -1,6 +1,6 @@
 <script>
 	// TODO: Make the style look good (not my responsibility i cant design very well)
-	import { has_valid_token, status_login, start_login } from "$lib/api.js";
+	import { has_valid_token, is_valid_token, status_login, start_login } from "$lib/api.js";
 	import { onMount } from 'svelte'
 
 	let login_id = "";
@@ -44,11 +44,20 @@
 		stage = 4;
 	}
 
-	let login_token_start = (event) => {
-		if (event.keyCode == 13) {
-			alert(event.target.value);
-		}
+	let input = "";
+
+
+	let login_token_submit = () => {
+		is_valid_token(input).then(result => {
+			if (result) {
+				localStorage.setItem("token", input);
+				stage = 0;
+			} else {
+				stage = 5;
+			}
+		});
 	}
+
 </script>
 
 <body>
@@ -71,7 +80,17 @@
 	{:else if stage == 4}
 		<div id="stage4">
 			<p>Log in using token</p>
-			<input type="text" id="token" on:keypress={login_token_start}/>
-		</div>		
+			<form>
+				<input type="text" bind:value={input}/>
+				<button type="submit" on:click|preventDefault={login_token_submit}>Submit</button>
+			</form>
+		</div>	
+	{:else if stage == 5}
+		<div id="stage5">
+			<p>Invalid token</p>
+			<button on:click={() => {
+				stage = 4;
+			}}>Go back</button>
+		</div>
 	{/if}
 </body>

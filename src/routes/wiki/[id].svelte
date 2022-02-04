@@ -17,8 +17,58 @@
 </script>
 
 <body>
-    <button><img src="" alt="edit button should go here"></button>
-    <button><img src="" alt="delete button should go here"></button>
+    <nav>
+        <div class="info">
+            <h2>Titel: {data.page_title}</h2>
+            <p>Erstellt: {new Date(data.page_created).toLocaleString()}</p>
+            <p>Bearbeitet: {new Date(data.page_edited).toLocaleString()}</p>
+        </div>
+
+        <div class="buttons">
+            <img src="/edit.svg" alt="edit" on:click={() => {alert("edit is not available for now")}}>
+            <img src="/trash.svg" alt="delete" on:click={() => {alert("delete is not available for now")}}>
+        </div>
+    </nav>
+
+    <hr>
+
+    <SvelteMarkdown source={data.page_text}/>
 </body>
 
-<SvelteMarkdown source={data.page_text}/>
+<style>
+    body {
+        background-color: white;
+        border-radius: 1rem;
+        color: black;
+        margin: 0;
+        padding: 1rem;   
+        margin-top: 1rem;
+    }
+
+    nav {
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+    }
+
+    h2 {
+        margin: 0;
+    }
+
+    p {
+        margin: .5rem 0;
+        margin-bottom: 0;
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .buttons img {
+        width: 2rem;
+        padding: .5rem;
+        cursor: pointer;
+    }
+</style>
+

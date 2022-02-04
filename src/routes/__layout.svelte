@@ -1,8 +1,10 @@
 <body>
     <nav>
-        <h2>AssemblerWiki</h2>
-        <a href="/">Home</a>
-        <a href="/login">Login</a>
+        <a style="text-decoration: none;" href="/">AssemblerWiki</a>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+        </div>
     </nav>
     <main><slot></slot></main>
 </body>
@@ -25,14 +27,12 @@
         padding: 1rem;
     }
 
-    h2 {
-        margin: 0;
+    nav * {
         background-color: black;
     }
 
     a {
         font-size: 1.5rem;
-        background-color: black;
     }
 
     main {

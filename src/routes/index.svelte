@@ -5,7 +5,7 @@
         const res = await wiki_list();
         return {
             props: {
-                data: res // array of objects containing page_id and page_title
+                data: res // array of objects containing page_id, page_title, page_created and page_edited
             }
         }
     }
@@ -67,6 +67,8 @@
                 <SvelteMarkdown source={page.text}/>
             </div>
         {/if}
+    {:else}
+        <p>Keine passenden Einträge vorhanden</p>
     {/each}
 </body>
 

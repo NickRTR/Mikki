@@ -128,6 +128,20 @@ export function has_valid_token() {
 	});
 }
 
+export function is_valid_token(token) {
+	return new Promise(async (resolve, reject) => {
+		api_request("/login/check?token=" + token).then(data => {
+			data = JSON.parse(data);
+
+			if (data.msg == "ok") {
+				resolve(true);
+			} else {
+				resolve(false);
+			}
+		});
+	});
+}
+
 export function get_api_token() {
 	return localStorage.getItem("token");
 }
