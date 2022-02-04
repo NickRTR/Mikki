@@ -89,3 +89,37 @@ export async function login() {
 
 	return token;
 }
+
+export async function api_request(url) {
+	var token = localStorage.getItem("token");
+
+	if (token) {
+		return await (await fetch(base_api + url + `${url.indexOf("?") != -1 ? "&" : "?"}token=${token}`)).text();
+	} else {
+		return await (await fetch(base_api + url)).text();
+	}
+}
+
+
+export function has_valid_token() {
+	return new Promise(async (resolve, reject) => {
+		if (localStorage.getItem("token")) {
+			api_request("/login/check").then(data => {
+				data = JSON.parse(data);
+
+				if (data.msg == "ok") {
+					resolve(true);
+				} else {
+					localStorage.removeItem("token");
+					resolve(false);
+				}
+			});
+		} else {
+			resolve(false);
+		}
+	});
+}
+
+export function get_api_token() {
+	return localStorage.getItem("token");
+}
