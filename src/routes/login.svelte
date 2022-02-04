@@ -39,31 +39,39 @@
 		localStorage.setItem("token", token);
 		stage = 0;
 	}
+
+	let login_token = () => {
+		stage = 4;
+	}
+
+	let login_token_start = (event) => {
+		if (event.keyCode == 13) {
+			alert(event.target.value);
+		}
+	}
 </script>
 
 <body>
 	{#if stage == 0}
 		<p>You are already logged in to log out please use the below button!</p>
 		<button on:click={logout}>LogOut</button>
-	{/if}
-
-	{#if stage == 1}
-			
+	{:else if stage == 1}
 		<div id="satge1">
 			<p>Hello and Welcome to the authentication page!</p>
 			<p>I will guide you trough the whole process!</p>
 			<button id="next" on:click={login_start}>Next</button>
+			<button id="token_login" on:click={login_token}>Login with token</button>
 		</div>
-
-	{/if}
-
-	{#if stage == 2}
-	
+	{:else if stage == 2}
 		<div id="stage2">
 			<p style={{
 				display: "inline"
 			}}>Please send "<code>-auth {login_id}</code>" to the bot on your preferred platform!</p>
 		</div>
-
-	{/if}		
+	{:else if stage == 4}
+		<div id="stage4">
+			<p>Log in using token</p>
+			<input type="text" id="token" on:keypress={login_token_start}/>
+		</div>		
+	{/if}
 </body>

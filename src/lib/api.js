@@ -64,6 +64,14 @@ export function wiki_delete(token, page_id) {
 	});
 }
 
+export function wiki_changelog() {
+	return new Promise((resolve, reject) => {
+		fetch(base_api + "/wiki/page/changelog").then(response => response.json()).then(response => {
+			resolve(response);
+		});
+	});
+}
+
 // to edit: wiki_editor, to delete: wiki_delete
 export function has_permission(token, permission) {
 	return new Promise((resolve, reject) => {

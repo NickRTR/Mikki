@@ -14,6 +14,7 @@
 <script>
     import {wiki_get} from "$lib/api.js";
     import SvelteMarkdown from 'svelte-markdown';
+    import {slide} from "svelte/transition";
 
     export let data;
     let oldData = data;
@@ -34,12 +35,13 @@
     }
 
     const render = async (id) => {
-        const res = await wiki_get(id);
         let checked = document.getElementById(id).checked;
 
         for (let i in data) {
             if (data[i].page_id === id) {
                 if (checked) {
+                    Object.assign(data[i], {"text": "loading data"});
+                    const res = await wiki_get(id);
                     Object.assign(data[i], {"text": res.page_text});
                 } else {
                     delete data[i].text;
@@ -61,7 +63,7 @@
             <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title} 🔗</a>
         </div>
         {#if page.text}
-            <div class="text">
+            <div class="text" in:slide out:slide>
                 <SvelteMarkdown source={page.text}/>
             </div>
         {/if}
@@ -112,18 +114,16 @@
 
     label {
         margin: 0 .5rem;
+        cursor: pointer;
     }
 
     .toggle:checked + label {
         transform: rotate(90deg);
     }
 
-    /* .wiki_post_urls button {
-        background-color: #203647;
-        color: white;
-        font-size: larger;
-        border: none;
-        cursor: pointer;
-        margin: 0 .5rem
+    .text {
+        border: 2px solid white;
+        padding: 0 .5rem;
+        margin: 0 1rem;
     }
 </style>
