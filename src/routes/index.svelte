@@ -12,6 +12,9 @@
 </script>
 
 <script>
+    import {wiki_get} from "$lib/api.js";
+    import SvelteMarkdown from 'svelte-markdown';
+
     export let data;
     let oldData = data;
 
@@ -30,8 +33,21 @@
         }
     }
 
-    const render = (id) => {
-        console.log(id);
+    const render = async (id) => {
+        const res = await wiki_get(id);
+
+        let checked = document.getElementById(id).checked;
+
+        for (let i in data) {
+            if (data[i].page_id === id) {
+                if (checked) {
+                    Object.assign(data[i], {"text": res.page_text});
+                } else {
+                    delete data[i].text;
+                }
+                data = data;
+            }
+        }
     }
 </script>
 
@@ -41,9 +57,14 @@
     </form>
     {#each data as page}
         <div class="wiki_post_urls">
-            <button onclick={() => {render(page.page_id)}}>▶︎</button>
+            <input type="checkbox" id={page.page_id} on:change={() => {render(page.page_id)}}>
             <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title} 🔗</a>
         </div>
+        {#if page.text}
+            <div class="text">
+                <SvelteMarkdown source={page.text}/>
+            </div>
+        {/if}
     {/each}
 </body>
 
@@ -90,7 +111,7 @@
         text-decoration: underline;
     }
 
-    .wiki_post_urls button {
+    /* .wiki_post_urls button {
         background-color: #203647;
         color: white;
         font-size: larger;
@@ -101,5 +122,5 @@
 
     .wiki_post_urls button:active:after {
         content: "▼";
-    }
+    } */
 </style>
