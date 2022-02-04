@@ -13,7 +13,8 @@
 
 <script>
     import {wiki_get} from "$lib/api.js";
-    import SvelteMarkdown from 'svelte-markdown';
+    import { copyToClipboard } from "$lib/helper";
+    import SvelteMarkdown from "svelte-markdown";
     import {slide} from "svelte/transition";
 
     export let data;
@@ -52,7 +53,7 @@
     }
 </script>
 
-<body>
+<body> 
     <form>
         <input type="text" placeholder="search" style="text-align: center;" bind:value={searchInput}>
     </form>
@@ -60,7 +61,10 @@
         <div class="wiki_post_urls">
             <input type="checkbox" class="toggle" id={page.page_id} on:change={() => {render(page.page_id)}}>
             <label for={page.page_id}>▶︎</label>
-            <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title} 🔗</a>
+            <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title}</a>
+            <span on:click={(event) => {
+                copyToClipboard(window.origin + "/wiki/" + page.page_id);
+            }}>🔗</span>
         </div>
         {#if page.text}
             <div class="text" in:slide out:slide>
@@ -92,12 +96,19 @@
 
 	.wiki_post_urls {
         display: flex;
-        border-radius: 5px;
-        background-color: #203647;
-        font-size: large;
+        align-items: center;
+        border-radius: .5rem;
+        background-color: var(--light-background);
+        font-size: 1.2rem;
         margin: 1rem 0;
         padding: .8rem 0;
         text-align: center;
+    }
+
+    .wiki_post_urls span {
+        margin-left: auto;
+        margin-right: .5rem;
+        cursor: pointer;
     }
 
     .wiki_post_urls a {
@@ -117,6 +128,7 @@
         margin: 0 .5rem;
         padding-top: .1rem;
         cursor: pointer;
+        color: var(--accent);
     }
 
     .toggle:checked + label {

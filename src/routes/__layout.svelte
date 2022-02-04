@@ -15,7 +15,7 @@
         @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap");
         font-family: 'JetBrains Mono', monospace;
         scroll-behavior: smooth;
-        background-color: #12232e;
+        background-color: var(--background);
         margin: 0;
         color: white;
     }
@@ -42,11 +42,34 @@
     }
 
     .links a:hover {
-        border-bottom: 3px solid white;
+        border-bottom: 3px solid var(--accent);
     }
 
     main {
         max-width: 900px;
         margin: 0 auto;
+    }
+
+    /* variables */
+
+    :global(:root) {
+        --accent: #F6C90E;
+        --background: #303841;
+        --light-background: #3A4750;
+    }
+
+    :global(button) {
+        margin-top: .5rem;
+		font-size: 1rem;
+		cursor: pointer;
+		border-radius: 1rem;
+		padding: .25rem .5rem;
+		border: none;
+		font-weight: bold;
+		background-color: var(--accent);
+    }
+
+    :global(h2) {
+		color: var(--accent);
     }
 </style>

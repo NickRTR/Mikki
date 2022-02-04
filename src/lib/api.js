@@ -1,3 +1,5 @@
+// DO NOT TOUCH AS LONG AS IT WORKS!!!!!!!!!!!!!!!!!!!
+
 var base_api = "https://x.glowman554.gq/api/v2";
 
 export async function start_login() {
@@ -7,6 +9,11 @@ export async function start_login() {
 
 export async function status_login(login_id) {
 	const res = await fetch(base_api + "/login/status?login_id=" + login_id);
+	return await res.json();
+} 
+
+export async function stop_login(login_id) {
+	const res = await fetch(base_api + "/login/stop?login_id=" + login_id);
 	return await res.json();
 } 
 

@@ -6,8 +6,16 @@
 
     const save = () => {
         if (title !== "") {
-            has_valid_token().then(() => {
+            has_valid_token().then(result => {
+                if (!result) {
+                    alert("You need to be logged in to save.");
+                    return;
+                }
                 has_permission(get_api_token(), "wiki_editor").then(async result => {
+                    if (!result) {
+                        alert("You need to have wiki_editor permission to save.");
+                        return;
+                    }
                     let res = await wiki_create(get_api_token(), title, text);
                     window.location.href = "/wiki/" + res.page_id;
                 })
@@ -31,7 +39,7 @@
     }
 
     input {
-        width: 100%;
+        width: 90%;
         border-radius: 1rem;
         padding: .5rem;
         margin-bottom: .5rem;
@@ -40,8 +48,9 @@
     }
 
     textarea {
-        width: 100%;
+        width: 90%;
         height: 50vh;
+        font-size: larger;
         border-radius: 1rem;
         resize: none;
         padding: .5rem;

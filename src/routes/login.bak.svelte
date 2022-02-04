@@ -65,47 +65,45 @@
 </script>
 
 <body>
-	<div>
-		{#if stage == 0}
-			<p>You are already logged in to log out please use the below button!</p>
-			<button on:click={logout}>LogOut</button>
-		{:else if stage == 1}
-			<div id="satge1">
-				<h2>Hello and Welcome to the authentication page!</h2>
-				<p>I will guide you through the whole process!</p>
-				<button id="next" on:click={login_start}>Next</button>
-				<button id="token_login" on:click={login_token}>Login with token</button>
-			</div>
-		{:else if stage == 2}
-			<div id="stage2">
-				<p>Please send "<em on:click={() => {copyToClipboard("-auth " + login_id)}}>-auth {login_id}</em>" to the bot on your preferred platform!</p>
-				<p class="copy" on:click={() => {copyToClipboard("-auth " + login_id)}}>Click to copy code</p>
-				<button on:click={() => {
-					stop_login(login_id).then(() => {
-						stage = 1;
-					});
-				}}>Go back</button>
-			</div>
-		{:else if stage == 4}
-			<div id="stage4">
-				<p>Log in using token</p>
-				<form>
-					<input type="text" bind:value={input}/>
-					<button type="submit" on:click|preventDefault={login_token_submit}>Submit</button>
-				</form>
-				<button on:click={() => {
+	{#if stage == 0}
+		<p>You are already logged in to log out please use the below button!</p>
+		<button on:click={logout}>LogOut</button>
+	{:else if stage == 1}
+		<div id="satge1">
+			<h2>Hello and Welcome to the authentication page!</h2>
+			<p>I will guide you through the whole process!</p>
+			<button id="next" on:click={login_start}>Next</button>
+			<button id="token_login" on:click={login_token}>Login with token</button>
+		</div>
+	{:else if stage == 2}
+		<div id="stage2">
+			<p>Please send "<em on:click={() => {copyToClipboard("-auth " + login_id)}}>-auth {login_id}</em>" to the bot on your preferred platform!</p>
+			<p class="copy" on:click={() => {copyToClipboard("-auth " + login_id)}}>Click to copy code</p>
+			<button on:click={() => {
+				stop_login(login_id).then(() => {
 					stage = 1;
-				}}>Go back</button>
-			</div>	
-		{:else if stage == 5}
-			<div id="stage5">
-				<p>Invalid token</p>
-				<button on:click={() => {
-					stage = 4;
-				}}>Go back</button>
-			</div>
-		{/if}
-	</div>
+				});
+			}}>Go back</button>
+		</div>
+	{:else if stage == 4}
+		<div id="stage4">
+			<p>Log in using token</p>
+			<form>
+				<input type="text" bind:value={input}/>
+				<button type="submit" on:click|preventDefault={login_token_submit}>Submit</button>
+			</form>
+			<button on:click={() => {
+				stage = 1;
+			}}>Go back</button>
+		</div>	
+	{:else if stage == 5}
+		<div id="stage5">
+			<p>Invalid token</p>
+			<button on:click={() => {
+				stage = 4;
+			}}>Go back</button>
+		</div>
+	{/if}
 </body>
 
 <style>

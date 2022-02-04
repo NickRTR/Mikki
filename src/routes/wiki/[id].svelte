@@ -18,7 +18,10 @@
     export let data;
 
     const deleteWiki = async () => {
-        has_valid_token().then(() => {
+        has_valid_token().then(result => {
+            if (!result) {
+                alert("You need to login first!");
+            }
             has_permission(get_api_token(), "wiki_delete").then(result => {
                 if (result) {
                     wiki_delete(get_api_token(), data.page_id).then(() => {
