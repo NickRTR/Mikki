@@ -1,9 +1,10 @@
 <body>
     <nav>
-        <a style="text-decoration: none;" href="/">AssemblerWiki</a>
+        <a style="text-decoration: none;" href="/" sveltekit:prefetch>AssemblerWiki</a>
         <div class="links">
-            <a href="/">Home</a>
-            <a href="/login">Login</a>
+            <a href="/" sveltekit:prefetch>Home</a>
+            <a href="/wiki/create" sveltekit:prefetch>Erstellen</a>
+            <a href="/login" sveltekit:prefetch>Login</a>
         </div>
     </nav>
     <main><slot></slot></main>

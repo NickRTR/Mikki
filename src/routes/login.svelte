@@ -22,14 +22,14 @@
 	}
 
 	let login_start = async () => {
-		let login_id_ = await start_login();
+		let login_id_ = (await start_login()).id;
 
 		login_id = login_id_;
 		stage = 2;
 
 		let token = null;
 		do {
-			token = await status_login(login_id_);
+			token = (await status_login(login_id_)).token;
 
 			if (token == null) {
 				await new Promise(resolve => setTimeout(resolve, 1000));

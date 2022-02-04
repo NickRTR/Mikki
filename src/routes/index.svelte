@@ -88,7 +88,6 @@
         padding: .3rem .5rem;
         border: none;
         font-size: 1.5rem;
-        margin-right: .5rem;
     }
 
 	.wiki_post_urls {
@@ -116,6 +115,7 @@
 
     label {
         margin: 0 .5rem;
+        padding-top: .1rem;
         cursor: pointer;
     }
 
@@ -125,7 +125,12 @@
 
     .text {
         border: 2px solid white;
+        border-radius: .5rem;
         padding: 0 .5rem;
         margin: 0 1rem;
+    }
+
+    p {
+        text-align: center;
     }
 </style>

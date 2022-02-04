@@ -1,5 +1,5 @@
 <script context="module">
-    import { get_api_token, wiki_delete, wiki_get } from "$lib/api";
+    import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission } from "$lib/api";
 
     export async function load(params) {
         const res = await wiki_get(params.params.id);
@@ -16,6 +16,20 @@
     import {dateToString} from "$lib/helper.js";
 
     export let data;
+
+    const deleteWiki = async () => {
+        has_valid_token().then(() => {
+            has_permission(get_api_token(), "wiki_delete").then(result => {
+                if (result) {
+                    wiki_delete(get_api_token(), data.page_id).then(() => {
+                        window.location.href = "/";
+                    });
+                } else {
+                    alert("You don't have permission to delete this wiki page");
+                }
+            });
+        });
+    }
 </script>
 
 <body>
@@ -27,8 +41,8 @@
         </div>
 
         <div class="buttons">
-            <img src="/edit.svg" alt="edit" on:click={() => {alert("edit is not available for now")}}>
-            <img src="/trash.svg" alt="delete" on:click={() => {wiki_delete(get_api_token(), data.page_id); window.location.href = "/"}}>
+            <img src="/edit.svg" alt="edit" on:click={() => {window.open("/wiki/edit/" + data.page_id)}}>
+            <img src="/trash.svg" alt="delete" on:click={deleteWiki}>
         </div>
     </nav>
 
@@ -44,6 +58,7 @@
         color: black;
         margin: 0;
         padding: 1rem;   
+        margin: 0 1rem;
         margin-top: 1rem;
     }
 
