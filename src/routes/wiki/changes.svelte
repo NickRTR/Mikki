@@ -51,6 +51,7 @@
         border-radius: .5rem;
 		margin: 1rem 0;
         padding: .8rem 0;
+        overflow-x: auto;
 	}
 
 	.changelog_list table {

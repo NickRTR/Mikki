@@ -13,3 +13,11 @@ export function dateToString(date) {
 export const copyToClipboard = (text) => {
 	navigator.clipboard.writeText(text);
 }
+
+export function downloadFile(download_url) {
+	let link = document.createElement("a");
+	link.setAttribute("href", download_url);
+	link.setAttribute("download", "file");
+	link.setAttribute("target", "_blank");
+	link.click();
+}

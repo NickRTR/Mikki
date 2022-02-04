@@ -36,6 +36,17 @@ export async function wiki_get(page_id) {
 	return data;
 }
 
+export async function wiki_get_download(page_id) {
+	const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id + "&download");
+	let data = await res.text();
+	data = decodeURIComponent(data);
+	data = JSON.parse(data);
+
+	data.download_url = new URL(base_api).origin + "/files/" + data.file_id;
+
+	return data;
+}
+
 export async function wiki_edit(token, page_id, page_title, page_text) {
 	var page_title_encoded = btoa(encodeURIComponent(page_title).replace(/%0[aA]/g, '\n'));
 	var page_text_encoded = btoa(encodeURIComponent(page_text).replace(/%0[aA]/g, '\n'));

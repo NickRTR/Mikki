@@ -1,5 +1,5 @@
 <script context="module">
-    import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission } from "$lib/api";
+    import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission, wiki_get_download } from "$lib/api";
 
     export async function load(params) {
         const res = await wiki_get(params.params.id);
@@ -13,7 +13,7 @@
 
 <script>
     import SvelteMarkdown from 'svelte-markdown';
-    import {dateToString} from "$lib/helper.js";
+    import { dateToString, downloadFile } from "$lib/helper.js";
 
     export let data;
 
@@ -35,6 +35,15 @@
             });
         });
     }
+
+    const download = async () => {
+        let res = await wiki_get_download(data.page_id);
+        //document.location = res.download_url;
+        downloadFile(res.download_url);
+        // wiki_get_download(data.page_id).then(res => {
+        //     document.location = res.download_url;
+        // });
+    }
 </script>
 
 <body>
@@ -46,14 +55,14 @@
         </div>
 
         <div class="buttons">
-            <img src="/edit.svg" alt="edit" on:click={() => {window.open("/wiki/edit/" + data.page_id)}}>
-            <img src="/trash.svg" alt="delete" on:click={deleteWiki}>
+            <img src="/edit.svg" alt="edit" on:click={() => {window.open("/wiki/edit/" + data.page_id)}} title="Editieren">
+            <img src="/trash.svg" alt="delete" on:click={deleteWiki} title="Löschen">
+            <button type="button" on:click={download}>Download</button>
         </div>
     </nav>
-
     <hr>
-
     <SvelteMarkdown source={data.page_text}/>
+
 </body>
 
 <style>

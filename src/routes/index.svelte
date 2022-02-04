@@ -41,9 +41,8 @@
         for (let i in data) {
             if (data[i].page_id === id) {
                 if (checked) {
-                    Object.assign(data[i], {"text": "loading data"});
                     const res = await wiki_get(id);
-                    Object.assign(data[i], {"text": res.page_text});
+                    data[i]["text"] = res.page_text;
                 } else {
                     delete data[i].text;
                 }

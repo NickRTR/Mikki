@@ -43,6 +43,7 @@
         justify-content: space-between;
         background-color: black;
         padding: 1rem;
+        font-size: 1.5rem;
     }
 
     nav * {
@@ -50,7 +51,6 @@
     }
 
     a {
-        font-size: 1.5rem;
         text-decoration: none;
         margin-left: .8rem;
     }
@@ -90,5 +90,17 @@
 		border: none;
 		font-weight: bold;
 		background-color: var(--accent);
+    }
+
+    /* media queries */
+
+    @media only screen and (max-width: 600px) {
+        nav {
+            font-size: 1rem;
+        }
+        
+        a {
+            margin-left: .3rem;
+        }
     }
 </style>
