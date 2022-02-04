@@ -2,6 +2,7 @@
     <nav>
         <h2>AssemblerWiki</h2>
         <a href="/">Home</a>
+        <a href="/login">Login</a>
     </nav>
     <main><slot></slot></main>
 </body>

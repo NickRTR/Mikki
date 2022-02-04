@@ -17,7 +17,8 @@
 </script>
 
 <body>
-    <button><img src="button should go here"></button>
+    <button><img src="" alt="edit button should go here"></button>
+    <button><img src="" alt="delete button should go here"></button>
 </body>
 
 <SvelteMarkdown source={data.page_text}/>
