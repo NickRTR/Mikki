@@ -1,10 +1,20 @@
+<script>
+    import {page} from "$app/stores";
+
+    const nav = [
+        {title: "Home", path: "/"},
+        {title: "Erstellen", path: "/wiki/create"},
+        {title: "Login", path: "/login"},
+    ];
+</script>
+
 <body>
     <nav>
         <a style="text-decoration: none;" href="/" sveltekit:prefetch>AssemblerWiki</a>
         <div class="links">
-            <a href="/" sveltekit:prefetch>Home</a>
-            <a href="/wiki/create" sveltekit:prefetch>Erstellen</a>
-            <a href="/login" sveltekit:prefetch>Login</a>
+            {#each nav as link}
+            <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch>{link.title}</a>
+            {/each}
         </div>
     </nav>
     <main><slot></slot></main>
@@ -35,13 +45,14 @@
     a {
         font-size: 1.5rem;
         text-decoration: none;
-    }
-
-    .links a {
-        border-bottom: 3px solid gray;
+        margin-left: .8rem;
     }
 
     .links a:hover {
+        border-bottom: 3px solid var(--accent);
+    }
+
+    .active {
         border-bottom: 3px solid var(--accent);
     }
 

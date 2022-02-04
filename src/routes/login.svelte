@@ -65,7 +65,7 @@
 </script>
 
 <body>
-	<div>
+	<div class="middle">
 		{#if stage == 0}
 			<p>You are already logged in to log out please use the below button!</p>
 			<button on:click={logout}>LogOut</button>
@@ -111,6 +111,8 @@
 <style>
 	body {
 		text-align: center;
+		display: flex;
+		justify-content: center;
 	}
 
 	em {
@@ -126,8 +128,13 @@
 		margin-bottom: 0;
 	}
 
-	button {
-		
+	.middle {
+		margin: 0;
+		position: absolute;
+		top: 50%;
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+		border-radius: 1rem;
 	}
 
 	button:hover {

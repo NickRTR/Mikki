@@ -56,13 +56,12 @@
 
 <style>
     body {
-        background-color: white;
+        background-color: var(--light-background);
         border-radius: 1rem;
-        color: black;
+        color: white;
         margin: 0;
         padding: 1rem;   
-        margin: 0 1rem;
-        margin-top: 1rem;
+        margin: 1rem;
     }
 
     nav {
