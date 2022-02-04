@@ -120,10 +120,12 @@ export function has_valid_token() {
 }
 
 export async function is_valid_token(token) {
-	const res = await fetch("/login/check?token=" + token);
-	let data = JSON.parse(res);
+	const res = await fetch(base_api + "/login/check?token=" + token);
+	let data = await res.json();
 	if (data.msg == "ok") {
-		return data;
+		return true;
+	} else {
+		return false;
 	}
 }
 

@@ -51,14 +51,14 @@
 
 	let input = "";
 
-
 	let login_token_submit = () => {
 		is_valid_token(input).then(result => {
 			if (result) {
 				localStorage.setItem("token", input);
 				stage = 0;
 			} else {
-				stage = 5;
+				alert("Ungültiges Token");
+				input = "";
 			}
 		});
 	}
@@ -67,24 +67,25 @@
 <body>
 	<div class="middle">
 		{#if stage == 0}
-			<p>You are already logged in to log out please use the below button!</p>
-			<button on:click={logout}>LogOut</button>
+			<p>Sie sind bereits eingeloggt. Drücken Sie den unteren Button, um sich auszuloggen.</p>
+			<button on:click={logout}>Ausloggen</button>
 		{:else if stage == 1}
 			<div id="satge1">
-				<h2>Hello and Welcome to the authentication page!</h2>
-				<p>I will guide you through the whole process!</p>
-				<button id="next" on:click={login_start}>Next</button>
-				<button id="token_login" on:click={login_token}>Login with token</button>
+				<h2>Herzlich willkommen zum Login!</h2>
+				<p>Folgen Sie den Anweisungen um sich einzuloggen.</p>
+				<button id="next" on:click={login_start}>Weiter</button>
+				<button id="token_login" on:click={login_token}>Mit Token einloggen</button>
 			</div>
 		{:else if stage == 2}
 			<div id="stage2">
-				<p>Please send "<em on:click={() => {copyToClipboard("-auth " + login_id)}}>-auth {login_id}</em>" to the bot on your preferred platform!</p>
-				<p class="copy" on:click={() => {copyToClipboard("-auth " + login_id)}}>Click to copy code</p>
+				<p>Bitte senden Sie "<em on:click={() => {copyToClipboard("-auth " + login_id)}}>-auth {login_id}</em>" an den Bot auf ihrer präferierten Platform (Discord, Telegram).</p>
+				<p>Anschließend können Sie auf diese Seite zurückkehren und sind mit Ihren Berechtigungen eingeloggt.</p>
+				<p class="copy" on:click={() => {copyToClipboard("-auth " + login_id)}}>Befehl kopieren</p>
 				<button on:click={() => {
 					stop_login(login_id).then(() => {
 						stage = 1;
 					});
-				}}>Go back</button>
+				}}>Zurückkehren</button>
 			</div>
 		{:else if stage == 4}
 			<div id="stage4">
@@ -95,15 +96,8 @@
 				</form>
 				<button on:click={() => {
 					stage = 1;
-				}}>Go back</button>
+				}}>Zurückkehren</button>
 			</div>	
-		{:else if stage == 5}
-			<div id="stage5">
-				<p>Invalid token</p>
-				<button on:click={() => {
-					stage = 4;
-				}}>Go back</button>
-			</div>
 		{/if}
 	</div>
 </body>
@@ -125,7 +119,6 @@
 	.copy {
 		text-decoration: underline;
 		cursor: pointer;
-		margin-bottom: 0;
 	}
 
 	.middle {

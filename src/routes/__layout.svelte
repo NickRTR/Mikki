@@ -4,6 +4,7 @@
     const nav = [
         {title: "Home", path: "/"},
         {title: "Erstellen", path: "/wiki/create"},
+        {title: "Log", path: "/wiki/changes"},
         {title: "Login", path: "/login"},
     ];
 </script>
@@ -13,11 +14,14 @@
         <a style="text-decoration: none;" href="/" sveltekit:prefetch>AssemblerWiki</a>
         <div class="links">
             {#each nav as link}
-            <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch>{link.title}</a>
+                <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch title={link.title}>{link.title}</a>
             {/each}
         </div>
     </nav>
     <main><slot></slot></main>
+    <!-- <footer>
+        <p>©2022 </p>
+    </footer> -->
 </body>
 
 <style>
@@ -31,8 +35,11 @@
     }
 
     nav {
+        position: sticky;
+        top: 0;
         color: white;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         background-color: black;
         padding: 1rem;
@@ -52,6 +59,11 @@
         border-bottom: 3px solid var(--accent);
     }
 
+    .links a:focus {
+        border-bottom: 3px solid var(--accent);
+        outline: none;
+    }
+
     .active {
         border-bottom: 3px solid var(--accent);
     }
@@ -60,7 +72,7 @@
         max-width: 900px;
         margin: 0 auto;
     }
-
+    
     /* variables */
 
     :global(:root) {
@@ -78,9 +90,5 @@
 		border: none;
 		font-weight: bold;
 		background-color: var(--accent);
-    }
-
-    :global(h2) {
-		color: var(--accent);
     }
 </style>
