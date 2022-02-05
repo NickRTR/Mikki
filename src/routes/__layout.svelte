@@ -25,15 +25,6 @@
 </body>
 
 <style>
-    * {
-        @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap");
-        font-family: 'JetBrains Mono', monospace;
-        scroll-behavior: smooth;
-        background-color: var(--background);
-        margin: 0;
-        color: white;
-    }
-
     nav {
         position: sticky;
         top: 0;
@@ -58,6 +49,7 @@
     a {
         text-decoration: none;
         margin-left: .8rem;
+        color: white;
     }
 
     .links a:hover {

@@ -1,10 +1,19 @@
-import adapter from '@sveltejs/adapter-auto';
+import preprocess from "svelte-preprocess";
+import adapter from "@sveltejs/adapter-static";
+//import node from "@sveltejs/adapter-node";
 
-/** @type {import('@sveltejs/kit').Config} */
-const config = {
+const dev = process.env.NODE_ENV == "development"
+
+export default {
 	kit: {
-		adapter: adapter()
+
+		//adapter: node()
+		adapter: adapter({
+			fallback: 'index.html'
+		}),
+
+		vite: {
+			compilerOptions: { dev },
+		}
 	}
 };
-
-export default config;
