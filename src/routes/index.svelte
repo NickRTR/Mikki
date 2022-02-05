@@ -46,7 +46,7 @@
         for (let i in data) {
             if (data[i].page_id === id) {
                 if (checked) {
-                    const res = await wiki_get(id);
+                    const res = await wiki_get(id, data);
                     data[i]["text"] = res.page_text;
                 } else {
                     delete data[i].text;

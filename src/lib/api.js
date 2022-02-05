@@ -28,8 +28,18 @@ export async function wiki_create(token, page_title, page_text) {
 	return data;
 }
 
-export async function wiki_get(page_id) {
+export async function wiki_get(page_id, wiki_list = []) {
 	if (navigator.onLine) {
+		let maybe_cached = localStorage.getItem("page_" + page_id);
+		if (maybe_cached) {
+			maybe_cached = JSON.parse(maybe_cached);
+			let wiki_list_entry = wiki_list.find(x => x.page_id == page_id);
+			if (wiki_list_entry) {
+				if (wiki_list_entry.page_edited == maybe_cached.page_edited) {
+					return maybe_cached;
+				}
+			}
+		}
 		const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id);
 		let data = await res.text();
 		data = decodeURIComponent(data);
@@ -87,7 +97,6 @@ export async function wiki_changelog() {
 		data = JSON.parse(data);
 		return data;
 	} else {
-		console.log("No internet connection");
 		return JSON.parse(localStorage.getItem("page_changelog"));
 	}
 }
@@ -104,7 +113,6 @@ export async function wiki_cache(progress_callback) {
 	for (let i = 0; i < current_pages.length; i++) {
 		progress_callback(i, current_pages.length );
 		localStorage.setItem("page_" + current_pages[i].page_id, JSON.stringify(await wiki_get(current_pages[i].page_id)));
-		await new Promise(resolve => setTimeout(resolve, 1000));
 	}
 
 	localStorage.setItem("page_list", JSON.stringify(current_pages));
