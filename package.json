@@ -1,7 +1,9 @@
 {
-  "name": "mikwiki",
+  "name": "mikki",
   "version": "0.0.1",
   "main": "src/electron.cjs",
+  "author": "Glowman554 <glowman434@gmail.com>",
+  "description": "Mikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht zu dokumentieren. ",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",

@@ -1,8 +1,17 @@
 {
-	"asar": false,
+	"asar": true,
 	"directories": { "output": "dist" },
 	"files": [
 		"src/electron.cjs", 
 		{ "from": "build", "to": "" }
-	]
+	],
+	"icon": "static/favicon.svg",
+	"appId": "gq.mikki.app",
+	"productName": "Mikki",
+	"linux": {
+		"target": [ "deb", "AppImage" ]
+	},
+	"win": {
+		"target": [ "msi", "portable" ]
+	}
 }
