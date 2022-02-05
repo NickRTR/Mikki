@@ -1,5 +1,4 @@
-<script context="module">
-    import { wiki_changelog } from "$lib/api.js";
+<!-- <script context="module">
 
     export async function load() {
 		const changelog = await wiki_changelog();
@@ -9,13 +8,24 @@
             }
         }
     }
-</script>
+</script> -->
 
 <script>
     import { dateToString } from "$lib/helper";
+    import { onMount } from "svelte"
+    import { wiki_changelog } from "$lib/api";
 
-	export let changelog;
+	let changelog = [];
+
+
+    onMount(async () => {
+        changelog = await wiki_changelog();
+    })
 </script>
+
+<svelte:head>
+    <title>Wikki - Log</title>
+</svelte:head>
 
 <body> 
     <h2>Wiki Änderungen</h2>

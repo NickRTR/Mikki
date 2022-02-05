@@ -1,13 +1,27 @@
 <script>
     import {page} from "$app/stores";
+    import { wiki_cache } from "$lib/api.js";
+	import { onMount } from 'svelte';
 
     const nav = [
         {title: "Home", path: "/"},
         {title: "Erstellen", path: "/wiki/create"},
         {title: "Log", path: "/wiki/changes"},
+        {title: "Einstellungen", path: "/settings"},
         {title: "Login", path: "/login"},
-        {title: "Einstelungen", path: "/settings"},
     ];
+
+    onMount(async () => {
+        if (localStorage.getItem("auto_cache") == "true") {
+            if (navigator.onLine) {
+                wiki_cache((p, m) => {
+                    console.log(`Auto caching: ${p + 1} / ${m}`);
+                }).then(() => {
+                    console.log("Auto caching done");
+                });
+            }
+        }
+    });
 </script>
 
 <body>

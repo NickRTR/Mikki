@@ -64,6 +64,10 @@
 	}
 </script>
 
+<svelte:head>
+    <title>Wikki - Login</title>
+</svelte:head>
+
 <body>
 	<div class="middle">
 		{#if stage == 0}

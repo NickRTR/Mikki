@@ -46,6 +46,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Wikki - {data.page_title}</title>
+</svelte:head>
+
 <body>
     <nav>
         <div class="info">

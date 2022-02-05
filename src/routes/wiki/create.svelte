@@ -26,6 +26,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Wikki - Erstellen</title>
+</svelte:head>
+
 <body>
     <h2>Seite erstellen</h2>
     <input type="text" placeholder="titel" bind:value={title}>

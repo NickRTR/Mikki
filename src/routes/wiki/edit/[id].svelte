@@ -46,6 +46,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>Wikki - Bearbeiten</title>
+</svelte:head>
+
 <body>
     <h2>Edit Page</h2>
     <input type="text" placeholder="titel" bind:value={title}>

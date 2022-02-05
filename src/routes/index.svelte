@@ -1,5 +1,4 @@
-<script context="module">
-    import { wiki_list } from "$lib/api.js";
+<!-- <script context="module">
 
     export async function load() {
         const res = await wiki_list();
@@ -9,16 +8,22 @@
             }
         }
     }
-</script>
+</script> -->
 
 <script>
-    import {wiki_get} from "$lib/api.js";
+    import { wiki_get, wiki_list } from "$lib/api.js";
     import { copyToClipboard } from "$lib/helper";
     import SvelteMarkdown from "svelte-markdown";
     import {slide} from "svelte/transition";
+    import { onMount } from "svelte"
 
-    export let data;
-    let oldData = data;
+    let data = [];
+    let oldData = [];
+
+    onMount(async () => {
+        data = await wiki_list();
+        oldData = data;
+    })
 
     let searchInput = "";
 
@@ -51,6 +56,10 @@
         }
     }
 </script>
+
+<svelte:head>
+    <title>Wikki</title>
+</svelte:head>
 
 <body> 
     <h2>Wiki</h2>

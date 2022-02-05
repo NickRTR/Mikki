@@ -29,11 +29,15 @@ export async function wiki_create(token, page_title, page_text) {
 }
 
 export async function wiki_get(page_id) {
-	const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id);
-	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	if (navigator.onLine) {
+		const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id);
+		let data = await res.text();
+		data = decodeURIComponent(data);
+		data = JSON.parse(data);
+		return data;
+	} else {
+		return JSON.parse(localStorage.getItem("page_" + page_id));
+	}
 }
 
 export async function wiki_get_download(page_id) {
@@ -59,11 +63,15 @@ export async function wiki_edit(token, page_id, page_title, page_text) {
 }
 
 export async function wiki_list() {
-	const res = await fetch(base_api + "/wiki/page/list");
-	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	if (navigator.onLine) {
+		const res = await fetch(base_api + "/wiki/page/list");
+		let data = await res.text();
+		data = decodeURIComponent(data);
+		data = JSON.parse(data);
+		return data;
+	} else {
+		return JSON.parse(localStorage.getItem("page_list"));
+	}
 }
 
 export async function wiki_delete(token, page_id) {
@@ -72,15 +80,16 @@ export async function wiki_delete(token, page_id) {
 }
 
 export async function wiki_changelog() {
-	//if (navigator.onLine) {
+	if (navigator.onLine) {
 		const res = await fetch(base_api + "/wiki/page/changelog");
 		let data = await res.text();
 		data = decodeURIComponent(data);
 		data = JSON.parse(data);
 		return data;
-	//} else {
-	//	return JSON.parse(localStorage.getItem("page_changelog"));
-	//}
+	} else {
+		console.log("No internet connection");
+		return JSON.parse(localStorage.getItem("page_changelog"));
+	}
 }
 
 // to edit: wiki_editor, to delete: wiki_delete
@@ -94,7 +103,7 @@ export async function wiki_cache(progress_callback) {
 
 	for (let i = 0; i < current_pages.length; i++) {
 		progress_callback(i, current_pages.length );
-		localStorage.setItem("page_" + current_pages[i].page_id, JSON.stringify(current_pages[i]));
+		localStorage.setItem("page_" + current_pages[i].page_id, JSON.stringify(await wiki_get(current_pages[i].page_id)));
 		await new Promise(resolve => setTimeout(resolve, 1000));
 	}
 
