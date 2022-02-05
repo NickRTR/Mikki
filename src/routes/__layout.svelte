@@ -11,7 +11,7 @@
 
 <body>
     <nav>
-        <a style="text-decoration: none;" href="/" sveltekit:prefetch>AssemblerWiki</a>
+        <a class="heading" href="/" sveltekit:prefetch>AssemblerWiki</a>
         <div class="links">
             {#each nav as link}
                 <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch title={link.title}>{link.title}</a>
@@ -42,12 +42,17 @@
         align-items: center;
         justify-content: space-between;
         background-color: black;
-        padding: 1rem;
+        padding: 1rem 1.5rem;
         font-size: 1.5rem;
     }
 
     nav * {
         background-color: black;
+    }
+
+    .heading {
+        text-decoration: none;
+        margin-left: 0;
     }
 
     a {
@@ -90,13 +95,15 @@
 		border: none;
 		font-weight: bold;
 		background-color: var(--accent);
+        color: black;
     }
 
     /* media queries */
 
     @media only screen and (max-width: 600px) {
         nav {
-            font-size: 1rem;
+            font-size: .9rem;
+            padding: 1rem .5rem;
         }
         
         a {

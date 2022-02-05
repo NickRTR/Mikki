@@ -129,7 +129,6 @@
 
     label {
         margin: 0 .5rem;
-        padding-top: .1rem;
         cursor: pointer;
         color: var(--accent);
     }
@@ -148,5 +147,11 @@
 
     p {
         text-align: center;
+    }
+
+    @media only screen and (max-width: 600px) {
+        label {
+            padding-bottom: 4px;
+        }
     }
 </style>

@@ -89,14 +89,14 @@
 			</div>
 		{:else if stage == 4}
 			<div id="stage4">
-				<p>Log in using token</p>
+				<p>Mit Token einloggen</p>
 				<form>
-					<input type="text" bind:value={input}/>
-					<button type="submit" on:click|preventDefault={login_token_submit}>Submit</button>
+					<input type="text" placeholder="token" bind:value={input}/>
 				</form>
 				<button on:click={() => {
 					stage = 1;
 				}}>Zurückkehren</button>
+				<button type="submit" on:click|preventDefault={login_token_submit}>Submit</button>
 			</div>	
 		{/if}
 	</div>
@@ -132,5 +132,12 @@
 
 	button:hover {
 		text-decoration: underline;
+	}
+
+	input {
+		border: none;
+		margin-bottom: .6rem;
+		padding: .4rem 1rem;
+		border-radius: 1rem;
 	}
 </style>
