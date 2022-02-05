@@ -6,6 +6,7 @@
         {title: "Erstellen", path: "/wiki/create"},
         {title: "Log", path: "/wiki/changes"},
         {title: "Login", path: "/login"},
+        {title: "Einstelungen", path: "/settings"},
     ];
 </script>
 

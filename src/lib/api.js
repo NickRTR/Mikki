@@ -72,17 +72,35 @@ export async function wiki_delete(token, page_id) {
 }
 
 export async function wiki_changelog() {
-	const res = await fetch(base_api + "/wiki/page/changelog");
-	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	//if (navigator.onLine) {
+		const res = await fetch(base_api + "/wiki/page/changelog");
+		let data = await res.text();
+		data = decodeURIComponent(data);
+		data = JSON.parse(data);
+		return data;
+	//} else {
+	//	return JSON.parse(localStorage.getItem("page_changelog"));
+	//}
 }
 
 // to edit: wiki_editor, to delete: wiki_delete
 export async function has_permission(token, permission) {
 	const res = await fetch(base_api + "/has_permission?token=" + token + "&permission=" + permission);
 	return await res.text();
+}
+
+export async function wiki_cache(progress_callback) {
+	let current_pages = await wiki_list();
+
+	for (let i = 0; i < current_pages.length; i++) {
+		progress_callback(i, current_pages.length );
+		localStorage.setItem("page_" + current_pages[i].page_id, JSON.stringify(current_pages[i]));
+		await new Promise(resolve => setTimeout(resolve, 1000));
+	}
+
+	localStorage.setItem("page_list", JSON.stringify(current_pages));
+	localStorage.setItem("page_changelog", JSON.stringify(await wiki_changelog()));
+
 }
 
 export async function login() {
