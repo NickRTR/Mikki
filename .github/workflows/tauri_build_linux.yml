@@ -5,7 +5,7 @@ name: Build and release tauri app
 
 on:
   push:
-    branches: [ master ]
+    branches: [ tauri ]
   workflow_dispatch:
 
 jobs:
