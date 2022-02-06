@@ -40,6 +40,14 @@
 </body>
 
 <style>
+    body {
+        font-family: 'JetBrains Mono', monospace;
+        scroll-behavior: smooth;
+        background-color: var(--background);
+        margin: 0;
+        color: white;
+    }
+
     nav {
         position: sticky;
         top: 0;

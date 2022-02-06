@@ -82,7 +82,7 @@
     {:else}
         <p>Keine passenden Einträge vorhanden</p>
     {/each}
-</body>
+ </body>
 
 <style>
     body {
