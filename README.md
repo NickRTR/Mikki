@@ -10,4 +10,4 @@ Wikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht z
 - Autocaching
 - Log über alle Änderungen am Wiki
 - Login System mit verschiedenen Berechtigungen über einen Bot
-- Desktop App mit Electron
+- extrem schnelle und kleine Desktop App mit Tauri
