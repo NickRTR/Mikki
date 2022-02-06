@@ -1,22 +1,25 @@
 <script>
 	import { wiki_cache } from "$lib/api";
 	import { onMount } from "svelte";
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
+
+	const progress = tweened(0, {
+		duration: 400,
+		easing: cubicOut
+	});
 
 	let autocache = true;
-	let progress = 0;
 	let max = 10;
-
 
 	onMount(() => {
 		autocache = localStorage.getItem("auto_cache");
 	})
 
-	const start_cache = () => {
-		wiki_cache((p, m) => {
-			progress = p + 1;
+	const start_cache = async () => {
+		await wiki_cache((p, m) => {
+			progress.set(p + 1)
 			max = m;
-		}).then(() => {
-			console.log("done");
 		});
 	}
 </script>
@@ -32,7 +35,14 @@
 		<div class="cachenow">
 			<h3>Cache jetzt erstellen</h3>
 
-			<progress id="progressBar" value={progress} max={max} style="width:300px;"></progress>
+			{#if $progress !== max}
+				<progress id="progressBar" value={$progress} max={max} style="width:300px;"></progress>			
+			{:else}
+				<div class="done">
+					<progress id="progressBar" value={$progress} max={max} style="width:300px;"></progress>			
+					<p>Abgeschlossen!</p>
+				</div>
+			{/if}
 			<button on:click={start_cache}>Cache erstellen</button>
 		</div>
 
