@@ -32,4 +32,4 @@ jobs:
           title: "Development Build"
           files: |
             src-tauri/target/release/bundle/macos/mikki.app
-            src-tauri/target/release/bundle/dmg/mikki_0.1.0_amd64.dmg
+            src-tauri/target/release/bundle/dmg/mikki_0.1.0_x86_64.dmg
