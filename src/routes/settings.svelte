@@ -9,6 +9,7 @@
 		easing: cubicOut
 	});
 
+	let cacheDone = false;
 	let autocache = true;
 	let max = 10;
 
@@ -17,10 +18,13 @@
 	})
 
 	const start_cache = async () => {
+		cacheDone = false;
 		await wiki_cache((p, m) => {
 			progress.set(p + 1)
 			max = m;
 		});
+		cacheDone = true;
+		progress.set(0);
 	}
 </script>
 
@@ -35,15 +39,14 @@
 		<div class="cachenow">
 			<h3>Cache jetzt erstellen</h3>
 
-			{#if $progress !== max}
-				<progress id="progressBar" value={$progress} max={max} style="width:300px;"></progress>			
-			{:else}
-				<div class="done">
-					<progress id="progressBar" value={$progress} max={max} style="width:300px;"></progress>			
+			<div class="progress">
+				{#if cacheDone}
 					<p>Abgeschlossen!</p>
-				</div>
-			{/if}
-			<button on:click={start_cache}>Cache erstellen</button>
+				{:else}
+					<progress id="progressBar" value={$progress} {max} style="width:300px;"></progress><br>	
+				{/if}
+				<button on:click={start_cache}>Cache erstellen</button>
+			</div>
 		</div>
 
 		<div class="autocache">
@@ -61,6 +64,14 @@
 </body>
 
 <style>
+	p {
+		margin-bottom: .5rem;
+	}
+
+	progress {
+		margin-bottom: .7rem;
+	}
+
 	/* For Chrome or Safari */
 	progress::-webkit-progress-bar {
 		background-color: #eeeeee;

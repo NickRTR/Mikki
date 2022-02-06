@@ -1,5 +1,7 @@
 <script>
     import {get_api_token, has_valid_token, has_permission, wiki_create} from "$lib/api.js";
+    import { redirect } from "$lib/helper.js";
+    
     
     let title = "";
     let text = "";
@@ -17,7 +19,8 @@
                         return;
                     }
                     let res = await wiki_create(get_api_token(), title, text);
-                    window.location.href = "/wiki/view#" + res.page_id;
+                    // window.location.href = "/wiki/view#" + res.page_id;
+                    redirect("/wiki/view#" + res.page_id);
                 })
             })
         } else {

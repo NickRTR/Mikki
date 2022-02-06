@@ -1,8 +1,8 @@
 <script>
     import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission, wiki_get_download } from "$lib/api";
-    import SvelteMarkdown from 'svelte-markdown';
-    import { dateToString } from "$lib/helper.js";
+    import { dateToString, redirect } from "$lib/helper.js";
     import { onMount } from "svelte";
+    import SvelteMarkdown from 'svelte-markdown';
 
     let id = "";
     let data = {
@@ -62,14 +62,7 @@
     
             <div class="buttons">
                 <img src="/edit.svg" alt="edit" on:click={() => {
-					if (window.__TAURI__) {
-						console.log("Running in tauri...");
-						const webview = new window.__TAURI__.window.WebviewWindow('theUniqueLabel', {
-							url: ("/wiki/edit#" + data.page_id)
-						});
-					} else {
-						window.open("/wiki/edit#" + data.page_id)
-					}
+                    redirect("/wiki/edit#" + data.page_id);
 				}} title="Editieren">
                 <img src="/trash.svg" alt="delete" on:click={deleteWiki} title="Löschen">
             </div>

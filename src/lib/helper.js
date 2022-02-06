@@ -18,3 +18,15 @@ export const copyToClipboard = (text) => {
 		navigator.clipboard.writeText(text);
 	}
 }
+
+export function redirect(url) {
+	if (window.__TAURI__) {
+		console.log("Running in tauri...");
+        var link = document.createElement('a');
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+	} else {
+		window.location.href = url;
+	}
+}

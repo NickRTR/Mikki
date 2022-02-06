@@ -9,7 +9,7 @@
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
     "start": "svelte-kit start",
-    "tauri": "concurrently --kill-others \"svelte-kit dev\" \"tauri dev -- --debug\"",
+    "tauri": "npm run build && tauri dev -- --debug",
     "tauri:package": "npm run build && tauri build"
   },
   "devDependencies": {

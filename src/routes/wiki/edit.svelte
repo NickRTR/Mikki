@@ -1,5 +1,6 @@
 <script>
-    import {get_api_token, has_valid_token, has_permission, wiki_edit, wiki_get} from "$lib/api.js";
+    import { get_api_token, has_valid_token, has_permission, wiki_edit, wiki_get } from "$lib/api.js";
+    import { redirect } from "$lib/helper.js";
     import { onMount } from "svelte";
 
     let id = "";
@@ -18,11 +19,9 @@
 
     let disabled = "";
 
-    let title = page.page_title;
-    let text = page.page_text;
     // du musst in der load function bleiben
     const save = () => {
-        if (title !== "") {
+        if (page.page_title !== "") {
             has_valid_token().then(result => {
                 if (!result) {
                     alert("You need to be logged in to save.");
@@ -35,7 +34,7 @@
                     }
                     wiki_edit(get_api_token(), id, page.page_title, page.page_text);
                     disabled = "disabled";
-                    window.location.href = "/";
+                    redirect("/");
                 })
             })
         } else {
@@ -73,7 +72,8 @@
     }
 
     input {
-        width: 100%;
+        width: 90%;
+        margin: .5rem;
         border-radius: 1rem;
         padding: .5rem;
         margin-bottom: .5rem;
@@ -82,7 +82,7 @@
     }
 
     textarea {
-        width: 100%;
+        width: 90%;
         font-size: larger;
         height: 50vh;
         border-radius: 1rem;
