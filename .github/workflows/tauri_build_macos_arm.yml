@@ -33,4 +33,4 @@ jobs:
           title: "Development Build"
           files: |
             src-tauri/target/aarch64-apple-darwin/release/bundle/macos/mikki.app
-            src-tauri/target/aarch64-apple-darwin/release/bundle/macos/dmg/mikki_0.1.0_aarch64.dmg
+            src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/mikki_0.1.0_aarch64.dmg
