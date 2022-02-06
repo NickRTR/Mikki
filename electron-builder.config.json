@@ -7,11 +7,12 @@
 	],
 	"appId": "gq.mikki.app",
 	"productName": "Mikki",
-	"icon": "static/favicon.png",
 	"linux": {
-		"target": [ "deb", "AppImage" ]
+		"target": [ "deb", "AppImage" ],
+		"icon": "static/favicon.svg"
 	},
 	"win": {
-		"target": [ "msi", "portable" ]
+		"target": [ "msi", "portable" ],
+		"icon": "static/favicon.png"
 	}
 }
