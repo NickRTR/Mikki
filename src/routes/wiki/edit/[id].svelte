@@ -1,12 +1,9 @@
 <script context="module">
-    import {wiki_get} from "$lib/api.js";
 
     export async function load (params) {
         let id = params.params.id;
-        const res = await wiki_get(id);
         return {
             props: {
-                page: res,
                 id: id
             }
         };
@@ -14,10 +11,22 @@
 </script>
 
 <script>
-    import {get_api_token, has_valid_token, has_permission, wiki_edit} from "$lib/api.js";
+    import {get_api_token, has_valid_token, has_permission, wiki_edit, wiki_get} from "$lib/api.js";
+    import { onMount } from "svelte";
 
     export let id;
-    export let page;
+    let page = {
+        page_title: "",
+        page_text: ""
+    };
+    
+    onMount(() => {
+        wiki_get(id).then(res => {
+            page = res;
+            console.log(page);
+        });
+    });
+
     let disabled = "";
 
     let title = page.page_title;
@@ -35,7 +44,7 @@
                         alert("You need to have the wiki_editor permission to save.");
                         return;
                     }
-                    wiki_edit(get_api_token(), id, title, text);
+                    wiki_edit(get_api_token(), id, page.page_title, page.page_text);
                     disabled = "disabled";
                     window.location.href = "/";
                 })
@@ -52,8 +61,8 @@
 
 <body>
     <h2>Edit Page</h2>
-    <input type="text" placeholder="titel" bind:value={title}>
-    <textarea placeholder="text" resi bind:value={text} />
+    <input type="text" placeholder="titel" bind:value={page.page_title}>
+    <textarea placeholder="text" resi bind:value={page.page_text} />
     <button type="submit" on:click={save} {disabled}>Speichern</button>
 </body>
 
@@ -69,12 +78,9 @@
         background: none;
         font-weight: bold;
     }
+    
     button:hover {
         cursor: pointer;
-    }
-    
-    body {
-        text-align: center;
     }
 
     input {

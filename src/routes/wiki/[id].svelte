@@ -1,21 +1,31 @@
 <script context="module">
-    import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission, wiki_get_download } from "$lib/api";
-
-    export async function load(params) {
-        const res = await wiki_get(params.params.id);
+    export async function load (params) {
+        let id = params.params.id;
         return {
             props: {
-                data: res // array of objects containing page_id and page_title
+                id: id
             }
-        }
+        };
     }
 </script>
 
 <script>
+    import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission, wiki_get_download } from "$lib/api";
     import SvelteMarkdown from 'svelte-markdown';
-    import { dateToString, downloadFile } from "$lib/helper.js";
+    import { dateToString } from "$lib/helper.js";
+    import { onMount } from "svelte";
 
-    export let data;
+    export let id;
+    let data = {
+        page_title: "",
+        page_text: ""
+    };
+    
+    onMount(() => {
+        wiki_get(id).then(res => {
+            data = res;
+        });
+    });
 
     const deleteWiki = async () => {
         has_valid_token().then(result => {
@@ -38,11 +48,7 @@
 
     const download = async () => {
         let res = await wiki_get_download(data.page_id);
-        //document.location = res.download_url;
-        downloadFile(res.download_url);
-        // wiki_get_download(data.page_id).then(res => {
-        //     document.location = res.download_url;
-        // });
+        window.open(res.download_url);
     }
 </script>
 
@@ -51,26 +57,28 @@
 </svelte:head>
 
 <body>
-    <nav>
-        <div class="info">
-            <h2>Titel: {data.page_title}</h2>
-            <p>Erstellt: {dateToString(data.page_created)}</p>
-            <p>Bearbeitet: {dateToString(data.page_edited)}</p>
-        </div>
-
-        <div class="buttons">
-            <img src="/edit.svg" alt="edit" on:click={() => {window.open("/wiki/edit/" + data.page_id)}} title="Editieren">
-            <img src="/trash.svg" alt="delete" on:click={deleteWiki} title="Löschen">
-            <button type="button" on:click={download}>Download</button>
-        </div>
-    </nav>
-    <hr>
-    <SvelteMarkdown source={data.page_text}/>
-
+    <div class="main">
+        <nav>
+            <div class="info">
+                <h2>Titel: {data.page_title}</h2>
+                <p>Erstellt: {dateToString(data.page_created)}</p>
+                <p>Bearbeitet: {dateToString(data.page_edited)}</p>
+            </div>
+    
+            <div class="buttons">
+                <img src="/edit.svg" alt="edit" on:click={() => {window.open("/wiki/edit/" + data.page_id)}} title="Editieren">
+                <img src="/trash.svg" alt="delete" on:click={deleteWiki} title="Löschen">
+            </div>
+        </nav>
+        <hr>
+        <SvelteMarkdown source={data.page_text}/>
+    </div>
+    <button type="button" on:click={download}>Download</button>
 </body>
 
 <style>
-    body {
+    .main {
+        text-align: left;
         background-color: var(--light-background);
         border-radius: 1rem;
         color: white;

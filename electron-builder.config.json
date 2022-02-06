@@ -5,9 +5,9 @@
 		"src/electron.cjs", 
 		{ "from": "build", "to": "" }
 	],
-	"icon": "static/favicon.svg",
 	"appId": "gq.mikki.app",
 	"productName": "Mikki",
+	"icon": "static/favicon.png",
 	"linux": {
 		"target": [ "deb", "AppImage" ]
 	},

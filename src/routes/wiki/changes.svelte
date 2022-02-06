@@ -52,10 +52,6 @@
         margin: 0 1rem;
     }
 
-    h2 {
-        text-align: center;
-    }
-
 	.changelog_list {
         background-color: var(--light-background);
         border-radius: .5rem;

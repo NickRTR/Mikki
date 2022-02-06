@@ -65,7 +65,7 @@
     <h2>Wiki</h2>
 
     <form>
-        <input type="text" placeholder="search" style="text-align: center;" bind:value={searchInput}>
+        <input type="text" placeholder="search" bind:value={searchInput}>
     </form>
     {#each data as page}
         <div class="wiki_post_urls">
@@ -89,10 +89,6 @@
         margin: 0 1rem;
     }
     
-    h2 {
-        text-align: center;
-    }
-    
     form {
         display: flex;
         justify-content: center;
@@ -114,7 +110,6 @@
         font-size: 1.2rem;
         margin: 1rem 0;
         padding: .8rem 0;
-        text-align: center;
     }
 
     .wiki_post_urls span {
@@ -147,15 +142,12 @@
     }
 
     .text {
+        text-align: left;
         border: 2px solid white;
         background-color: var(--light-background);
         border-radius: .5rem;
         padding: 0 .5rem;
         margin: 0 1rem;
-    }
-
-    p {
-        text-align: center;
     }
 
     @media only screen and (max-width: 600px) {

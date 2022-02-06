@@ -38,10 +38,6 @@
 </body>
 
 <style>
-    body {
-        text-align: center;
-    }
-
     input {
         width: 90%;
         border-radius: 1rem;

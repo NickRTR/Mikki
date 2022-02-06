@@ -80,7 +80,7 @@ export async function wiki_list() {
 		data = JSON.parse(data);
 		return data;
 	} else {
-		return JSON.parse(localStorage.getItem("page_list"));
+		return JSON.parse(localStorage.getItem("page_list")) || [];
 	}
 }
 
