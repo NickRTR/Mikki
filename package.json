@@ -11,12 +11,15 @@
     "preview": "svelte-kit preview",
     "start": "svelte-kit start",
     "electron": "concurrently --kill-others \"svelte-kit dev\" \"electron src/electron.cjs\"",
-    "electron:package": "npm run build && electron-builder --config electron-builder.config.json"
+    "electron:package": "npm run build && electron-builder --config electron-builder.config.json",
+    "tauri": "concurrently --kill-others \"svelte-kit dev\" \"tauri dev -- --debug\"",
+    "tauri:package": "npm run build && tauri build"
   },
   "devDependencies": {
     "@sveltejs/adapter-node": "next",
     "@sveltejs/adapter-static": "next",
     "@sveltejs/kit": "next",
+    "@tauri-apps/cli": "^1.0.0-beta.10",
     "concurrently": "^6.0.0",
     "electron": "^12.0.2",
     "electron-builder": "^22.10.5",
@@ -27,7 +30,7 @@
   },
   "type": "module",
   "dependencies": {
-	"electron-serve": "^1.1.0",
+    "electron-serve": "^1.1.0",
     "electron-window-state": "^5.0.3",
     "svelte-markdown": "^0.2.2"
   }

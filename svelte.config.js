@@ -9,7 +9,11 @@ export default {
 
 		//adapter: node()
 		adapter: adapter({
-			fallback: 'index.html'
+			// fallback: '200.html'
+			pages: 'build',
+			assets: 'build',
+			fallback: null,
+			precompress: false
 		}),
 
 		vite: {

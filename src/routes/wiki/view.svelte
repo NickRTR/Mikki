@@ -1,27 +1,17 @@
-<script context="module">
-    export async function load (params) {
-        let id = params.params.id;
-        return {
-            props: {
-                id: id
-            }
-        };
-    }
-</script>
-
 <script>
     import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission, wiki_get_download } from "$lib/api";
     import SvelteMarkdown from 'svelte-markdown';
     import { dateToString } from "$lib/helper.js";
     import { onMount } from "svelte";
 
-    export let id;
+    let id = "";
     let data = {
         page_title: "",
         page_text: ""
     };
     
     onMount(() => {
+		id = window.location.hash.substr(1);
         wiki_get(id).then(res => {
             data = res;
         });
@@ -47,8 +37,12 @@
     }
 
     const download = async () => {
-        let res = await wiki_get_download(data.page_id);
-        window.open(res.download_url);
+		if (window.__TAURI__) {
+        	let res = await wiki_get_download(data.page_id);
+			window.__TAURI__.shell.open(res.download_url);
+		} else {
+        	window.open(res.download_url);
+		}
     }
 </script>
 
@@ -66,7 +60,16 @@
             </div>
     
             <div class="buttons">
-                <img src="/edit.svg" alt="edit" on:click={() => {window.open("/wiki/edit/" + data.page_id)}} title="Editieren">
+                <img src="/edit.svg" alt="edit" on:click={() => {
+					if (window.__TAURI__) {
+						console.log("Running in tauri...");
+						const webview = new window.__TAURI__.window.WebviewWindow('theUniqueLabel', {
+							url: ("/wiki/edit#" + data.page_id)
+						});
+					} else {
+						window.open("/wiki/edit#" + data.page_id)
+					}
+				}} title="Editieren">
                 <img src="/trash.svg" alt="delete" on:click={deleteWiki} title="Löschen">
             </div>
         </nav>

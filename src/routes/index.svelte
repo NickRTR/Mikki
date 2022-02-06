@@ -71,8 +71,8 @@
         <div class="wiki_post_urls">
             <input type="checkbox" class="toggle" id={page.page_id} on:change={() => {render(page.page_id)}}>
             <label for={page.page_id}>▶︎</label>
-            <a href="/wiki/{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title}</a>
-            <span on:click={() => {copyToClipboard(window.origin + "/wiki/" + page.page_id)}}>🔗</span>
+            <a href="/wiki/view#{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title}</a>
+            <span on:click={() => {copyToClipboard(window.origin + "/wiki/view#" + page.page_id)}}>🔗</span>
         </div>
         {#if page.text}
             <div class="text" transition:slide|local>
