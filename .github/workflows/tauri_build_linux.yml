@@ -1,38 +1,35 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Build and release electron app
+name: Build and release tauri app
 
 on:
   push:
     branches: [ master ]
   workflow_dispatch:
 
-env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 jobs:
   electron-build:
-    name: Build and release electron app
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ ubuntu-latest, windows-latest ]
+    name: Build and release tauri app
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 16.x
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
       - run: npm install
-      - run: npm run electron:package
+      - run: npm run tauri:package
       
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: ${{ matrix.os }}
+          automatic_release_tag: linux-release
           prerelease: false
           title: "Development Build"
           files: |
-            dist/Mikki*
-            dist/mikki*
+            src-tauri/target/release/bundle/appimage/mikki_0.1.0_amd64.AppImage
+            src-tauri/target/release/bundle/deb/mikki_0.1.0_amd64.deb

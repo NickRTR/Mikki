@@ -1,5 +1,5 @@
 <script>
-    import {page} from "$app/stores";
+    import { page } from "$app/stores";
     import { wiki_cache } from "$lib/api.js";
 	import { onMount } from 'svelte';
 
