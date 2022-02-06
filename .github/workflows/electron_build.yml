@@ -33,4 +33,6 @@ jobs:
           automatic_release_tag: ${{ matrix.os }}
           prerelease: false
           title: "Development Build"
-          files: dist/Mikki*
+          files: |
+            dist/Mikki*
+            dist/mikki*
