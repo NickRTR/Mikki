@@ -17,7 +17,7 @@
                         return;
                     }
                     let res = await wiki_create(get_api_token(), title, text);
-                    window.location.href = "/wiki/" + res.page_id;
+                    window.location.href = "/wiki/view#" + res.page_id;
                 })
             })
         } else {

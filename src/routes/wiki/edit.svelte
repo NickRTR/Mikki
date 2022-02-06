@@ -1,26 +1,15 @@
-<script context="module">
-
-    export async function load (params) {
-        let id = params.params.id;
-        return {
-            props: {
-                id: id
-            }
-        };
-    }
-</script>
-
 <script>
     import {get_api_token, has_valid_token, has_permission, wiki_edit, wiki_get} from "$lib/api.js";
     import { onMount } from "svelte";
 
-    export let id;
+    let id = "";
     let page = {
         page_title: "",
         page_text: ""
     };
     
     onMount(() => {
+		id = window.location.hash.substr(1);
         wiki_get(id).then(res => {
             page = res;
             console.log(page);

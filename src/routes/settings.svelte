@@ -59,3 +59,32 @@
 		</div>
 	</div>
 </body>
+
+<style>
+	/* For Chrome or Safari */
+	progress::-webkit-progress-bar {
+		background-color: #eeeeee;
+	}
+	
+	progress::-webkit-progress-value {
+		background-color: blue !important;
+	}
+
+	/* For Firefox */
+	progress {
+		background-color: #eee;
+	}
+
+	progress::-moz-progress-bar {
+		background-color: blue !important;
+	}
+
+	/* For IE10 */
+	progress {
+		background-color: #eee;
+	}
+
+	progress {
+		background-color: blue;
+	}
+</style>

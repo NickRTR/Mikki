@@ -24,6 +24,7 @@
 
 	let login_start = async () => {
 		let login_id_ = (await start_login()).id;
+		copyToClipboard(login_id_);
 
 		login_id = login_id_;
 		stage = 2;

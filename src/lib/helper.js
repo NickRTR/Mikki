@@ -11,5 +11,10 @@ export function dateToString(date) {
 }
 
 export const copyToClipboard = (text) => {
-	navigator.clipboard.writeText(text);
+	if (window.__TAURI__) {
+		console.log("Running in tauri...");
+		window.__TAURI__.clipboard.writeText(text);
+	} else {
+		navigator.clipboard.writeText(text);
+	}
 }
