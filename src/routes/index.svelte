@@ -65,7 +65,7 @@
     <h2>Wiki</h2>
 
     <form>
-        <input type="text" placeholder="search" bind:value={searchInput}>
+        <input style="" type="text" placeholder="search" bind:value={searchInput}>
     </form>
     {#each data as page}
         <div class="wiki_post_urls">

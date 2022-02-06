@@ -1,0 +1,36 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Build and release tauri app macos arm
+
+on:
+  push:
+    branches: [ tauri ]
+  workflow_dispatch:
+
+jobs:
+  tauri-build:
+    name: Build and release tauri app
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with: 
+          node-version: 16.x
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: aarch64-apple-darwin
+      - run: npm install
+      - run: npm run tauri:package -- --target aarch64-apple-darwin
+      
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: macos-arm-release
+          prerelease: false
+          title: "Development Build"
+          files: |
+            src-tauri/target/release/bundle/macos/mikki.app
+            src-tauri/target/release/bundle/dmg/mikki_0.1.0_aarch64.dmg
