@@ -2,6 +2,10 @@
     import { page } from "$app/stores";
     import { wiki_cache } from "$lib/api.js";
 	import { onMount } from 'svelte';
+    import { slide } from "svelte/transition";
+
+    let innerWidth = 0;
+    let showHamburger = false;
 
     const nav = [
         {title: "Home", path: "/"},
@@ -24,18 +28,32 @@
     });
 </script>
 
+<svelte:window bind:innerWidth />
+
 <body>
     <nav>
         <a class="heading" href="/" sveltekit:prefetch>AssemblerWiki</a>
-        <div class="links">
+        {#if innerWidth >= 850}
+            <div class="links">
+                {#each nav as link}
+                    <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch title={link.title}>{link.title}</a>
+                {/each}
+            </div>
+        {:else}
+            <input type="checkbox" id="toggle" bind:checked={showHamburger}>
+            <label for="toggle"><img src="/menu.svg" alt="Menu"></label>
+        {/if}
+    </nav>
+    {#if showHamburger}
+        <div class="hamburger" transition:slide>
             {#each nav as link}
-                <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch title={link.title}>{link.title}</a>
+                <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch title={link.title} on:click={() => {showHamburger = false}}>{link.title}</a><br>
             {/each}
         </div>
-    </nav>
+    {/if}
     <main><slot></slot></main>
     <!-- <footer>
-        <p>©2022 </p>
+        <p>©2022 Janick, Nick Reutlinger, Moritz Schittenhelm</p>
     </footer> -->
 </body>
 
@@ -75,17 +93,48 @@
         color: white;
     }
 
-    .links a:hover {
+    img {
+        width: 3rem;
+        margin-bottom: -1rem;
+        margin-top: -.5rem;
+    }
+
+    .links a:hover, .hamburger a:hover {
         border-bottom: 3px solid var(--accent);
     }
 
-    .links a:focus {
+    .links a:focus, .hamburger a:focus {
         border-bottom: 3px solid var(--accent);
         outline: none;
     }
 
     .active {
         border-bottom: 3px solid var(--accent);
+    }
+
+    #toggle {
+        display: none;
+    }
+
+    #toggle + label {
+        transition: 500ms ease all;
+    }
+
+    #toggle:checked + label {
+        transform: rotate(-90deg);
+        transition: 500ms ease all;
+    }
+
+    .hamburger {
+        margin-top: -.5rem;
+        padding-left: 1.5rem;
+        background-color: black;
+        padding-bottom: .5rem;
+    }
+
+    .hamburger a {
+        margin: 0;
+        line-height: 1.8rem;
     }
 
     main {
@@ -116,12 +165,7 @@
 
     /* media queries */
 
-    @media only screen and (max-width: 600px) {
-        nav {
-            font-size: .9rem;
-            padding: 1rem .5rem;
-        }
-        
+    @media only screen and (max-width: 600px) {      
         a {
             margin-left: .3rem;
         }

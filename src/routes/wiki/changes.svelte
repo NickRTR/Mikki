@@ -37,7 +37,7 @@
                 <th>Zeitpunkt</th>
             </tr>
 
-            {#each changelog as entry}
+            {#each changelog.reverse() as entry}
                 <tr>
                     <td>{entry.what}</td>
                     <td>{dateToString(entry.when)}</td>

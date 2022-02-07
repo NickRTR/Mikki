@@ -14,7 +14,7 @@
     import { wiki_get, wiki_list } from "$lib/api.js";
     import { copyToClipboard, weburl } from "$lib/helper";
     import SvelteMarkdown from "svelte-markdown";
-    import {slide} from "svelte/transition";
+    import { slide } from "svelte/transition";
     import { onMount } from "svelte"
 
     let data = [];

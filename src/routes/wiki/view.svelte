@@ -23,17 +23,17 @@
                 alert("You need to login first!");
                 return;
             }
-            has_permission(get_api_token(), "wiki_delete").then(async result => {
-                if (result) {
-                    if (await confirm("Seite löschen? Es gibt kein zurück mehr!")) {
-                        wiki_delete(get_api_token(), data.page_id).then(() => {
-                            window.location.href = "/";
-                        });
+            if (confirm("Seite löschen? Es gibt kein zurück mehr!")) {
+                has_permission(get_api_token(), "wiki_delete").then(async result => {
+                    if (result) {
+                            wiki_delete(get_api_token(), data.page_id).then(() => {
+                                window.location.href = "/";
+                            });
+                    } else {
+                        alert("You don't have permission to delete this wiki page");
                     }
-                } else {
-                    alert("You don't have permission to delete this wiki page");
-                }
-            });
+                });
+            }
         });
     }
 

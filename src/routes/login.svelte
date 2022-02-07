@@ -1,5 +1,4 @@
 <script>
-	// TODO: Make the style look good (not my responsibility i cant design very well)
 	import { has_valid_token, is_valid_token, status_login, start_login, stop_login } from "$lib/api.js";
 	import { onMount } from 'svelte';
 	import { copyToClipboard } from "$lib/helper.js";
@@ -24,7 +23,7 @@
 
 	let login_start = async () => {
 		let login_id_ = (await start_login()).id;
-		copyToClipboard(login_id_);
+		copyToClipboard("-auth " + login_id_);
 
 		login_id = login_id_;
 		stage = 2;
