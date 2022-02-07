@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<script>
+			if (window.__TAURI__) {
+				// if i dont do it with a string concatenation it sometimes gets replaced with a number. like why??????????
+				window["__" + "TAURI__INVOKE_KEY_TOKEN__"] = window["__" + "TAURI_INVOKE_KEY__"];
+				console.log("tauri invoke key:", window["__" + "TAURI__INVOKE_KEY_TOKEN__"]);
+			}
+
+			window.onerror = function(message, source, lineno, colno, error) {
+				alert("Oh no! An error occurred!\n" + message + " in " + source + " " + lineno + ":" + colno);
+				return true;
+			};
+		</script>
 		<meta charset="utf-8" />
 		<meta name="description" content="" />
 		<link rel="icon" href="/favicon.svg" />
