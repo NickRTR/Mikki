@@ -123,15 +123,20 @@ export async function has_permission(token, permission) {
 export async function wiki_cache(progress_callback) {
 	let last_sync = localStorage.getItem("page_last_cache");
 	if (last_sync) {
-		last_sync = new Date(parseInt(last_sync));
-		let now = new Date();
-		if (now.getTime() - last_sync.getTime() < 1000 * 60 * 5) {
-			console.log("skipping cache update because last one was less than 5 minutes ago");
-			return;
+		if (last_sync == "-1") {
+			console.warn("Always running cache update (DEBUG ONLY)");
+		} else {
+			last_sync = new Date(parseInt(last_sync));
+			let now = new Date();
+			if (now.getTime() - last_sync.getTime() < 1000 * 60 * 5) {
+				console.log("skipping cache update because last one was less than 5 minutes ago");
+				return;
+			}
+
+			localStorage.setItem("page_last_cache", now.getTime());
 		}
 	} else {
-		last_sync = new Date();
-		localStorage.setItem("page_last_cache", last_sync.getTime());
+		localStorage.setItem("page_last_cache", new Date().getTime());
 	}
 
 	for (let item in localStorage) {

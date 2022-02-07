@@ -13,8 +13,11 @@
 	let autocache = true;
 	let max = 10;
 
+	let always_update_cache = false;
+
 	onMount(() => {
 		autocache = localStorage.getItem("auto_cache");
+		always_update_cache = localStorage.getItem("page_last_cache") == "-1";
 	})
 
 	const start_cache = async () => {
@@ -58,6 +61,14 @@
 			{:else}
 				<p>Autocache ist deaktiviert.</p>
 				<button on:click={() => {localStorage.setItem("auto_cache", "true"); autocache = !autocache}}>aktivieren</button>
+			{/if}
+
+			{#if always_update_cache}
+				<p>Cache wird immer aktualisiert (Nicht empfohlen kann performance verschlechtern).</p>
+				<button on:click={() => {localStorage.removeItem("page_last_cache"); always_update_cache = !always_update_cache}}>deaktivieren</button>
+			{:else}
+				<p>Cache wird nur alle 5 minuten aktualisiert.</p>
+				<button on:click={() => {localStorage.setItem("page_last_cache", "-1"); always_update_cache = !always_update_cache}}>aktivieren</button>
 			{/if}
 		</div>
 	</div>

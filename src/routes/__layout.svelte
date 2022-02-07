@@ -7,6 +7,8 @@
     let innerWidth = 0;
     let showHamburger = false;
 
+    let cacheRunning = false;
+
     const nav = [
         {title: "Home", path: "/"},
         {title: "Erstellen", path: "/wiki/create"},
@@ -19,8 +21,10 @@
         if (localStorage.getItem("auto_cache") == "true") {
             if (navigator.onLine) {
                 wiki_cache((p, m) => {
+                    cacheRunning = true;
                     console.log(`Auto caching: ${p + 1} / ${m}`);
                 }).then(() => {
+                    cacheRunning = false;
                     console.log("Auto caching done");
                 });
             }
@@ -32,7 +36,7 @@
 
 <body>
     <nav>
-        <a class="heading" href="/" sveltekit:prefetch>AssemblerWiki</a>
+        <a class="heading" class:running={cacheRunning} href="/" sveltekit:prefetch>AssemblerWiki</a>
         {#if innerWidth >= 850}
             <div class="links">
                 {#each nav as link}
@@ -85,6 +89,11 @@
     .heading {
         text-decoration: none;
         margin-left: 0;
+        border-bottom: 3px solid greenyellow;
+    }
+
+    .running {
+        border-bottom: 3px solid orange;
     }
 
     a {
