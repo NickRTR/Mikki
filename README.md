@@ -4,7 +4,7 @@ Wikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht z
 
 ## Features:
 
-- Interpretieren und Erstellen von Markup Files
+- Interpretieren und Erstellen von Markdown Files
 - Erstellen, Bearbeiten und Löschen von Wiki Einträgen
 - Chache der Einträge anlegen, wenn kein Internetzugriff besteht
 - Autocaching
