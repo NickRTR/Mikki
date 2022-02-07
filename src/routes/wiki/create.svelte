@@ -59,4 +59,8 @@
         padding: .5rem;
         border: none;
     }
+
+    button {
+        margin-bottom: 1rem;
+    }
 </style>

@@ -52,9 +52,9 @@
         </div>
     {/if}
     <main><slot></slot></main>
-    <!-- <footer>
-        <p>©2022 Janick, Nick Reutlinger, Moritz Schittenhelm</p>
-    </footer> -->
+    <footer>
+        <p>©2022 Janick Voss, Nick Reutlinger, Moritz Schittenhelm</p>
+    </footer>
 </body>
 
 <style>
@@ -141,6 +141,15 @@
         max-width: 900px;
         margin: 0 auto;
         text-align: center;
+    }
+
+    footer {
+        text-align: center;
+    }
+
+    footer p {
+        margin: 0;
+        margin-bottom: 1rem;
     }
     
     /* variables */

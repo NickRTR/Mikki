@@ -2,6 +2,28 @@
 
 var base_api = "https://x.glowman554.gq/api/v2";
 
+const escape_map = {
+	"\\\\": "\\\\",
+	"\"": "\\\"",
+	"\b": "\\b",
+	"\f": "\\f",
+	"\n": "\\n",
+	"\t": "\\t"
+}
+
+export function process_escapes(input) {
+	for (let escape in escape_map) {
+		input = input.replace(new RegExp(escape, "g"), escape_map[escape]);
+	}
+	return input;
+}
+
+export function process_response(data) {
+	data = decodeURIComponent(data);
+	data = JSON.parse(data);
+	return data;
+}
+
 export async function start_login() {
 	const res = await fetch(base_api + "/login/start");
 	return await res.json();
@@ -18,8 +40,8 @@ export async function stop_login(login_id) {
 } 
 
 export async function wiki_create(token, page_title, page_text) {
-	var page_title_encoded = btoa(encodeURIComponent(page_title).replace(/%0[aA]/g, '\n'));
-	var page_text_encoded = btoa(encodeURIComponent(page_text).replace(/%0[aA]/g, '\n'));
+	var page_title_encoded = btoa(encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n'));
+	var page_text_encoded = btoa(encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, '\n'));
 
 	const res = await fetch(base_api + "/wiki/page/create?token=" + token + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded);
 	let data = await res.text();
@@ -42,9 +64,7 @@ export async function wiki_get(page_id, wiki_list = []) {
 		}
 		const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id);
 		let data = await res.text();
-		data = decodeURIComponent(data);
-		data = JSON.parse(data);
-		return data;
+		return process_response(data);
 	} else {
 		return JSON.parse(localStorage.getItem("page_" + page_id));
 	}
@@ -53,8 +73,7 @@ export async function wiki_get(page_id, wiki_list = []) {
 export async function wiki_get_download(page_id) {
 	const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id + "&download");
 	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
+	data = process_response(data);
 
 	data.download_url = new URL(base_api).origin + "/files/" + data.file_id;
 
@@ -62,23 +81,19 @@ export async function wiki_get_download(page_id) {
 }
 
 export async function wiki_edit(token, page_id, page_title, page_text) {
-	var page_title_encoded = btoa(encodeURIComponent(page_title).replace(/%0[aA]/g, '\n'));
-	var page_text_encoded = btoa(encodeURIComponent(page_text).replace(/%0[aA]/g, '\n'));
+	var page_title_encoded = btoa(encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n'));
+	var page_text_encoded = btoa(encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, '\n'));
 
 	const res = await fetch(base_api + "/wiki/page/edit?token=" + token + "&page_id=" + page_id + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded);
 	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	return process_response(data);
 }
 
 export async function wiki_list() {
 	if (navigator.onLine) {
 		const res = await fetch(base_api + "/wiki/page/list");
 		let data = await res.text();
-		data = decodeURIComponent(data);
-		data = JSON.parse(data);
-		return data;
+		return process_response(data);
 	} else {
 		return JSON.parse(localStorage.getItem("page_list")) || [];
 	}
@@ -93,9 +108,7 @@ export async function wiki_changelog() {
 	if (navigator.onLine) {
 		const res = await fetch(base_api + "/wiki/page/changelog");
 		let data = await res.text();
-		data = decodeURIComponent(data);
-		data = JSON.parse(data);
-		return data;
+		return process_response(data);
 	} else {
 		return JSON.parse(localStorage.getItem("page_changelog"));
 	}
@@ -108,6 +121,26 @@ export async function has_permission(token, permission) {
 }
 
 export async function wiki_cache(progress_callback) {
+	let last_sync = localStorage.getItem("page_last_cache");
+	if (last_sync) {
+		last_sync = new Date(parseInt(last_sync));
+		let now = new Date();
+		if (now.getTime() - last_sync.getTime() < 1000 * 60 * 5) {
+			console.log("skipping cache update because last one was less than 5 minutes ago");
+			return;
+		}
+	} else {
+		last_sync = new Date();
+		localStorage.setItem("page_last_cache", last_sync.getTime());
+	}
+
+	for (let item in localStorage) {
+		if (item.match(/page_[0-9]*_[0-9]*/g)) {
+			localStorage.removeItem(item);
+			console.log("removed " + item);
+		}
+	}
+
 	let current_pages = await wiki_list();
 
 	for (let i = 0; i < current_pages.length; i++) {

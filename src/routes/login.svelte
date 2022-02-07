@@ -108,7 +108,6 @@
 
 <style>
 	body {
-		text-align: center;
 		display: flex;
 		justify-content: center;
 	}
@@ -127,6 +126,7 @@
 
 	.middle {
 		margin: 0;
+		margin-top: 1rem;
 		position: absolute;
 		top: 50%;
 		-ms-transform: translateY(-50%);

@@ -68,6 +68,10 @@
 		margin-bottom: .5rem;
 	}
 
+	.autocache button {
+		margin-bottom: 1rem;
+	}
+
 	progress {
 		margin-bottom: .7rem;
 	}
@@ -75,27 +79,33 @@
 	/* For Chrome or Safari */
 	progress::-webkit-progress-bar {
 		background-color: #eeeeee;
+		border-radius: 1rem;
 	}
 	
 	progress::-webkit-progress-value {
-		background-color: blue !important;
+		background-color: var(--accent) !important;
+		border-radius: 1rem;
 	}
 
 	/* For Firefox */
 	progress {
 		background-color: #eee;
+		border-radius: 1rem;
 	}
 
 	progress::-moz-progress-bar {
-		background-color: blue !important;
+		background-color: var(--accent) !important;
+		border-radius: 1rem;
 	}
 
 	/* For IE10 */
 	progress {
 		background-color: #eee;
+		border-radius: 1rem;
 	}
 
 	progress {
-		background-color: blue;
+		background-color: var(--accent);
+		border-radius: 1rem;
 	}
 </style>
