@@ -100,7 +100,7 @@
         margin-bottom: 0;
     }
 	
-    .text {
+    code {
         overflow: scroll;
      }
 
