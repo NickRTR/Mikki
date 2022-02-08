@@ -148,6 +148,7 @@
         border-radius: .5rem;
         padding: 0 .5rem;
         margin: 0 1rem;
+	overflow: scroll;
     }
 
     @media only screen and (max-width: 600px) {
