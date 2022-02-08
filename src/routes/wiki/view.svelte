@@ -99,6 +99,10 @@
         margin: .5rem 0;
         margin-bottom: 0;
     }
+	
+    .text {
+        overflow: scroll;
+     }
 
     .buttons {
         display: flex;
