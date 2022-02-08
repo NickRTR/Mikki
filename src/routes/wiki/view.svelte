@@ -69,12 +69,15 @@
             </div>
         </nav>
         <hr>
-        <SvelteMarkdown source={data.page_text}/>
+		<div style="overflow: scroll;" >
+        	<SvelteMarkdown source={data.page_text} />
+		</div>
     </div>
     <button type="button" on:click={download}>Download</button>
 </body>
 
 <style>
+
     .main {
         text-align: left;
         background-color: var(--light-background);
@@ -99,10 +102,6 @@
         margin: .5rem 0;
         margin-bottom: 0;
     }
-	
-    code {
-        overflow: scroll;
-     }
 
     .buttons {
         display: flex;
