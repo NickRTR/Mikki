@@ -38,8 +38,9 @@
     }
 
     const download = async () => {
+		let res = await wiki_get_download(data.page_id);
+
 		if (window.__TAURI__) {
-        	let res = await wiki_get_download(data.page_id);
 			window.__TAURI__.shell.open(res.download_url);
 		} else {
         	window.open(res.download_url);
