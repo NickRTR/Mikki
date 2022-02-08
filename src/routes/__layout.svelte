@@ -145,6 +145,10 @@
         margin: 0;
         line-height: 1.8rem;
     }
+	
+    .text {
+        overflow: scroll;
+	}
 
     main {
         max-width: 900px;
