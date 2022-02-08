@@ -7,7 +7,7 @@
     let innerWidth = 0;
     let showHamburger = false;
 
-    let cacheRunning = false;
+    let cacheRunning = true;
 
     const nav = [
         {title: "Home", path: "/"},

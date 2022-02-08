@@ -10,11 +10,9 @@
         page_text: ""
     };
     
-    onMount(() => {
+    onMount(async () => {
 		id = window.location.hash.substr(1);
-        wiki_get(id).then(res => {
-            data = res;
-        });
+        data = await wiki_get(id);
     });
 
     const deleteWiki = async () => {
@@ -53,32 +51,33 @@
 </svelte:head>
 
 <body>
-    <div class="main">
+    <main>
         <nav>
             <div class="info">
                 <h2>Titel: {data.page_title}</h2>
                 <p>Erstellt: {dateToString(data.page_created)}</p>
                 <p>Bearbeitet: {dateToString(data.page_edited)}</p>
             </div>
-    
+        
             <div class="buttons">
-                <img src="/edit.svg" alt="edit" on:click={() => {
-                    redirect("/wiki/edit#" + data.page_id);
-				}} title="Editieren">
+                <img src="/edit.svg" alt="edit" title="Editieren" on:click={() => {redirect("/wiki/edit#" + data.page_id)}}>
                 <img src="/trash.svg" alt="delete" on:click={deleteWiki} title="Löschen">
             </div>
         </nav>
         <hr>
-		<div style="overflow: scroll;" >
-        	<SvelteMarkdown source={data.page_text} />
-		</div>
-    </div>
+        {#if data.page_text}
+            <div style="overflow-x: auto;">
+                <SvelteMarkdown source={data.page_text} />
+            </div>
+        {:else} 
+            <p>Fetching Data</p>    
+        {/if}
+    </main>
     <button type="button" on:click={download}>Download</button>
 </body>
 
 <style>
-
-    .main {
+    main {
         text-align: left;
         background-color: var(--light-background);
         border-radius: 1rem;
