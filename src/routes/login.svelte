@@ -62,6 +62,8 @@
 			}
 		});
 	}
+
+	let showPassword = false;
 </script>
 
 <svelte:head>
@@ -95,7 +97,9 @@
 		<div id="stage4">
 			<p>Mit Token einloggen</p>
 			<form>
-				<input type="text" placeholder="token" bind:value={input}/>
+				<input type="password" placeholder="token" id="inputPassword" bind:value={input}/>
+				<input type="checkbox" id="togglePassword" bind:checked={showPassword} on:change={() => {document.querySelector('#inputPassword').type = showPassword ? 'text' : 'password'}}>
+				<label for="togglePassword"><img src="showPassword.svg" alt="show"></label>
 			</form>
 			<button on:click={() => {
 				stage = 1;
@@ -119,16 +123,6 @@
 		cursor: pointer;
 	}
 
-	/* .middle {
-		margin: 0;
-		margin-top: 1rem;
-		position: absolute;
-		top: 50%;
-		-ms-transform: translateY(-50%);
-		transform: translateY(-50%);
-		border-radius: 1rem;
-	} */
-
 	button:hover {
 		text-decoration: underline;
 	}
@@ -142,5 +136,29 @@
 		margin-bottom: .6rem;
 		padding: .4rem 1rem;
 		border-radius: 1rem;
+	}
+
+	input[type=checkbox] {
+		display: none;
+	}
+
+	form {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	img {
+		width: 2rem;
+		margin-bottom: .2rem;
+		cursor: pointer;
+	}
+
+	label {
+		filter: brightness(.5);
+	}
+	
+	input[type=checkbox]:checked + label {
+		filter: brightness(1);
 	}
 </style>

@@ -36,7 +36,7 @@
 <body>
     <h2>Seite erstellen</h2>
     <input type="text" placeholder="titel" bind:value={title}>
-    <textarea placeholder="Markup" resi bind:value={text}/>
+    <textarea placeholder="Markdown" resi bind:value={text}/>
     <button type="submit" on:click={save}>Erstellen</button>
 </body>
 
