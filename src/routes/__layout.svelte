@@ -57,7 +57,7 @@
     {/if}
     <main><slot></slot></main>
     <footer>
-        <p>©2022 Janick Voss, Nick Reutlinger, Moritz Schittenhelm</p>
+        <p>©2022 Janick Voss, Nick Reutlinger</p>
     </footer>
 </body>
 

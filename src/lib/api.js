@@ -1,5 +1,3 @@
-// DO NOT TOUCH AS LONG AS IT WORKS!!!!!!!!!!!!!!!!!!!
-
 var base_api = "https://x.glowman554.gq/api/v2";
 
 const escape_map = {

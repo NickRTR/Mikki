@@ -1,15 +1,3 @@
-<!-- <script context="module">
-
-    export async function load() {
-        const res = await wiki_list();
-        return {
-            props: {
-                data: res // array of objects containing page_id, page_title, page_created and page_edited
-            }
-        }
-    }
-</script> -->
-
 <script>
     import { wiki_get, wiki_list } from "$lib/api.js";
     import { copyToClipboard, weburl } from "$lib/helper";

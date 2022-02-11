@@ -107,7 +107,6 @@
 			<button type="submit" on:click|preventDefault={login_token_submit}>Submit</button>
 		</div>	
 	{/if}
-	<!-- </div> -->
 </body>
 
 <style>

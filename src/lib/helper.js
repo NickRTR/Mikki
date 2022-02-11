@@ -1,9 +1,3 @@
-// export function dateToString(date) {
-// 	const date_obj = new Date(date);
-// 	const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-// 	return date_obj.toLocaleDateString('de-DE', options);
-// }
-
 export const weburl = "https://www.mikki.gq"
 
 export function dateToString(date) {

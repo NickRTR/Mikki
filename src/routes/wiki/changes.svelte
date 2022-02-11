@@ -1,15 +1,3 @@
-<!-- <script context="module">
-
-    export async function load() {
-		const changelog = await wiki_changelog();
-        return {
-            props: {
-				changelog: changelog
-            }
-        }
-    }
-</script> -->
-
 <script>
     import { dateToString } from "$lib/helper";
     import { onMount } from "svelte"
