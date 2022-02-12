@@ -71,7 +71,6 @@
 </svelte:head>
 
 <body>
-	<!-- <div class="middle"> -->
 	{#if stage == 0}
 		<p>Sie sind bereits eingeloggt. Drücken Sie den unteren Button, um sich auszuloggen.</p>
 		<button on:click={logout}>Ausloggen</button>

@@ -3,6 +3,7 @@
     import { wiki_cache } from "$lib/api.js";
 	import { onMount } from 'svelte';
     import { slide } from "svelte/transition";
+    import { SvelteToast } from "@zerodevx/svelte-toast";
 
     let innerWidth = 0;
     let showHamburger = false;
@@ -35,6 +36,7 @@
 <svelte:window bind:innerWidth />
 
 <body>
+    <SvelteToast /> 
     <nav>
         <a class="heading" class:running={cacheRunning} href="/" sveltekit:prefetch>AssemblerWiki</a>
         {#if innerWidth >= 850}
@@ -159,6 +161,13 @@
     footer p {
         margin: 0;
         margin-bottom: 1rem;
+    }
+
+    :root {
+        --toastContainerTop: auto;
+        --toastContainerRight: auto;
+        --toastContainerBottom: 2rem;
+        --toastContainerLeft: calc(50vw - 8rem);
     }
     
     /* variables */

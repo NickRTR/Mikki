@@ -1,4 +1,6 @@
-export const weburl = "https://www.mikki.gq"
+import { toast } from "@zerodevx/svelte-toast";
+
+export const weburl = "https://www.mikki.gq";
 
 export function dateToString(date) {
 	const date_obj = new Date(date);
@@ -7,6 +9,13 @@ export function dateToString(date) {
 }
 
 export const copyToClipboard = (text) => {
+	toast.push("Kopiert!", {
+		theme: {
+			'--toastBackground': '#3A4750',
+    		'--toastBarBackground': '#F6C90E'
+		},
+		duration: 2500
+	});
 	if (window.__TAURI__) {
 		console.log("Running in tauri...");
 		window.__TAURI__.clipboard.writeText(text);
