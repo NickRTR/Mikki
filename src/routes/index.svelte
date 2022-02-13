@@ -18,11 +18,11 @@
     $: {  
         data = []
         if (searchInput !== "") {
-            for (let i in oldData) {
-                if (oldData[i].page_title.toLowerCase().includes(searchInput.toLowerCase())) {
-                    data = [...data, oldData[i]];
+            oldData.forEach(element => {
+                if (element.page_title.toLowerCase().includes(searchInput.toLowerCase())) {
+                    data = [...data, element]
                 }
-            }
+            });
         } else {
             data = oldData;
         }
@@ -31,17 +31,17 @@
     const render = async (id) => {
         let checked = document.getElementById(id).checked;
 
-        for (let i in data) {
-            if (data[i].page_id === id) {
+        data.forEach(async element => {
+            if (element.page_id === id) {
                 if (checked) {
                     const res = await wiki_get(id, data);
-                    data[i]["text"] = res.page_text;
+                    element["text"] = res.page_text;
                 } else {
-                    delete data[i].text;
+                    delete element.text;
                 }
                 data = data;
             }
-        }
+        });
     }
 </script>
 
