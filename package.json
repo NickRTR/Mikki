@@ -4,11 +4,11 @@
   "author": "Glowman554 <glowman434@gmail.com>",
   "description": "Mikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht zu dokumentieren. ",
   "scripts": {
-    "dev": "svelte-kit dev",
-    "build": "svelte-kit build",
-    "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
-    "start": "svelte-kit start",
+    "dev": "node write_github_commit.js && svelte-kit dev",
+    "build": "node write_github_commit.js && svelte-kit build",
+    "package": "node write_github_commit.js && svelte-kit package",
+    "preview": "node write_github_commit.js && svelte-kit preview",
+    "start": "node write_github_commit.js && svelte-kit start",
     "tauri": "npm run build && tauri dev -- --debug",
     "tauri:package": "npm run build && tauri build"
   },

@@ -1,6 +1,7 @@
 <script>
     import { page } from "$app/stores";
     import { wiki_cache } from "$lib/api.js";
+    import { run_update_notifier } from "$lib/helper";
 	import { onMount } from 'svelte';
     import { slide } from "svelte/transition";
     import { SvelteToast } from "@zerodevx/svelte-toast";
@@ -30,6 +31,8 @@
                 });
             }
         }
+
+		run_update_notifier();
     });
 </script>
 

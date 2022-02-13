@@ -13,8 +13,7 @@ export const copyToClipboard = (text) => {
 		theme: {
 			'--toastBackground': '#3A4750',
     		'--toastBarBackground': '#F6C90E'
-		},
-		duration: 2500
+		}
 	});
 	if (window.__TAURI__) {
 		console.log("Running in tauri...");
@@ -34,4 +33,38 @@ export function redirect(url) {
 	// } else {
 		window.location.href = url;
 	// }
+}
+
+export function run_update_notifier() {
+	if (window.__TAURI__ && window.commit_sha) {
+		console.log("Checking for updates...");
+		fetch("https://api.github.com/repos/Mik-Wiki/Mikki/commits/master", {
+			method: "GET",
+			headers: {
+				"accept": "application/vnd.github.VERSION.sha"
+			}
+		}).then(res => res.text().then(res => {
+			window.remote_commit_sha = res;
+
+			console.log("remote_commit_sha: " + window.remote_commit_sha);
+			console.log("local_commit_sha: " + window.commit_sha);
+
+			if (window.remote_commit_sha != window.commit_sha) {
+				toast.push("<a style='color: white; text-decoration: none;' href='https://github.com/Mik-Wiki/Mikki/releases'>Neue version verfügbar</a>", {
+					theme: {
+						'--toastBackground': '#ff0000',
+						'--toastBarBackground': '#F6C90E'
+					},
+					duration: 10000
+				});
+			} else {
+				console.log("No update available.");
+			}
+
+			delete window.remote_commit_sha;
+			delete window.commit_sha;
+		}));
+	} else {
+		console.warn("Not running in tauri. Not checking for updates.");
+	}
 }
