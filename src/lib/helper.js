@@ -36,6 +36,8 @@ export function redirect(url) {
 }
 
 export function run_update_notifier() {
+	// test alert:
+	// window.commit_sha = "bla";
 	if (window.__TAURI__ && window.commit_sha) {
 		console.log("Checking for updates...");
 		fetch("https://api.github.com/repos/Mik-Wiki/Mikki/commits/master", {
@@ -52,10 +54,10 @@ export function run_update_notifier() {
 			if (window.remote_commit_sha != window.commit_sha) {
 				toast.push("<a style='color: white; text-decoration: none;' href='https://github.com/Mik-Wiki/Mikki/releases'>Neue version verfügbar</a>", {
 					theme: {
-						'--toastBackground': '#ff0000',
+						'--toastBackground': 'red',
 						'--toastBarBackground': '#F6C90E'
 					},
-					duration: 10000
+					duration: 50000,
 				});
 			} else {
 				console.log("No update available.");
