@@ -38,7 +38,7 @@ export function redirect(url) {
 export function run_update_notifier() {
 	// test alert:
 	// window.commit_sha = "bla";
-	if (window.__TAURI__ && window.commit_sha) {
+	if (window.__TAURI__ && window.commit_sha && navigator.onLine) {
 		console.log("Checking for updates...");
 		fetch("https://api.github.com/repos/Mik-Wiki/Mikki/commits/master", {
 			method: "GET",
