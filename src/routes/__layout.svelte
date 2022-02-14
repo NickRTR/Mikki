@@ -166,21 +166,17 @@
         margin-bottom: 1rem;
     }
 
-    :root {
-        --toastContainerTop: auto;
-        --toastContainerRight: auto;
-        --toastContainerBottom: 2rem;
-        --toastContainerLeft: calc(50vw - 8rem);
-    }
     
     /* variables */
-
+    
     :global(:root) {
         --accent: #F6C90E;
         --background: #303841;
         --light-background: #3A4750;
     }
-
+    
+    /* Global styles */
+    
     :global(button) {
         margin-top: .5rem;
 		font-size: 1rem;
@@ -191,6 +187,14 @@
 		font-weight: bold;
 		background-color: var(--accent);
         color: black;
+    }
+
+    /* Toast styles */
+    :root {
+        --toastContainerTop: auto;
+        --toastContainerRight: auto;
+        --toastContainerBottom: 2rem;
+        --toastContainerLeft: calc(50vw - 8rem);
     }
 
     /* media queries */
