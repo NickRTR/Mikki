@@ -18,6 +18,8 @@ export default {
 
 		vite: {
 			compilerOptions: { dev },
-		}
+		},
+		
+		trailingSlash: true
 	}
 };
