@@ -145,6 +145,8 @@
     }
 
     .hamburger {
+        width: 100%;
+        position: fixed;
         margin-top: -.5rem;
         padding-left: 1.5rem;
         background-color: black;
