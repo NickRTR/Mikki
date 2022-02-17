@@ -70,3 +70,17 @@ export function run_update_notifier() {
 		console.warn("Not running in tauri. Not checking for updates.");
 	}
 }
+
+export 	const render_graph = () => {
+	// map all "pre.mermaid > code" to "div.mermaid"
+	document.querySelectorAll("pre.mermaid > code").forEach(element => {
+		let div = document.createElement("div");
+		div.classList.add("mermaid");
+		div.innerHTML = element.innerHTML;
+		element.parentNode.replaceChild(div, element);
+
+		console.log("Rendering graph: " + div.innerHTML);
+
+		mermaid.init(undefined, div);
+	});
+}

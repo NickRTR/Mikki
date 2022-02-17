@@ -1,10 +1,10 @@
 <script>
     import { page } from "$app/stores";
     import { wiki_cache } from "$lib/api.js";
-    import { run_update_notifier } from "$lib/helper";
+    import { run_update_notifier, copyToClipboard } from "$lib/helper";
 	import { onMount } from 'svelte';
     import { slide } from "svelte/transition";
-    import { SvelteToast } from "@zerodevx/svelte-toast";
+    import { SvelteToast, toast } from "@zerodevx/svelte-toast";
 
     let innerWidth = 0;
     let showHamburger = false;
@@ -62,7 +62,13 @@
     {/if}
     <main><slot></slot></main>
     <footer>
-        <p>©2022 Janick Voss, Nick Reutlinger</p>
+        <p style="display: inline;">©2022 Janick Voss, Nick Reutlinger</p>
+		<p style="display: inline;" on:click={
+			event => {
+				var log = window.application_log.join("\n");
+				copyToClipboard(log);
+			}
+		}>📑</p>
     </footer>
 </body>
 

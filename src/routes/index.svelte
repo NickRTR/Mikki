@@ -1,6 +1,6 @@
 <script>
     import { wiki_get, wiki_list } from "$lib/api.js";
-    import { copyToClipboard, weburl } from "$lib/helper";
+    import { copyToClipboard, weburl, render_graph } from "$lib/helper";
     import SvelteMarkdown from "svelte-markdown";
     import { slide } from "svelte/transition";
     import { onMount } from "svelte"
@@ -64,7 +64,7 @@
         </div>
         {#if page.text}
             <div class="text" transition:slide|local>
-                <SvelteMarkdown source={page.text}/>
+                <SvelteMarkdown source={page.text} on:parsed={render_graph}/>
             </div>
         {/if}
     {:else}

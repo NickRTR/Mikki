@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<script src="/commit.js"></script>
+		<script src="/mermaid.min.js"></script>
 		<script>
 			if (window.__TAURI__) {
 				window["__" + "TAURI__INVOKE_KEY_TOKEN__"] = window["__" + "TAURI_INVOKE_KEY__"];
@@ -11,6 +12,37 @@
 			window.onerror = function(message, source, lineno, colno, error) {
 				alert("Oh no! An error occurred!\n" + message + " in " + source + " " + lineno + ":" + colno);
 				return true;
+			};
+
+			window.old_console = Object.assign({}, console);
+			window.application_log = [];
+
+			console.log = (...args) => {
+				args.forEach(arg => {
+					window.application_log.push(arg);
+				});
+				window.old_console.log(...args);
+			};
+
+			console.error = (...args) => {
+				args.forEach(arg => {
+					window.application_log.push("[ERROR] " + arg);
+				});
+				window.old_console.error(...args);
+			};
+
+			console.warn = (...args) => {
+				args.forEach(arg => {
+					window.application_log.push("[WARN] " + arg);
+				});
+				window.old_console.warn(...args);
+			};
+
+			console.info = (...args) => {
+				args.forEach(arg => {
+					window.application_log.push("[INFO] " + arg);
+				});
+				window.old_console.info(...args);
 			};
 		</script>
 		<meta charset="utf-8" />

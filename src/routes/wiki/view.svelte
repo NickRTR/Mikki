@@ -1,6 +1,6 @@
 <script>
     import { get_api_token, wiki_delete, wiki_get, has_valid_token, has_permission, wiki_get_download } from "$lib/api";
-    import { dateToString, redirect } from "$lib/helper.js";
+    import { dateToString, redirect, render_graph } from "$lib/helper.js";
     import { onMount } from "svelte";
     import SvelteMarkdown from 'svelte-markdown';
 
@@ -67,7 +67,7 @@
         <hr>
         {#if data.page_text}
             <div style="overflow-x: auto;">
-                <SvelteMarkdown source={data.page_text} />
+                <SvelteMarkdown source={data.page_text} on:parsed={render_graph}/>
             </div>
         {:else} 
             <p>Fetching Data</p>    
