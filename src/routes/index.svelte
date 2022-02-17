@@ -60,7 +60,7 @@
             <input type="checkbox" class="toggle" id={page.page_id} on:change={() => {render(page.page_id)}}>
             <label for={page.page_id}>▶︎</label>
             <a href="/wiki/view#{page.page_id}" id={page.page_title} sveltekit:prefetch>{page.page_title}</a>
-            <span on:click={() => {copyToClipboard((window.__TAURI__ ? weburl : window.origin) + "/wiki/view#" + page.page_id)}}>🔗</span>
+            <span title="link kopieren" on:click={() => {copyToClipboard((window.__TAURI__ ? weburl : window.origin) + "/wiki/view#" + page.page_id)}}>📌</span>
         </div>
         {#if page.text}
             <div class="text" transition:slide|local>

@@ -62,9 +62,8 @@
     {/if}
     <main><slot></slot></main>
     <footer>
-        <p style="display: inline;">©2022 Janick Voss, Nick Reutlinger</p>
-		<p style="display: inline;" on:click={
-			event => {
+        <p>©2022 Janick Voss, Nick Reutlinger</p>
+		<p class="copyError" title="application log kopieren" on:click={() => {
 				var log = window.application_log.join("\n");
 				copyToClipboard(log);
 			}
@@ -164,15 +163,21 @@
     }
 
     footer {
-        text-align: center;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
     }
 
     footer p {
         margin: 0;
-        margin-bottom: 1rem;
     }
 
-    
+    .copyError {
+        cursor: pointer;
+        margin-left: .5rem;
+    }
+
     /* variables */
     
     :global(:root) {
