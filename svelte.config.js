@@ -20,6 +20,6 @@ export default {
 			compilerOptions: { dev },
 		},
 		
-		trailingSlash: true
+		trailingSlash: "always"
 	}
 };
