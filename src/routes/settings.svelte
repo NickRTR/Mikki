@@ -32,7 +32,7 @@
 </script>
 
 <svelte:head>
-    <title>Wikki - Einstellungen</title>
+    <title>Mikki - Einstellungen</title>
 </svelte:head>
 
 <body>

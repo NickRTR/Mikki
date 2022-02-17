@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head>
-    <title>Wikki - Log</title>
+    <title>Mikki - Log</title>
 </svelte:head>
 
 <body> 

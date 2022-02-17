@@ -46,7 +46,7 @@
 </script>
 
 <svelte:head>
-    <title>Wikki</title>
+    <title>Mikki</title>
 </svelte:head>
 
 <body> 

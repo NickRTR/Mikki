@@ -30,7 +30,7 @@
 </script>
 
 <svelte:head>
-    <title>Wikki - Erstellen</title>
+    <title>Mikki - Erstellen</title>
 </svelte:head>
 
 <body>

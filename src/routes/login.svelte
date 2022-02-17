@@ -67,7 +67,7 @@
 </script>
 
 <svelte:head>
-    <title>Wikki - Login</title>
+    <title>Mikki - Login</title>
 </svelte:head>
 
 <body>
