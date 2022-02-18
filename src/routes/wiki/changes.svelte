@@ -5,7 +5,6 @@
 
 	let changelog = [];
 
-
     onMount(async () => {
         changelog = await wiki_changelog();
     })

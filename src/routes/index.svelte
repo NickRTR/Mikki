@@ -14,7 +14,6 @@
     })
 
     let searchInput = "";
-
     $: {  
         data = []
         if (searchInput !== "") {

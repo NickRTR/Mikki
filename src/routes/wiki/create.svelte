@@ -1,7 +1,6 @@
 <script>
-    import {get_api_token, has_valid_token, has_permission, wiki_create} from "$lib/api.js";
+    import { get_api_token, has_valid_token, has_permission, wiki_create } from "$lib/api.js";
     import { redirect } from "$lib/helper.js";
-    
     
     let title = "";
     let text = "";

@@ -4,7 +4,7 @@
     import { run_update_notifier, copyToClipboard } from "$lib/helper";
 	import { onMount } from 'svelte';
     import { slide } from "svelte/transition";
-    import { SvelteToast, toast } from "@zerodevx/svelte-toast";
+    import { SvelteToast } from "@zerodevx/svelte-toast";
 
     let innerWidth = 0;
     let showHamburger = false;
