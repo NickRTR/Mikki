@@ -40,7 +40,7 @@ export function run_update_notifier() {
 	// window.commit_sha = "bla";
 	if (window.__TAURI__ && window.commit_sha && navigator.onLine) {
 		console.log("Checking for updates...");
-		fetch("https://api.github.com/repos/Mik-Wiki/Mikki/commits/master", {
+		fetch("https://api.github.com/repos/NickRTR/Mikki/commits/master", {
 			method: "GET",
 			headers: {
 				"accept": "application/vnd.github.VERSION.sha"
