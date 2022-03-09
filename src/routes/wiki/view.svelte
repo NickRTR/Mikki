@@ -42,7 +42,7 @@
 			window.__TAURI__.shell.open(res.download_url);
 		} else {
         	window.open(res.download_url);
-		}
+    	}
     }
 </script>
 
@@ -85,6 +85,7 @@
         margin: 0;
         padding: 1rem;   
         margin: 1rem;
+        margin-bottom: .5rem;
     }
 
     nav {
