@@ -90,6 +90,7 @@
         background-color: black;
         padding: 1rem 1.5rem;
         font-size: 1.5rem;
+        z-index: 1;
     }
 
     nav * {
@@ -200,6 +201,10 @@
 		font-weight: bold;
 		background-color: var(--accent);
         color: black;
+    }
+
+    :global(a) {
+        color: white;
     }
 
     /* Toast styles */
