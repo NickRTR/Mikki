@@ -19,7 +19,9 @@ export default {
 		vite: {
 			compilerOptions: { dev },
 		},
-		
+		prerender: {
+			default: true
+		},
 		trailingSlash: "always"
 	}
 };
