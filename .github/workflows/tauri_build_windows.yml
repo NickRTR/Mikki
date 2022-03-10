@@ -32,4 +32,4 @@ jobs:
           title: "Development Build"
           files: |
             src-tauri/target/release/mikki.exe
-            src-tauri/target/release/bundle/msi/mikki_0.1.0_x64.msi
+            src-tauri/target/release/bundle/msi/mikki_0.1.0_x64_en-US.msi
