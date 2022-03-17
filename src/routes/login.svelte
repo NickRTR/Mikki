@@ -98,7 +98,7 @@
 			<form>
 				<input type="password" placeholder="token" id="inputPassword" bind:value={input}/>
 				<input type="checkbox" id="togglePassword" bind:checked={showPassword} on:change={() => {document.querySelector('#inputPassword').type = showPassword ? 'text' : 'password'}}>
-				<label for="togglePassword"><img src="showPassword.svg" alt="show"></label>
+				<label for="togglePassword"><img src="/showPassword.svg" alt="show"></label>
 			</form>
 			<button on:click={() => {
 				stage = 1;
