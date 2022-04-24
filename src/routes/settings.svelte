@@ -63,6 +63,8 @@
 				<button on:click={() => {localStorage.setItem("auto_cache", "true"); autocache = !autocache}}>aktivieren</button>
 			{/if}
 
+			<h3>Cache Intervall</h3>
+			
 			{#if always_update_cache}
 				<p>Cache wird immer aktualisiert (Nicht empfohlen kann performance verschlechtern).</p>
 				<button on:click={() => {localStorage.removeItem("page_last_cache"); always_update_cache = !always_update_cache}}>deaktivieren</button>
