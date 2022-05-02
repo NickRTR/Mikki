@@ -42,6 +42,7 @@
 		}
 
 		localStorage.setItem("token", token);
+		await stop_login(login_id_);
 		stage = 0;
 	}
 
