@@ -53,7 +53,7 @@
             <label for="toggle"><img src="/menu.svg" alt="Menu"></label>
         {/if}
     </nav>
-    {#if showHamburger && innerWidth < 600}
+    {#if showHamburger}
         <div class="hamburger" transition:slide>
             {#each nav as link}
                 <a href={link.path} class:active={$page.url.pathname === link.path} sveltekit:prefetch title={link.title} on:click={() => {showHamburger = false}}>{link.title}</a><br>
