@@ -19,8 +19,11 @@ export default {
 			compilerOptions: { dev },
 		},
 		prerender: {
-			default: true
+			default: true,
+			onError: ({ status, path, referrer, referenceType }) => {
+				console.log(status, path, referrer, referenceType)
+			}
 		},
-		trailingSlash: "always"
+		trailingSlash: "always",
 	}
 };
