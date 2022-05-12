@@ -16,7 +16,7 @@
 	let always_update_cache = false;
 
 	onMount(() => {
-		autocache = localStorage.getItem("auto_cache");
+		autocache = localStorage.getItem("auto_cache") == "true" ? true : false;
 		always_update_cache = localStorage.getItem("page_last_cache") == "-1";
 	})
 
