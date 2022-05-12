@@ -16,12 +16,12 @@
     });
 
     const deleteWiki = async () => {
-        has_valid_token().then(result => {
+        has_valid_token().then(async result => {
             if (!result) {
                 alert("You need to login first!");
                 return;
             }
-            if (confirm("Seite löschen? Es gibt kein zurück mehr!")) {
+            if (await confirm("Seite löschen? Es gibt kein zurück mehr!")) {
                 has_permission(get_api_token(), "wiki_delete").then(async result => {
                     if (result) {
                             wiki_delete(get_api_token(), data.page_id).then(() => {
