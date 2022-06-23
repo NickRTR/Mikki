@@ -41,7 +41,10 @@ export async function wiki_create(token, page_title, page_text) {
 	var page_title_encoded = btoa(encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n'));
 	var page_text_encoded = btoa(encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, '\n'));
 
-	const res = await fetch(base_api + "/wiki/page/create?token=" + token + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded);
+	const res = await fetch(base_api + "/wiki/page/create?token=" + token + "&page_title=" + page_title_encoded, {
+		method: "POST",
+		body: page_text_encoded
+	});
 	let data = await res.text();
 	data = decodeURIComponent(data);
 	data = JSON.parse(data);
@@ -82,7 +85,10 @@ export async function wiki_edit(token, page_id, page_title, page_text) {
 	var page_title_encoded = btoa(encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n'));
 	var page_text_encoded = btoa(encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, '\n'));
 
-	const res = await fetch(base_api + "/wiki/page/edit?token=" + token + "&page_id=" + page_id + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded);
+	const res = await fetch(base_api + "/wiki/page/edit?token=" + token + "&page_id=" + page_id + "&page_title=" + page_title_encoded, {
+		method: "POST",
+		body: page_text_encoded
+	});
 	let data = await res.text();
 	return process_response(data);
 }
