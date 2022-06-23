@@ -9,7 +9,7 @@
     "package": "node write_github_commit.js && svelte-kit package",
     "preview": "node write_github_commit.js && svelte-kit preview",
     "start": "node write_github_commit.js && svelte-kit start",
-    "tauri": "npm run build && tauri dev -- --debug",
+    "tauri": "npm run build && tauri dev",
     "tauri:package": "npm run build && tauri build"
   },
   "devDependencies": {

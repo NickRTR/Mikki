@@ -1,6 +1,6 @@
 <script>
     import { get_api_token, has_valid_token, has_permission, wiki_edit, wiki_get } from "$lib/api.js";
-    import { redirect } from "$lib/helper.js";
+    import { redirect, toBase64 } from "$lib/helper.js";
     import { onMount } from "svelte";
 
     let id = "";
@@ -32,15 +32,47 @@
                         alert("You need to have the wiki_editor permission to save.");
                         return;
                     }
-                    wiki_edit(get_api_token(), id, page.page_title, page.page_text);
-                    disabled = "disabled";
-                    redirect("/");
+                    wiki_edit(get_api_token(), id, page.page_title, page.page_text).then(() => {
+                    	disabled = "disabled";
+                    	redirect("/");
+					}).catch((e) => {
+						alert("Something is wrong could not save! Maybe the file is too big?");
+					});
                 })
             })
         } else {
             alert("Der Titel darf nicht leer sein.")
         }
     }
+
+	var picture_proggress = 0;
+	var picture_proggress_show = false;
+
+	function on_picture_upload() {
+		var element = document.getElementById('uploaded_picture');
+
+		if (element.files.length != 1) {
+			alert("Flasche anzahl an dateien ausgewählt!");
+			delete element.files;
+		} else {
+			toBase64(element.files[0], progress => {
+				picture_proggress = progress;
+				picture_proggress_show = true;
+			}).then(res => {
+				// console.log(res);
+				picture_proggress_show = false;
+
+				var textarea = document.getElementById("editor");
+
+				var tmp = textarea.value.slice(0, textarea.selectionStart) + `![${element.files[0].name}](${res})\n` + textarea.value.slice(textarea.selectionStart);
+				textarea.value = tmp;
+				page.page_text = tmp;
+				textarea.focus();
+
+				delete element.files;
+			});
+		}
+	}
 </script>
 
 <svelte:head>
@@ -50,8 +82,15 @@
 <body>
     <h2>Edit Page</h2>
     <input type="text" placeholder="titel" bind:value={page.page_title}>
-    <textarea placeholder="text" resi bind:value={page.page_text} />
+    <textarea id="editor" placeholder="text" resi bind:value={page.page_text} />
     <button type="submit" on:click={save} {disabled}>Speichern</button>
+	<button onclick="document.getElementById('uploaded_picture').click();">Bild hohchladen</button>
+	
+	<input type="file" style="display:none;" id="uploaded_picture" name="file" on:change={on_picture_upload}/>
+
+	{ #if picture_proggress_show }
+		<progress max="100" value={picture_proggress}></progress>
+	{ /if }
 </body>
 
 <style>
