@@ -66,10 +66,10 @@
 <body>
     <h2>Seite erstellen</h2>
     <input type="text" placeholder="titel" bind:value={title}>
-    <textarea id="editor" placeholder="Markdown" resi bind:value={text}/>
+    <textarea id="editor" placeholder="Markdown" bind:value={text}/>
     <button type="submit" on:click={save}>Erstellen</button>
 
-	<button onclick="document.getElementById('uploaded_picture').click();">Bild hohchladen</button>
+	<button onclick="document.getElementById('uploaded_picture').click();">Bild hochladen</button>
 	
 	<input type="file" style="display:none;" id="uploaded_picture" name="file" on:change={on_picture_upload}/>
 
