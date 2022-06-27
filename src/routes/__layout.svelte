@@ -60,6 +60,7 @@
             {/each}
         </div>
     {/if}
+    <p style="color: red; text-align: center">Da unser Serversystem gerade erhebliche Probleme hat, kann es zu Ladefehlern und anderen Zwischenfällen kommen.</p>
     <main><slot></slot></main>
     <footer>
         <p>©2022 Janick Voss, Nick Reutlinger</p>
