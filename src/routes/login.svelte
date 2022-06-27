@@ -37,9 +37,7 @@
 			}
 		} while (token == null && stage == 2);
 
-		if (stage != 2) {
-			return;
-		}
+		if (stage != 2) return;
 
 		localStorage.setItem("token", token);
 		await stop_login(login_id_);

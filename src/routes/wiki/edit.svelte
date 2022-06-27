@@ -19,24 +19,23 @@
 
     let disabled = "";
 
-    // du musst in der load function bleiben
     const save = () => {
         if (page.page_title !== "") {
             has_valid_token().then(result => {
                 if (!result) {
-                    alert("You need to be logged in to save.");
+                    alert("Sie müssen eingeloggt sein, um zu speichern.");
                     return;
                 }
                 has_permission(get_api_token(), "wiki_editor").then(result => {
                     if (!result) {
-                        alert("You need to have the wiki_editor permission to save.");
+                        alert("Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.");
                         return;
                     }
                     wiki_edit(get_api_token(), id, page.page_title, page.page_text).then(() => {
                     	disabled = "disabled";
                     	redirect("/");
 					}).catch((e) => {
-						alert("Something is wrong could not save! Maybe the file is too big?");
+						alert("Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?");
 					});
                 })
             })
@@ -51,8 +50,8 @@
 	function on_picture_upload() {
 		var element = document.getElementById('uploaded_picture');
 
-		if (element.files.length != 1) {
-			alert("Flasche anzahl an dateien ausgewählt!");
+		if (element.files.length !== 1) {
+			alert("Bitte wählen sie nur eine Datei aus.");
 			delete element.files;
 		} else {
 			toBase64(element.files[0], progress => {
@@ -86,7 +85,7 @@
     <button type="submit" on:click={save} {disabled}>Speichern</button>
 	<button onclick="document.getElementById('uploaded_picture').click();">Bild hohchladen</button>
 	
-	<input type="file" style="display:none;" id="uploaded_picture" name="file" on:change={on_picture_upload}/>
+	<input type="file" style="display: none" id="uploaded_picture" maxlength="1" name="file" on:change={on_picture_upload}/>
 
 	{ #if picture_proggress_show }
 		<progress max="100" value={picture_proggress}></progress>

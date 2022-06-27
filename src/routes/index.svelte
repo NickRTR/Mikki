@@ -15,11 +15,11 @@
 
     let searchInput = "";
     $: {  
-        data = []
+        data = [];
         if (searchInput !== "") {
             oldData.forEach(element => {
                 if (element.page_title.toLowerCase().includes(searchInput.toLowerCase())) {
-                    data = [...data, element]
+                    data = [...data, element];
                 }
             });
         } else {
@@ -63,7 +63,7 @@
         </div>
         {#if page.text}
             <div class="text" transition:slide|local>
-                <SvelteMarkdown source={page.text} on:parsed={render_graph}/>
+                <SvelteMarkdown source={page.text} on:parsed={render_graph} />
             </div>
         {/if}
     {:else}

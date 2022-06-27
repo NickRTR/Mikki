@@ -9,16 +9,16 @@
         if (title !== "") {
             has_valid_token().then(result => {
                 if (!result) {
-                    alert("You need to be logged in to save.");
+                    alert("Sie müssen eingeloggt sein, um zu speichern.");
                     return;
                 }
                 has_permission(get_api_token(), "wiki_editor").then(async result => {
                     if (!result) {
-                        alert("You need to have wiki_editor permission to save.");
+                        alert("Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.");
                         return;
                     }
                     let res = await wiki_create(get_api_token(), title, text).catch((err) => {
-						alert("Something is wrong could not save! Maybe the file is too big?");
+						alert("Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?");
 					});
                     // window.location.href = "/wiki/view#" + res.page_id;
                     redirect("/wiki/view#" + res.page_id);
