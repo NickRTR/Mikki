@@ -5,7 +5,7 @@
   "description": "Mikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht zu dokumentieren.",
   "scripts": {
     "dev": "node write_github_commit.js && svelte-kit dev",
-    "build": "node write_github_commit.js && svelte-kit build",
+    "build": "node write_github_commit.js && vite build",
     "package": "node write_github_commit.js && svelte-kit package",
     "preview": "node write_github_commit.js && svelte-kit preview",
     "start": "node write_github_commit.js && svelte-kit start",
