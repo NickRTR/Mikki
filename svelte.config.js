@@ -12,7 +12,6 @@ export default {
 			pages: 'build',
 			assets: 'build',
 			fallback: null,
-			precompress: false
 		}),
 
 		vite: {
