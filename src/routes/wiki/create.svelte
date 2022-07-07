@@ -66,7 +66,7 @@
 <body>
     <h2>Seite erstellen</h2>
     <input type="text" placeholder="titel" bind:value={title}>
-    <textarea id="editor" placeholder="Markdown Text \n Herr Weiß, SETZEN SIE LEERZEILEN!!!" bind:value={text} />
+    <textarea id="editor" placeholder="Markdown Text" bind:value={text} />
     <button type="submit" on:click={save}>Erstellen</button>
 
 	<button onclick="document.getElementById('uploaded_picture').click();">Bild hochladen</button>
