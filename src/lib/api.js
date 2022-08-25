@@ -1,4 +1,4 @@
-var base_api = "https://x.glowman554.gq/api/v2";
+var base_api = "https://mikki.deno.dev/api/v2";
 
 const escape_map = {
 	"\\\\": "\\\\",
