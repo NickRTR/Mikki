@@ -176,7 +176,7 @@ export async function wiki_cache(progress_callback) {
 	}
 
 	for (let item in localStorage) {
-		if (item.match(/page_[0-9]*_[0-9]*/g)) {
+		if (item.match(/page_[0-9]+_?[0-9]+/g)) {
 			localStorage.removeItem(item);
 			console.log('removed ' + item);
 		}
