@@ -8,7 +8,9 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"lint": "prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"tauri": "npm run build && tauri dev",
+		"tauri:package": "npm run build && tauri build"
 	},
 	"devDependencies": {
 		"@sveltejs/kit": "next",
