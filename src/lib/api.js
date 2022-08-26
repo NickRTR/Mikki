@@ -22,6 +22,31 @@ export function process_response(data) {
 	return data;
 }
 
+/**
+ * 
+ * @param {{error?: string}} json 
+ */
+function throw_if_error(json) {
+	if (json.error) {
+		alert(json.error);
+		throw new Error(json.error);
+	}
+}
+
+/**
+ * 
+ * @param {string} txt 
+ */
+function throw_if_error_txt(txt) {
+	var json;
+	try {
+		json = JSON.parse(txt);
+	} catch (e) {}
+
+	if (json) {
+		throw_if_error(json);
+	}
+}
 export async function wiki_create(token, page_title, page_text) {
 	var page_title_encoded = btoa(
 		encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n')
@@ -38,6 +63,7 @@ export async function wiki_create(token, page_title, page_text) {
 		}
 	);
 	let data = await res.text();
+	throw_if_error_txt(data);
 	data = decodeURIComponent(data);
 	data = JSON.parse(data);
 	return data;
@@ -57,6 +83,7 @@ export async function wiki_get(page_id, wiki_list = []) {
 		}
 		const res = await fetch(base_api + '/wiki/page/get?page_id=' + page_id);
 		let data = await res.text();
+		throw_if_error_txt(data);
 		return process_response(data);
 	} else {
 		return JSON.parse(localStorage.getItem('page_' + page_id));
@@ -66,6 +93,7 @@ export async function wiki_get(page_id, wiki_list = []) {
 export async function wiki_get_download(page_id) {
 	const res = await fetch(base_api + '/wiki/page/get?page_id=' + page_id + '&download');
 	let data = await res.text();
+	throw_if_error_txt(data);
 	data = process_response(data);
 
 	data.download_url = new URL(base_api).origin + '/files/' + data.file_id;
@@ -95,6 +123,7 @@ export async function wiki_edit(token, page_id, page_title, page_text) {
 		}
 	);
 	let data = await res.text();
+	throw_if_error_txt(data);
 	return process_response(data);
 }
 
@@ -102,6 +131,7 @@ export async function wiki_list() {
 	if (navigator.onLine) {
 		const res = await fetch(base_api + '/wiki/page/list');
 		let data = await res.text();
+		throw_if_error_txt(data);
 		return process_response(data);
 	} else {
 		return JSON.parse(localStorage.getItem('page_list')) || [];
@@ -110,13 +140,16 @@ export async function wiki_list() {
 
 export async function wiki_delete(token, page_id) {
 	const res = await fetch(base_api + '/wiki/page/delete?token=' + token + '&page_id=' + page_id);
-	return await res.json();
+	var json = await res.json();
+	throw_if_error(json);
+	return json;
 }
 
 export async function wiki_changelog() {
 	if (navigator.onLine) {
 		const res = await fetch(base_api + '/wiki/page/changelog');
 		let data = await res.text();
+		throw_if_error_txt(data);
 		return process_response(data);
 	} else {
 		return JSON.parse(localStorage.getItem('page_changelog'));
@@ -167,9 +200,10 @@ export async function api_request(url) {
 	var token = localStorage.getItem('token');
 
 	if (token) {
-		return await (
-			await fetch(base_api + url + `${url.indexOf('?') != -1 ? '&' : '?'}token=${token}`)
-		).text();
+		var res = await fetch(base_api + url + `${url.indexOf('?') != -1 ? '&' : '?'}token=${token}`);
+		var data = await res.text();
+		throw_if_error_txt(data);
+		return data;
 	} else {
 		return await (await fetch(base_api + url)).text();
 	}
@@ -202,7 +236,10 @@ export async function has_valid_token() {
 		method: "POST"
 	});
 
-	return result.json();
+	var json = await result.json();
+	throw_if_error(json);
+
+	return json;
 }
 
 /**
@@ -216,7 +253,10 @@ export async function login_account(login_obj) {
 		method: "POST"
 	});
 
-	var token = (await result.json()).token;
+	var json = await result.json();
+	throw_if_error(json);
+
+	var token = json.token;
 
 	save_api_token(token);
 
@@ -234,7 +274,10 @@ export async function create_account(login_obj) {
 		method: "POST"
 	});
 
-	var token = (await result.json()).token;
+	var json = await result.json();
+	throw_if_error(json);
+
+	var token = json.token;
 
 	save_api_token(token);
 
