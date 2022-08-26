@@ -1,5 +1,5 @@
 <script>
-	import { get_api_token, has_valid_token, has_permission, wiki_edit, wiki_get } from '$lib/api.js';
+	import { get_api_token, has_valid_token, wiki_edit, wiki_get } from '$lib/api.js';
 	import { redirect, toBase64 } from '$lib/helper.js';
 	import { onMount } from 'svelte';
 
@@ -26,20 +26,18 @@
 					alert('Sie müssen eingeloggt sein, um zu speichern.');
 					return;
 				}
-				has_permission(get_api_token(), 'wiki_editor').then((result) => {
-					if (!result) {
-						alert('Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.');
-						return;
-					}
-					wiki_edit(get_api_token(), id, page.page_title, page.page_text)
-						.then(() => {
-							disabled = 'disabled';
-							redirect('/');
-						})
-						.catch((e) => {
-							alert('Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?');
-						});
-				});
+				if (!result) {
+					alert('Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.');
+					return;
+				}
+				wiki_edit(get_api_token(), id, page.page_title, page.page_text)
+					.then(() => {
+						disabled = 'disabled';
+						redirect('/');
+					})
+					.catch((e) => {
+						alert('Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?');
+					});
 			});
 		} else {
 			alert('Der Titel darf nicht leer sein.');

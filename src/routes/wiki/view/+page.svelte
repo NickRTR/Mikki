@@ -4,7 +4,6 @@
 		wiki_delete,
 		wiki_get,
 		has_valid_token,
-		has_permission,
 		wiki_get_download
 	} from '$lib/api';
 	import { dateToString, redirect, render_graph } from '$lib/helper.js';
@@ -29,15 +28,13 @@
 				return;
 			}
 			if (await confirm('Seite löschen? Es gibt kein zurück mehr!')) {
-				has_permission(get_api_token(), 'wiki_delete').then(async (result) => {
-					if (result) {
-						wiki_delete(get_api_token(), data.page_id).then(() => {
-							window.location.href = '/';
-						});
-					} else {
-						alert("You don't have permission to delete this wiki page");
-					}
-				});
+				if (result) {
+					wiki_delete(get_api_token(), data.page_id).then(() => {
+						window.location.href = '/';
+					});
+				} else {
+					alert("You don't have permission to delete this wiki page");
+				}
 			}
 		});
 	};

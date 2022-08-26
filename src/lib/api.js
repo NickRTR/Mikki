@@ -22,21 +22,6 @@ export function process_response(data) {
 	return data;
 }
 
-export async function start_login() {
-	const res = await fetch(base_api + '/login/start');
-	return await res.json();
-}
-
-export async function status_login(login_id) {
-	const res = await fetch(base_api + '/login/status?login_id=' + login_id);
-	return await res.json();
-}
-
-export async function stop_login(login_id) {
-	const res = await fetch(base_api + '/login/stop?login_id=' + login_id);
-	return await res.json();
-}
-
 export async function wiki_create(token, page_title, page_text) {
 	var page_title_encoded = btoa(
 		encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n')
@@ -138,14 +123,6 @@ export async function wiki_changelog() {
 	}
 }
 
-// to edit: wiki_editor, to delete: wiki_delete
-export async function has_permission(token, permission) {
-	const res = await fetch(
-		base_api + '/has_permission?token=' + token + '&permission=' + permission
-	);
-	return await res.text();
-}
-
 export async function wiki_cache(progress_callback) {
 	let last_sync = localStorage.getItem('page_last_cache');
 	if (last_sync) {
@@ -186,21 +163,6 @@ export async function wiki_cache(progress_callback) {
 	localStorage.setItem('page_changelog', JSON.stringify(await wiki_changelog()));
 }
 
-export async function login() {
-	let login_id = await start_login();
-
-	let token = null;
-	do {
-		token = await status_login(login_id);
-
-		if (token == null) {
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-		}
-	} while (token == null);
-
-	return token;
-}
-
 export async function api_request(url) {
 	var token = localStorage.getItem('token');
 
@@ -213,35 +175,68 @@ export async function api_request(url) {
 	}
 }
 
-export function has_valid_token() {
-	return new Promise(async (resolve, reject) => {
-		if (localStorage.getItem('token')) {
-			api_request('/login/check').then((data) => {
-				data = JSON.parse(data);
-
-				if (data.msg == 'ok') {
-					resolve(true);
-				} else {
-					localStorage.removeItem('token');
-					resolve(false);
-				}
-			});
-		} else {
-			resolve(false);
-		}
-	});
-}
-
-export async function is_valid_token(token) {
-	const res = await fetch(base_api + '/login/check?token=' + token);
-	let data = await res.json();
-	if (data.msg == 'ok') {
-		return true;
-	} else {
-		return false;
-	}
-}
+/**
+ * 
+ * @returns {string}
+ */
 
 export function get_api_token() {
 	return localStorage.getItem('token');
+}
+
+/**
+ * 
+ * @param {string} token 
+ */
+export function save_api_token(token) {
+	localStorage.setItem('token', token);
+}
+
+/**
+ * 
+ * @returns {Promise<boolean>}
+ */
+export async function has_valid_token() {
+	var result = await fetch(base_api + '/acc/check', {
+		body: get_api_token(),
+		method: "POST"
+	});
+
+	return result.json();
+}
+
+/**
+ * 
+ * @param {{username: string, password: string}} login_obj 
+ * @return {Promise<string>}
+ */
+export async function login_account(login_obj) {
+	var result = await fetch(base_api + '/acc/login', {
+		body: JSON.stringify(login_obj),
+		method: "POST"
+	});
+
+	var token = (await result.json()).token;
+
+	save_api_token(token);
+
+	return token;
+}
+
+/**
+ * 
+ * @param {{username: string, password: string}} login_obj 
+ * @return {Promise<string>}
+ */
+export async function create_account(login_obj) {
+	var result = await fetch(base_api + '/acc/create', {
+		body: JSON.stringify(login_obj),
+		method: "POST"
+	});
+
+	var token = (await result.json()).token;
+
+	save_api_token(token);
+
+	return token;
 }
