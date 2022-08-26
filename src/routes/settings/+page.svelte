@@ -1,6 +1,6 @@
 <script>
-	import { wiki_cache } from "$lib/api";
-	import { onMount } from "svelte";
+	import { wiki_cache } from '$lib/api';
+	import { onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 
@@ -16,23 +16,23 @@
 	let always_update_cache = false;
 
 	onMount(() => {
-		autocache = localStorage.getItem("auto_cache") == "true" ? true : false;
-		always_update_cache = localStorage.getItem("page_last_cache") == "-1";
-	})
+		autocache = localStorage.getItem('auto_cache') == 'true' ? true : false;
+		always_update_cache = localStorage.getItem('page_last_cache') == '-1';
+	});
 
 	const start_cache = async () => {
 		cacheDone = false;
 		await wiki_cache((p, m) => {
-			progress.set(p + 1)
+			progress.set(p + 1);
 			max = m;
 		});
 		cacheDone = true;
 		progress.set(0);
-	}
+	};
 </script>
 
 <svelte:head>
-    <title>Mikki - Einstellungen</title>
+	<title>Mikki - Einstellungen</title>
 </svelte:head>
 
 <body>
@@ -46,7 +46,7 @@
 				{#if cacheDone}
 					<p>Abgeschlossen!</p>
 				{:else}
-					<progress id="progressBar" value={$progress} {max} style="width:300px;"></progress><br>	
+					<progress id="progressBar" value={$progress} {max} style="width:300px;" /><br />
 				{/if}
 				<button on:click={start_cache}>Cache erstellen</button>
 			</div>
@@ -57,20 +57,40 @@
 
 			{#if autocache}
 				<p>Autocache ist aktiviert.</p>
-				<button on:click={() => {localStorage.setItem("auto_cache", "false"); autocache = !autocache}}>deaktivieren</button>
+				<button
+					on:click={() => {
+						localStorage.setItem('auto_cache', 'false');
+						autocache = !autocache;
+					}}>deaktivieren</button
+				>
 			{:else}
 				<p>Autocache ist deaktiviert.</p>
-				<button on:click={() => {localStorage.setItem("auto_cache", "true"); autocache = !autocache}}>aktivieren</button>
+				<button
+					on:click={() => {
+						localStorage.setItem('auto_cache', 'true');
+						autocache = !autocache;
+					}}>aktivieren</button
+				>
 			{/if}
 
 			<h3>Cache Intervall</h3>
-			
+
 			{#if always_update_cache}
 				<p>Cache wird immer aktualisiert (Nicht empfohlen kann performance verschlechtern).</p>
-				<button on:click={() => {localStorage.removeItem("page_last_cache"); always_update_cache = !always_update_cache}}>deaktivieren</button>
+				<button
+					on:click={() => {
+						localStorage.removeItem('page_last_cache');
+						always_update_cache = !always_update_cache;
+					}}>deaktivieren</button
+				>
 			{:else}
 				<p>Cache wird nur alle 5 minuten aktualisiert.</p>
-				<button on:click={() => {localStorage.setItem("page_last_cache", "-1"); always_update_cache = !always_update_cache}}>aktivieren</button>
+				<button
+					on:click={() => {
+						localStorage.setItem('page_last_cache', '-1');
+						always_update_cache = !always_update_cache;
+					}}>aktivieren</button
+				>
 			{/if}
 		</div>
 	</div>
@@ -78,7 +98,7 @@
 
 <style>
 	p {
-		margin-bottom: .5rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.autocache button {
@@ -86,7 +106,7 @@
 	}
 
 	progress {
-		margin-bottom: .7rem;
+		margin-bottom: 0.7rem;
 	}
 
 	/* For Chrome or Safari */
@@ -94,7 +114,7 @@
 		background-color: #eeeeee;
 		border-radius: 1rem;
 	}
-	
+
 	progress::-webkit-progress-value {
 		background-color: var(--accent) !important;
 		border-radius: 1rem;

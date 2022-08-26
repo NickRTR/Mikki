@@ -5,7 +5,7 @@ name: Build and release tauri app macos arm
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-        with: 
+        with:
           node-version: 16.x
       - uses: actions-rs/toolchain@v1
         with:
@@ -24,13 +24,13 @@ jobs:
           target: aarch64-apple-darwin
       - run: npm install
       - run: npm run tauri:package -- --target aarch64-apple-darwin
-      
+
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           automatic_release_tag: macos-arm-release
           prerelease: false
-          title: "Development Build"
+          title: 'Development Build'
           files: |
             src-tauri/target/aarch64-apple-darwin/release/bundle/macos/mikki.app
             src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/mikki_0.1.0_aarch64.dmg

@@ -5,7 +5,7 @@ name: Build and release tauri app windows
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -23,13 +23,13 @@ jobs:
           toolchain: stable
       - run: npm install
       - run: npm run tauri:package
-      
+
       - uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           automatic_release_tag: windows-release
           prerelease: false
-          title: "Development Build"
+          title: 'Development Build'
           files: |
             src-tauri/target/release/mikki.exe
             src-tauri/target/release/bundle/msi/mikki_0.1.0_x64_en-US.msi

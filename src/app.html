@@ -5,12 +5,14 @@
 		<script src="/mermaid.min.js"></script>
 		<script>
 			if (window.__TAURI__) {
-				window["__" + "TAURI__INVOKE_KEY_TOKEN__"] = window["__" + "TAURI_INVOKE_KEY__"];
-				console.log("tauri invoke key:", window["__" + "TAURI__INVOKE_KEY_TOKEN__"]);
+				window['__' + 'TAURI__INVOKE_KEY_TOKEN__'] = window['__' + 'TAURI_INVOKE_KEY__'];
+				console.log('tauri invoke key:', window['__' + 'TAURI__INVOKE_KEY_TOKEN__']);
 			}
 
-			window.onerror = function(message, source, lineno, colno, error) {
-				alert("Oh no! An error occurred!\n" + message + " in " + source + " " + lineno + ":" + colno);
+			window.onerror = function (message, source, lineno, colno, error) {
+				alert(
+					'Oh no! An error occurred!\n' + message + ' in ' + source + ' ' + lineno + ':' + colno
+				);
 				return true;
 			};
 
@@ -18,41 +20,46 @@
 			window.application_log = [];
 
 			console.log = (...args) => {
-				args.forEach(arg => {
+				args.forEach((arg) => {
 					window.application_log.push(arg);
 				});
 				window.old_console.log(...args);
 			};
 
 			console.error = (...args) => {
-				args.forEach(arg => {
-					window.application_log.push("[ERROR] " + arg);
+				args.forEach((arg) => {
+					window.application_log.push('[ERROR] ' + arg);
 				});
 				window.old_console.error(...args);
 			};
 
 			console.warn = (...args) => {
-				args.forEach(arg => {
-					window.application_log.push("[WARN] " + arg);
+				args.forEach((arg) => {
+					window.application_log.push('[WARN] ' + arg);
 				});
 				window.old_console.warn(...args);
 			};
 
 			console.info = (...args) => {
-				args.forEach(arg => {
-					window.application_log.push("[INFO] " + arg);
+				args.forEach((arg) => {
+					window.application_log.push('[INFO] ' + arg);
 				});
 				window.old_console.info(...args);
 			};
 		</script>
 		<meta charset="utf-8" />
-  		<meta name="description" content="Mikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht zu dokumentieren." />
+		<meta
+			name="description"
+			content="Mikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht zu dokumentieren."
+		/>
 		<link rel="icon" href="/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!-- Apple -->
-		<meta name="apple-mobile-web-app-title" content="Mikki">
-		<link rel="apple-touch-icon-precomposed" href="/ios-icon.png">
-		<style>@import url("/font.css");</style>
+		<meta name="apple-mobile-web-app-title" content="Mikki" />
+		<link rel="apple-touch-icon-precomposed" href="/ios-icon.png" />
+		<style>
+			@import url('/font.css');
+		</style>
 		%sveltekit.head%
 	</head>
 	<body>

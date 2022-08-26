@@ -1,13 +1,19 @@
 <script>
-	import { has_valid_token, is_valid_token, status_login, start_login, stop_login } from "$lib/api.js";
+	import {
+		has_valid_token,
+		is_valid_token,
+		status_login,
+		start_login,
+		stop_login
+	} from '$lib/api.js';
 	import { onMount } from 'svelte';
-	import { copyToClipboard } from "$lib/helper.js";
+	import { copyToClipboard } from '$lib/helper.js';
 
-	let login_id = "";
+	let login_id = '';
 	let stage = -1;
 
 	onMount(() => {
-		has_valid_token().then(result => {
+		has_valid_token().then((result) => {
 			if (result) {
 				stage = 0;
 			} else {
@@ -17,13 +23,13 @@
 	});
 
 	let logout = () => {
-		localStorage.setItem("token", null);
+		localStorage.setItem('token', null);
 		stage = 1;
-	}
+	};
 
 	let login_start = async () => {
 		let login_id_ = (await start_login()).id;
-		copyToClipboard("-auth " + login_id_);
+		copyToClipboard('-auth ' + login_id_);
 
 		login_id = login_id_;
 		stage = 2;
@@ -33,40 +39,40 @@
 			token = (await status_login(login_id_)).token;
 
 			if (token == null) {
-				await new Promise(resolve => setTimeout(resolve, 1000));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 			}
 		} while (token == null && stage == 2);
 
 		if (stage != 2) return;
 
-		localStorage.setItem("token", token);
+		localStorage.setItem('token', token);
 		await stop_login(login_id_);
 		stage = 0;
-	}
+	};
 
 	let login_token = () => {
 		stage = 4;
-	}
+	};
 
-	let input = "";
+	let input = '';
 
 	let login_token_submit = () => {
-		is_valid_token(input).then(result => {
+		is_valid_token(input).then((result) => {
 			if (result) {
-				localStorage.setItem("token", input);
+				localStorage.setItem('token', input);
 				stage = 0;
 			} else {
-				alert("Ungültiges Token");
-				input = "";
+				alert('Ungültiges Token');
+				input = '';
 			}
 		});
-	}
+	};
 
 	let showPassword = false;
 </script>
 
 <svelte:head>
-    <title>Mikki - Login</title>
+	<title>Mikki - Login</title>
 </svelte:head>
 
 <body>
@@ -82,28 +88,55 @@
 		</div>
 	{:else if stage == 2}
 		<div id="stage2">
-			<p>Bitte senden Sie "<em on:click={() => {copyToClipboard("-auth " + login_id)}}>-auth {login_id}</em>" an den Bot auf ihrer präferierten Platform (Discord, Telegram).</p>
-			<p>Anschließend können Sie auf diese Seite zurückkehren und sind mit Ihren Berechtigungen eingeloggt.</p>
-			<p class="copy" on:click={() => {copyToClipboard("-auth " + login_id)}}>Befehl kopieren</p>
-			<button on:click={() => {
-				stop_login(login_id).then(() => {
-					stage = 1;
-				});
-			}}>Zurückkehren</button>
+			<p>
+				Bitte senden Sie "<em
+					on:click={() => {
+						copyToClipboard('-auth ' + login_id);
+					}}>-auth {login_id}</em
+				>" an den Bot auf ihrer präferierten Platform (Discord, Telegram).
+			</p>
+			<p>
+				Anschließend können Sie auf diese Seite zurückkehren und sind mit Ihren Berechtigungen
+				eingeloggt.
+			</p>
+			<p
+				class="copy"
+				on:click={() => {
+					copyToClipboard('-auth ' + login_id);
+				}}
+			>
+				Befehl kopieren
+			</p>
+			<button
+				on:click={() => {
+					stop_login(login_id).then(() => {
+						stage = 1;
+					});
+				}}>Zurückkehren</button
+			>
 		</div>
 	{:else if stage == 4}
 		<div id="stage4">
 			<p>Mit Token einloggen</p>
 			<form>
-				<input type="password" placeholder="token" id="inputPassword" bind:value={input}/>
-				<input type="checkbox" id="togglePassword" bind:checked={showPassword} on:change={() => {document.querySelector('#inputPassword').type = showPassword ? 'text' : 'password'}}>
-				<label for="togglePassword"><img src="/showPassword.svg" alt="show"></label>
+				<input type="password" placeholder="token" id="inputPassword" bind:value={input} />
+				<input
+					type="checkbox"
+					id="togglePassword"
+					bind:checked={showPassword}
+					on:change={() => {
+						document.querySelector('#inputPassword').type = showPassword ? 'text' : 'password';
+					}}
+				/>
+				<label for="togglePassword"><img src="/showPassword.svg" alt="show" /></label>
 			</form>
-			<button on:click={() => {
-				stage = 1;
-			}}>Zurückkehren</button>
+			<button
+				on:click={() => {
+					stage = 1;
+				}}>Zurückkehren</button
+			>
 			<button type="submit" on:click|preventDefault={login_token_submit}>Submit</button>
-		</div>	
+		</div>
 	{/if}
 </body>
 
@@ -130,12 +163,12 @@
 
 	input {
 		border: none;
-		margin-bottom: .6rem;
-		padding: .4rem 1rem;
+		margin-bottom: 0.6rem;
+		padding: 0.4rem 1rem;
 		border-radius: 1rem;
 	}
 
-	input[type=checkbox] {
+	input[type='checkbox'] {
 		display: none;
 	}
 
@@ -147,15 +180,15 @@
 
 	img {
 		width: 2rem;
-		margin-bottom: .2rem;
+		margin-bottom: 0.2rem;
 		cursor: pointer;
 	}
 
 	label {
-		filter: brightness(.5);
+		filter: brightness(0.5);
 	}
-	
-	input[type=checkbox]:checked + label {
+
+	input[type='checkbox']:checked + label {
 		filter: brightness(1);
 	}
 </style>
