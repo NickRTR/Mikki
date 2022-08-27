@@ -30,7 +30,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           automatic_release_tag: macos-arm-release
           prerelease: false
-          title: 'Development Build'
+          title: "Development Build"
           files: |
             src-tauri/target/aarch64-apple-darwin/release/bundle/macos/mikki.app
             src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/mikki_0.1.0_aarch64.dmg

@@ -29,7 +29,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           automatic_release_tag: macos-release
           prerelease: false
-          title: 'Development Build'
+          title: "Development Build"
           files: |
             src-tauri/target/release/bundle/macos/mikki.app
             src-tauri/target/release/bundle/dmg/mikki_0.1.0_x64.dmg

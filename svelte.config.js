@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from "@sveltejs/adapter-static";
 //import node from "@sveltejs/adapter-node";
 
 export default {
@@ -6,8 +6,8 @@ export default {
 		//adapter: node()
 		adapter: adapter({
 			// fallback: '200.html'
-			pages: 'build',
-			assets: 'build',
+			pages: "build",
+			assets: "build",
 			fallback: null,
 			precompress: false
 		}),
@@ -17,6 +17,6 @@ export default {
 				console.log(status, path, referrer, referenceType);
 			}
 		},
-		trailingSlash: 'always'
+		trailingSlash: "always"
 	}
 };

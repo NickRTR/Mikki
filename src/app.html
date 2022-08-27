@@ -5,13 +5,13 @@
 		<script src="/mermaid.min.js"></script>
 		<script>
 			if (window.__TAURI__) {
-				window['__' + 'TAURI__INVOKE_KEY_TOKEN__'] = window['__' + 'TAURI_INVOKE_KEY__'];
-				console.log('tauri invoke key:', window['__' + 'TAURI__INVOKE_KEY_TOKEN__']);
+				window["__" + "TAURI__INVOKE_KEY_TOKEN__"] = window["__" + "TAURI_INVOKE_KEY__"];
+				console.log("tauri invoke key:", window["__" + "TAURI__INVOKE_KEY_TOKEN__"]);
 			}
 
 			window.onerror = function (message, source, lineno, colno, error) {
 				alert(
-					'Oh no! An error occurred!\n' + message + ' in ' + source + ' ' + lineno + ':' + colno
+					"Oh no! An error occurred!\n" + message + " in " + source + " " + lineno + ":" + colno
 				);
 				return true;
 			};
@@ -28,21 +28,21 @@
 
 			console.error = (...args) => {
 				args.forEach((arg) => {
-					window.application_log.push('[ERROR] ' + arg);
+					window.application_log.push("[ERROR] " + arg);
 				});
 				window.old_console.error(...args);
 			};
 
 			console.warn = (...args) => {
 				args.forEach((arg) => {
-					window.application_log.push('[WARN] ' + arg);
+					window.application_log.push("[WARN] " + arg);
 				});
 				window.old_console.warn(...args);
 			};
 
 			console.info = (...args) => {
 				args.forEach((arg) => {
-					window.application_log.push('[INFO] ' + arg);
+					window.application_log.push("[INFO] " + arg);
 				});
 				window.old_console.info(...args);
 			};
@@ -58,7 +58,7 @@
 		<meta name="apple-mobile-web-app-title" content="Mikki" />
 		<link rel="apple-touch-icon-precomposed" href="/ios-icon.png" />
 		<style>
-			@import url('/font.css');
+			@import url("/font.css");
 		</style>
 		%sveltekit.head%
 	</head>

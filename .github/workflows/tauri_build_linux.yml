@@ -30,7 +30,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           automatic_release_tag: linux-release
           prerelease: false
-          title: 'Development Build'
+          title: "Development Build"
           files: |
             src-tauri/target/release/bundle/appimage/mikki_0.1.0_amd64.AppImage
             src-tauri/target/release/bundle/deb/mikki_0.1.0_amd64.deb

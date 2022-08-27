@@ -1,29 +1,29 @@
 <script>
-	import { get_api_token, has_valid_token, wiki_create } from '$lib/api.js';
-	import { redirect, toBase64 } from '$lib/helper.js';
+	import { get_api_token, has_valid_token, wiki_create } from "$lib/api.js";
+	import { redirect, toBase64 } from "$lib/helper.js";
 
-	let title = '';
-	let text = '';
+	let title = "";
+	let text = "";
 
 	const save = () => {
-		if (title !== '') {
+		if (title !== "") {
 			has_valid_token().then(async (result) => {
 				if (!result) {
-					alert('Sie müssen eingeloggt sein, um zu speichern.');
+					alert("Sie müssen eingeloggt sein, um zu speichern.");
 					return;
 				}
 				if (!result) {
-					alert('Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.');
+					alert("Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.");
 					return;
 				}
 				let res = await wiki_create(get_api_token(), title, text).catch((err) => {
-					alert('Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?');
+					alert("Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?");
 				});
 				// window.location.href = "/wiki/view#" + res.page_id;
-				redirect('/wiki/view#' + res.page_id);
+				redirect("/wiki/view#" + res.page_id);
 			});
 		} else {
-			alert('Der Titel darf nicht leer sein.');
+			alert("Der Titel darf nicht leer sein.");
 		}
 	};
 
@@ -31,10 +31,10 @@
 	var picture_proggress_show = false;
 
 	function on_picture_upload() {
-		var element = document.getElementById('uploaded_picture');
+		var element = document.getElementById("uploaded_picture");
 
 		if (element.files.length != 1) {
-			alert('Flasche anzahl an dateien ausgewählt!');
+			alert("Flasche anzahl an dateien ausgewählt!");
 			delete element.files;
 		} else {
 			toBase64(element.files[0], (progress) => {
@@ -44,7 +44,7 @@
 				// console.log(res);
 				picture_proggress_show = false;
 
-				var textarea = document.getElementById('editor');
+				var textarea = document.getElementById("editor");
 
 				var tmp =
 					textarea.value.slice(0, textarea.selectionStart) +

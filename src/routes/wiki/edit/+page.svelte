@@ -1,12 +1,12 @@
 <script>
-	import { get_api_token, has_valid_token, wiki_edit, wiki_get } from '$lib/api.js';
-	import { redirect, toBase64 } from '$lib/helper.js';
-	import { onMount } from 'svelte';
+	import { get_api_token, has_valid_token, wiki_edit, wiki_get } from "$lib/api.js";
+	import { redirect, toBase64 } from "$lib/helper.js";
+	import { onMount } from "svelte";
 
-	let id = '';
+	let id = "";
 	let page = {
-		page_title: '',
-		page_text: ''
+		page_title: "",
+		page_text: ""
 	};
 
 	onMount(() => {
@@ -17,30 +17,30 @@
 		});
 	});
 
-	let disabled = '';
+	let disabled = "";
 
 	const save = () => {
-		if (page.page_title !== '') {
+		if (page.page_title !== "") {
 			has_valid_token().then((result) => {
 				if (!result) {
-					alert('Sie müssen eingeloggt sein, um zu speichern.');
+					alert("Sie müssen eingeloggt sein, um zu speichern.");
 					return;
 				}
 				if (!result) {
-					alert('Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.');
+					alert("Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.");
 					return;
 				}
 				wiki_edit(get_api_token(), id, page.page_title, page.page_text)
 					.then(() => {
-						disabled = 'disabled';
-						redirect('/');
+						disabled = "disabled";
+						redirect("/");
 					})
 					.catch((e) => {
-						alert('Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?');
+						alert("Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?");
 					});
 			});
 		} else {
-			alert('Der Titel darf nicht leer sein.');
+			alert("Der Titel darf nicht leer sein.");
 		}
 	};
 
@@ -48,10 +48,10 @@
 	var picture_proggress_show = false;
 
 	function on_picture_upload() {
-		var element = document.getElementById('uploaded_picture');
+		var element = document.getElementById("uploaded_picture");
 
 		if (element.files.length !== 1) {
-			alert('Bitte wählen sie nur eine Datei aus.');
+			alert("Bitte wählen sie nur eine Datei aus.");
 			delete element.files;
 		} else {
 			toBase64(element.files[0], (progress) => {
@@ -61,7 +61,7 @@
 				// console.log(res);
 				picture_proggress_show = false;
 
-				var textarea = document.getElementById('editor');
+				var textarea = document.getElementById("editor");
 
 				var tmp =
 					textarea.value.slice(0, textarea.selectionStart) +

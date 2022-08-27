@@ -1,8 +1,8 @@
 <script>
-	import { wiki_cache } from '$lib/api';
-	import { onMount } from 'svelte';
-	import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
+	import { wiki_cache } from "$lib/api";
+	import { onMount } from "svelte";
+	import { tweened } from "svelte/motion";
+	import { cubicOut } from "svelte/easing";
 
 	const progress = tweened(0, {
 		duration: 400,
@@ -16,8 +16,8 @@
 	let always_update_cache = false;
 
 	onMount(() => {
-		autocache = localStorage.getItem('auto_cache') == 'true' ? true : false;
-		always_update_cache = localStorage.getItem('page_last_cache') == '-1';
+		autocache = localStorage.getItem("auto_cache") == "true" ? true : false;
+		always_update_cache = localStorage.getItem("page_last_cache") == "-1";
 	});
 
 	const start_cache = async () => {
@@ -59,7 +59,7 @@
 				<p>Autocache ist aktiviert.</p>
 				<button
 					on:click={() => {
-						localStorage.setItem('auto_cache', 'false');
+						localStorage.setItem("auto_cache", "false");
 						autocache = !autocache;
 					}}>deaktivieren</button
 				>
@@ -67,7 +67,7 @@
 				<p>Autocache ist deaktiviert.</p>
 				<button
 					on:click={() => {
-						localStorage.setItem('auto_cache', 'true');
+						localStorage.setItem("auto_cache", "true");
 						autocache = !autocache;
 					}}>aktivieren</button
 				>
@@ -79,7 +79,7 @@
 				<p>Cache wird immer aktualisiert (Nicht empfohlen kann performance verschlechtern).</p>
 				<button
 					on:click={() => {
-						localStorage.removeItem('page_last_cache');
+						localStorage.removeItem("page_last_cache");
 						always_update_cache = !always_update_cache;
 					}}>deaktivieren</button
 				>
@@ -87,7 +87,7 @@
 				<p>Cache wird nur alle 5 minuten aktualisiert.</p>
 				<button
 					on:click={() => {
-						localStorage.setItem('page_last_cache', '-1');
+						localStorage.setItem("page_last_cache", "-1");
 						always_update_cache = !always_update_cache;
 					}}>aktivieren</button
 				>

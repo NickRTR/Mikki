@@ -1,13 +1,13 @@
 <script>
-	import { create_account } from '$lib/api.js';
+	import { create_account } from "$lib/api.js";
 
 	let showPassword = false;
 
 	async function create_submit() {
-		console.log('create_submit()');
+		console.log("create_submit()");
 		var create = {
-			username: document.getElementById('inputUsername').value,
-			password: document.getElementById('inputPassword').value
+			username: document.getElementById("inputUsername").value,
+			password: document.getElementById("inputPassword").value
 		};
 		console.log(create);
 		create_account(create).then(console.log);
@@ -29,7 +29,7 @@
 				id="togglePassword"
 				bind:checked={showPassword}
 				on:change={() => {
-					document.querySelector('#inputPassword').type = showPassword ? 'text' : 'password';
+					document.querySelector("#inputPassword").type = showPassword ? "text" : "password";
 				}}
 			/>
 			<label for="togglePassword"><img src="/showPassword.svg" alt="show" /></label>
@@ -66,7 +66,7 @@
 		border-radius: 1rem;
 	}
 
-	input[type='checkbox'] {
+	input[type="checkbox"] {
 		display: none;
 	}
 
@@ -86,7 +86,7 @@
 		filter: brightness(0.5);
 	}
 
-	input[type='checkbox']:checked + label {
+	input[type="checkbox"]:checked + label {
 		filter: brightness(1);
 	}
 </style>

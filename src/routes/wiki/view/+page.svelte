@@ -5,15 +5,15 @@
 		wiki_get,
 		has_valid_token,
 		wiki_get_download
-	} from '$lib/api';
-	import { dateToString, redirect, render_graph } from '$lib/helper.js';
-	import { onMount } from 'svelte';
-	import SvelteMarkdown from 'svelte-markdown';
+	} from "$lib/api";
+	import { dateToString, redirect, render_graph } from "$lib/helper.js";
+	import { onMount } from "svelte";
+	import SvelteMarkdown from "svelte-markdown";
 
-	let id = '';
+	let id = "";
 	let data = {
-		page_title: '',
-		page_text: ''
+		page_title: "",
+		page_text: ""
 	};
 
 	onMount(async () => {
@@ -24,13 +24,13 @@
 	const deleteWiki = async () => {
 		has_valid_token().then(async (result) => {
 			if (!result) {
-				alert('You need to login first!');
+				alert("You need to login first!");
 				return;
 			}
-			if (await confirm('Seite löschen? Es gibt kein zurück mehr!')) {
+			if (await confirm("Seite löschen? Es gibt kein zurück mehr!")) {
 				if (result) {
 					wiki_delete(get_api_token(), data.page_id).then(() => {
-						window.location.href = '/';
+						window.location.href = "/";
 					});
 				} else {
 					alert("You don't have permission to delete this wiki page");
@@ -69,7 +69,7 @@
 					alt="edit"
 					title="Editieren"
 					on:click={() => {
-						redirect('/wiki/edit#' + data.page_id);
+						redirect("/wiki/edit#" + data.page_id);
 					}}
 				/>
 				<img src="/trash.svg" alt="delete" on:click={deleteWiki} title="Löschen" />

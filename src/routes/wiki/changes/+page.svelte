@@ -1,7 +1,7 @@
 <script>
-	import { dateToString } from '$lib/helper';
-	import { onMount } from 'svelte';
-	import { wiki_changelog } from '$lib/api';
+	import { dateToString } from "$lib/helper";
+	import { onMount } from "svelte";
+	import { wiki_changelog } from "$lib/api";
 
 	let changelog = [];
 

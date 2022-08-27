@@ -1,11 +1,9 @@
 <script>
-	import { onMount } from 'svelte';
-	import { copyToClipboard } from '$lib/helper.js';
-	import { login_account } from '$lib/api.js';
+	import { onMount } from "svelte";
+	import { copyToClipboard } from "$lib/helper.js";
+	import { login_account } from "$lib/api.js";
 
-
-	onMount(() => {
-	});
+	onMount(() => {});
 	let showPassword = false;
 
 	async function login_submit() {
@@ -15,7 +13,7 @@
 			password: document.getElementById("inputPassword").value
 		};
 		console.log(login);
-		login_account(login).then(console.log)
+		login_account(login).then(console.log);
 	}
 </script>
 
@@ -34,7 +32,7 @@
 				id="togglePassword"
 				bind:checked={showPassword}
 				on:change={() => {
-					document.querySelector('#inputPassword').type = showPassword ? 'text' : 'password';
+					document.querySelector("#inputPassword").type = showPassword ? "text" : "password";
 				}}
 			/>
 			<label for="togglePassword"><img src="/showPassword.svg" alt="show" /></label>
@@ -71,7 +69,7 @@
 		border-radius: 1rem;
 	}
 
-	input[type='checkbox'] {
+	input[type="checkbox"] {
 		display: none;
 	}
 
@@ -91,7 +89,7 @@
 		filter: brightness(0.5);
 	}
 
-	input[type='checkbox']:checked + label {
+	input[type="checkbox"]:checked + label {
 		filter: brightness(1);
 	}
 </style>
