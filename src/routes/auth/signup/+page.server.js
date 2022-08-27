@@ -1,10 +1,8 @@
 import { redirect } from "@sveltejs/kit";
-import { create_account } from "$lib/api";
 import * as cookie from "cookie";
 
 export async function load({ parent }) {
 	const { user } = await parent();
-	console.log(user);
 	if (user) {
 		throw redirect(307, "/");
 	}
@@ -35,32 +33,35 @@ export async function POST({ request, setHeaders }) {
 		};
 	}
 
-	const response = await create_account({ username: email, password });
-	console.log(response);
+	const result = await fetch("https://mikki.deno.dev/api/v2/acc/create", {
+		body: JSON.stringify({ email, password }),
+		method: "POST"
+	});
 
-	if (response.error) {
+	const data = await result.json();
+
+	if (data.error) {
 		return {
-			status: response.error.status,
 			errors: {
-				error: response.error.message
+				signup: data.error
 			}
 		};
+	} else {
+		setHeaders({
+			"set-cookie": cookie.serialize("auth", data.token, {
+				// send cookie for every page
+				path: "/",
+				// server side only cookie so you can"t use `document.cookie`
+				httpOnly: true,
+				// only requests from same site can send cookies
+				// and serves to protect from CSRF
+				// https://developer.mozilla.org/en-US/docs/Glossary/CSRF
+				sameSite: "strict",
+				// only sent over HTTPS
+				secure: process.env.NODE_ENV === "production",
+				// set cookie to expire after two weeks
+				maxAge: 60 * 60 * 24 * 12
+			})
+		});
 	}
-
-	setHeaders({
-		"set-cookie": cookie.serialize("auth", response.session.access_token, {
-			// send cookie for every page
-			path: "/",
-			// server side only cookie so you can"t use `document.cookie`
-			httpOnly: true,
-			// only requests from same site can send cookies
-			// and serves to protect from CSRF
-			// https://developer.mozilla.org/en-US/docs/Glossary/CSRF
-			sameSite: "strict",
-			// only sent over HTTPS
-			secure: process.env.NODE_ENV === "production",
-			// set cookie to expire after two weeks
-			maxAge: 60 * 60 * 24 * 12
-		})
-	});
 }

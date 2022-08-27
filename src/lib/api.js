@@ -239,17 +239,18 @@ export async function login_account(login_obj) {
 }
 
 export async function create_account(login_obj) {
+	console.log(login_obj);
+
 	var result = await fetch(base_api + "/acc/create", {
 		body: JSON.stringify(login_obj),
 		method: "POST"
 	});
 
-	var json = await result.json();
+	let json = await result.json();
+
 	throw_if_error(json);
 
 	var token = json.token;
-
-	save_api_token(token);
 
 	return token;
 }

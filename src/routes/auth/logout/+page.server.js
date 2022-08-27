@@ -9,5 +9,5 @@ export async function load({ setHeaders }) {
 		})
 	});
 
-	throw redirect(307, "/auth/login");
+	throw redirect(307, "/");
 }
