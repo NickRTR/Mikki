@@ -16,8 +16,8 @@
 		{ title: "Erstellen", path: "/wiki/create" },
 		{ title: "Log", path: "/wiki/changes" },
 		{ title: "Einstellungen", path: "/settings" },
-		{ title: "Login", path: "/account/login" },
-		{ title: "Account Erstellen", path: "/account/create" }
+		{ title: "Login", path: "/auth/login" },
+		{ title: "Registrieren", path: "/auth/signup" }
 	];
 
 	onMount(async () => {

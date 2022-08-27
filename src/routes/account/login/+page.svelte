@@ -42,18 +42,6 @@
 </body>
 
 <style>
-	em {
-		font-size: 1rem;
-		font-weight: bold;
-		font-style: normal;
-		cursor: pointer;
-	}
-
-	.copy {
-		text-decoration: underline;
-		cursor: pointer;
-	}
-
 	button:hover {
 		text-decoration: underline;
 	}

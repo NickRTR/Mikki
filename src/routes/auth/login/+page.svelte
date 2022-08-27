@@ -1,32 +1,32 @@
 <script>
-	// import { send } from "$lib/api";
-	// import { get } from "svelte/store";
-	// import { goto } from "$app/navigation";
+	import { send } from "$lib/api";
+	import { get } from "svelte/store";
+	import { page } from "$app/stores";
 
-	// let emailInput = "";
-	// let passwordInput = "";
-	// let showPassword = false;
+	let emailInput = "";
+	let passwordInput = "";
+	let showPassword = false;
 
-	// export let error;
+	export let error;
 
-	// $: {
-	// 	if (error === "Invalid login credentials") {
-	// 		error = get(wordList).error.wrongCredentials;
-	// 	}
-	// }
+	$: {
+		if (error === "Invalid login credentials") {
+			error = get(wordList).error.wrongCredentials;
+		}
+	}
 
-	// async function login(event) {
-	// 	const formEl = event.target;
-	// 	const response = await send(formEl);
+	async function login(event) {
+		const formEl = event.target;
+		const response = await send(formEl);
 
-	// 	if (response.error) {
-	// 		error = response.error;
-	// 	} else {
-	// 		$session.user = response.user;
-	// 	}
+		if (response.error) {
+			error = response.error;
+		} else {
+			$page.data.user = response.user;
+		}
 
-	// 	formEl.reset();
-	// }
+		formEl.reset();
+	}
 </script>
 
 <svelte:head>
@@ -35,7 +35,7 @@
 
 <body>
 	<h1>Login</h1>
-	<!-- <form on:submit|preventDefault={login} method="post" autocomplete="off">
+	<form on:submit|preventDefault={login} method="post" autocomplete="off">
 		<label for="email">E-mail: </label><br />
 		<input
 			type="email"
@@ -44,13 +44,13 @@
 			placeholder="email@email.com"
 			bind:value={emailInput}
 		/><br />
-		<label for="password">{$wordList.login.password}:</label><br />
+		<label for="password">Passwort:</label><br />
 		<div class="password">
 			<input
 				type="password"
 				id="password"
 				name="password"
-				placeholder={$wordList.login.password}
+				placeholder="Passwort"
 				bind:value={passwordInput}
 			/>
 			<input
@@ -71,16 +71,8 @@
 			<p class="error">{error}</p>
 		{/if}
 
-		<button type="submit">{$wordList.login.registered.title}</button>
-		<p
-			class="link"
-			on:click={() => {
-				goto("/auth/signup");
-			}}
-		>
-			{$wordList.login.registered.switch}
-		</p>
-	</form> -->
+		<button type="submit">Einloggen</button>
+	</form>
 </body>
 
 <style>
@@ -162,13 +154,6 @@
 	button:hover,
 	button:focus {
 		border-color: var(--minor);
-	}
-
-	.link {
-		margin-top: 0.7rem;
-		cursor: pointer;
-		text-decoration: underline;
-		font-weight: 400;
 	}
 
 	.error {
