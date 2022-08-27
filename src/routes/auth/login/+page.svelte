@@ -1,55 +1,41 @@
-<script context="module">
-	export function load({ session, props }) {
-		if (session.user) {
-			return {
-				status: 302,
-				redirect: "/"
-			};
-		}
-
-		return { props };
-	}
-</script>
-
 <script>
-	import { send } from "$lib/api";
-	import { get } from "svelte/store";
-	import { goto } from "$app/navigation";
-	import { session } from "$app/stores";
+	// import { send } from "$lib/api";
+	// import { get } from "svelte/store";
+	// import { goto } from "$app/navigation";
 
-	let emailInput = "";
-	let passwordInput = "";
-	let showPassword = false;
+	// let emailInput = "";
+	// let passwordInput = "";
+	// let showPassword = false;
 
-	export let error;
+	// export let error;
 
-	$: {
-		if (error === "Invalid login credentials") {
-			error = get(wordList).error.wrongCredentials;
-		}
-	}
+	// $: {
+	// 	if (error === "Invalid login credentials") {
+	// 		error = get(wordList).error.wrongCredentials;
+	// 	}
+	// }
 
-	async function login(event) {
-		const formEl = event.target;
-		const response = await send(formEl);
+	// async function login(event) {
+	// 	const formEl = event.target;
+	// 	const response = await send(formEl);
 
-		if (response.error) {
-			error = response.error;
-		} else {
-			$session.user = response.user;
-		}
+	// 	if (response.error) {
+	// 		error = response.error;
+	// 	} else {
+	// 		$session.user = response.user;
+	// 	}
 
-		formEl.reset();
-	}
+	// 	formEl.reset();
+	// }
 </script>
 
 <svelte:head>
-	<title>Schoppy - {$wordList.login.registered.title}</title>
+	<title>Mikki - Login</title>
 </svelte:head>
 
 <body>
-	<h1>{$wordList.login.registered.title}</h1>
-	<form on:submit|preventDefault={login} method="post" autocomplete="off">
+	<h1>Login</h1>
+	<!-- <form on:submit|preventDefault={login} method="post" autocomplete="off">
 		<label for="email">E-mail: </label><br />
 		<input
 			type="email"
@@ -94,7 +80,7 @@
 		>
 			{$wordList.login.registered.switch}
 		</p>
-	</form>
+	</form> -->
 </body>
 
 <style>

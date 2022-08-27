@@ -1,7 +1,7 @@
 import supabase from "$lib/supabase";
 import * as cookie from "cookie";
 
-export async function GET() {
+export async function load() {
 	await supabase.auth.signOut();
 
 	return {
