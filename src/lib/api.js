@@ -22,10 +22,6 @@ export function process_response(data) {
 	return data;
 }
 
-/**
- *
- * @param {{error?: string}} json
- */
 function throw_if_error(json) {
 	if (json.error) {
 		alert(json.error);
@@ -33,10 +29,6 @@ function throw_if_error(json) {
 	}
 }
 
-/**
- *
- * @param {string} txt
- */
 function throw_if_error_txt(txt) {
 	var json;
 	try {
@@ -47,6 +39,7 @@ function throw_if_error_txt(txt) {
 		throw_if_error(json);
 	}
 }
+
 export async function wiki_create(token, page_title, page_text) {
 	var page_title_encoded = btoa(
 		encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, "\n")
@@ -209,27 +202,14 @@ export async function api_request(url) {
 	}
 }
 
-/**
- *
- * @returns {string}
- */
-
 export function get_api_token() {
 	return localStorage.getItem("token");
 }
 
-/**
- *
- * @param {string} token
- */
 export function save_api_token(token) {
 	localStorage.setItem("token", token);
 }
 
-/**
- *
- * @returns {Promise<boolean>}
- */
 export async function has_valid_token() {
 	var result = await fetch(base_api + "/acc/check", {
 		body: get_api_token(),
@@ -242,11 +222,6 @@ export async function has_valid_token() {
 	return json;
 }
 
-/**
- *
- * @param {{username: string, password: string}} login_obj
- * @return {Promise<string>}
- */
 export async function login_account(login_obj) {
 	var result = await fetch(base_api + "/acc/login", {
 		body: JSON.stringify(login_obj),
@@ -263,11 +238,6 @@ export async function login_account(login_obj) {
 	return token;
 }
 
-/**
- *
- * @param {{username: string, password: string}} login_obj
- * @return {Promise<string>}
- */
 export async function create_account(login_obj) {
 	var result = await fetch(base_api + "/acc/create", {
 		body: JSON.stringify(login_obj),
