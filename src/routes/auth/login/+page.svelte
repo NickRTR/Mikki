@@ -1,6 +1,5 @@
 <script>
 	import { send } from "$lib/api";
-	import { get } from "svelte/store";
 	import { page } from "$app/stores";
 
 	let emailInput = "";
@@ -8,12 +7,6 @@
 	let showPassword = false;
 
 	export let error;
-
-	$: {
-		if (error === "Invalid login credentials") {
-			error = get(wordList).error.wrongCredentials;
-		}
-	}
 
 	async function login(event) {
 		const formEl = event.target;

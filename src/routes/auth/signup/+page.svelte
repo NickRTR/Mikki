@@ -1,51 +1,21 @@
-<script context="module">
-	export function load({ session, props }) {
-		if (session.user) {
-			return {
-				status: 302,
-				redirect: "/"
-			};
-		}
-
-		return { props };
-	}
-</script>
-
 <script>
 	import { send } from "$lib/api";
-	import { wordList } from "$lib/stores.js";
-	import { get } from "svelte/store";
-	import { goto } from "$app/navigation";
-	import { session } from "$app/stores";
+	import { page } from "$app/stores";
 
 	let emailInput = "";
 	let passwordInput = "";
 	let showPassword = false;
 
 	export let error;
-	export let success;
 
-	$: {
-		if (error === "Invalid login credentials") {
-			error = get(wordList).error.wrongCredentials;
-		} else if (error === "Password should be at least 6 characters") {
-			error = get(wordList).error.toShortPassword;
-		}
-	}
-
-	async function register(event) {
+	async function login(event) {
 		const formEl = event.target;
 		const response = await send(formEl);
 
 		if (response.error) {
 			error = response.error;
 		} else {
-			const res = await fetch("/auth/createUserdata");
-			const data = await res.json();
-
-			if (!data.error) {
-				$session.user = response.user;
-			}
+			$page.data.user = response.user;
 		}
 
 		formEl.reset();
@@ -53,12 +23,12 @@
 </script>
 
 <svelte:head>
-	<title>Schoppy - {$wordList.login.unregistered.title}</title>
+	<title>Mikki - Registrieren</title>
 </svelte:head>
 
 <body>
-	<h1>{$wordList.login.unregistered.title}</h1>
-	<form on:submit|preventDefault={register} method="post" autocomplete="off">
+	<h1>Registrieren</h1>
+	<form on:submit|preventDefault={login} method="post" autocomplete="off">
 		<label for="email">E-mail: </label><br />
 		<input
 			type="email"
@@ -67,13 +37,13 @@
 			placeholder="email@email.com"
 			bind:value={emailInput}
 		/><br />
-		<label for="password">{$wordList.login.password}:</label><br />
+		<label for="password">Passwort:</label><br />
 		<div class="password">
 			<input
 				type="password"
 				id="password"
 				name="password"
-				placeholder={$wordList.login.password}
+				placeholder="Passwort"
 				bind:value={passwordInput}
 			/>
 			<input
@@ -94,20 +64,7 @@
 			<p class="error">{error}</p>
 		{/if}
 
-		{#if success}
-			<!-- TODO: Translate -->
-			<p>Thank you for signing up!</p>
-			<p><a href="/auth/login">You can log in.</a></p>
-		{/if}
-
-		<button type="submit">{$wordList.login.unregistered.title}</button>
-		<p
-			on:click={() => {
-				goto("/auth/login");
-			}}
-		>
-			{$wordList.login.unregistered.switch}
-		</p>
+		<button type="submit">Registrieren</button>
 	</form>
 </body>
 
@@ -192,15 +149,7 @@
 		border-color: var(--minor);
 	}
 
-	p {
-		margin-top: 0.7rem;
-		cursor: pointer;
-		text-decoration: underline;
-		font-weight: 400;
-	}
-
 	.error {
 		color: tomato;
-		text-decoration: none;
 	}
 </style>
