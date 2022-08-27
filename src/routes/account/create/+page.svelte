@@ -1,17 +1,13 @@
 <script>
-	import { onMount } from 'svelte';
 	import { create_account } from '$lib/api.js';
 
-
-	onMount(() => {
-	});
 	let showPassword = false;
 
 	async function create_submit() {
-		console.log("create_submit()");
+		console.log('create_submit()');
 		var create = {
-			username: document.getElementById("inputUsername").value,
-			password: document.getElementById("inputPassword").value
+			username: document.getElementById('inputUsername').value,
+			password: document.getElementById('inputPassword').value
 		};
 		console.log(create);
 		create_account(create).then(console.log);
