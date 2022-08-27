@@ -11,13 +11,16 @@
 
 	let cacheRunning = true;
 
+	// TODO: Dynamically show links according to user auth state
+
 	const nav = [
 		{ title: "Home", path: "/" },
 		{ title: "Erstellen", path: "/wiki/create" },
 		{ title: "Log", path: "/wiki/changes" },
 		{ title: "Einstellungen", path: "/settings" },
 		{ title: "Login", path: "/auth/login" },
-		{ title: "Registrieren", path: "/auth/signup" }
+		{ title: "Registrieren", path: "/auth/signup" },
+		{ title: "Logout", path: "/auth/logout" }
 	];
 
 	onMount(async () => {

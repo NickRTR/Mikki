@@ -4,7 +4,6 @@ import * as cookie from "cookie";
 
 export async function load({ parent }) {
 	const { user } = await parent();
-	console.log(user);
 	if (user) {
 		throw redirect(307, "/");
 	}
@@ -48,7 +47,7 @@ export async function POST({ request, setHeaders }) {
 	}
 
 	setHeaders({
-		"set-cookie": cookie.serialize("session", response.session.access_token, {
+		"set-cookie": cookie.serialize("auth", response.session.access_token, {
 			// send cookie for every page
 			path: "/",
 			// server side only cookie so you can"t use `document.cookie`
