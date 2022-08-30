@@ -8,7 +8,8 @@ export async function load({ request }) {
 			return {
 				user: {
 					token: cookies.auth
-				}
+				},
+				displayLink: false
 			};
 		}
 	}

@@ -63,5 +63,6 @@ export async function POST({ request, setHeaders }) {
 				maxAge: 60 * 60 * 24 * 12
 			})
 		});
+		throw redirect(307, "/");
 	}
 }

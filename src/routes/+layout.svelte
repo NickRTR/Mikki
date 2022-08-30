@@ -11,16 +11,18 @@
 
 	let cacheRunning = true;
 
-	// TODO: Dynamically show links according to user auth state
+	export let data;
 
-	const nav = [
-		{ title: "Home", path: "/" },
-		{ title: "Erstellen", path: "/wiki/create" },
-		{ title: "Log", path: "/wiki/changes" },
-		{ title: "Einstellungen", path: "/settings" },
-		{ title: "Login", path: "/auth/login" },
-		{ title: "Registrieren", path: "/auth/signup" },
-		{ title: "Logout", path: "/auth/logout" }
+	$: authenticated = data.user === undefined ? false : true;
+
+	$: nav = [
+		{ title: "Home", path: "/", display: true },
+		{ title: "Erstellen", path: "/wiki/create", display: authenticated },
+		{ title: "Log", path: "/wiki/changes", display: true },
+		{ title: "Einstellungen", path: "/settings", display: true },
+		{ title: "Login", path: "/auth/login", display: !authenticated },
+		{ title: "Registrieren", path: "/auth/signup", display: !authenticated },
+		{ title: "Logout", path: "/auth/logout", display: authenticated }
 	];
 
 	onMount(async () => {
@@ -45,16 +47,20 @@
 <body>
 	<SvelteToast />
 	<nav>
-		<a class="heading" class:running={cacheRunning} href="/" sveltekit:prefetch>AssemblerWiki</a>
+		<a class="heading" class:running={cacheRunning} href="/" data-sveltekit-prefetch
+			>AssemblerWiki</a
+		>
 		{#if innerWidth >= 850}
 			<div class="links">
 				{#each nav as link}
-					<a
-						href={link.path}
-						class:active={$page.url.pathname === link.path}
-						sveltekit:prefetch
-						title={link.title}>{link.title}</a
-					>
+					{#if link.display == true}
+						<a
+							href={link.path}
+							class:active={$page.url.pathname === link.path}
+							data-sveltekit-prefetch
+							title={link.title}>{link.title}</a
+						>
+					{/if}
 				{/each}
 			</div>
 		{:else}
@@ -65,15 +71,17 @@
 	{#if showHamburger}
 		<div class="hamburger" transition:slide>
 			{#each nav as link}
-				<a
-					href={link.path}
-					class:active={$page.url.pathname === link.path}
-					sveltekit:prefetch
-					title={link.title}
-					on:click={() => {
-						showHamburger = false;
-					}}>{link.title}</a
-				><br />
+				{#if link.display}
+					<a
+						href={link.path}
+						class:active={$page.url.pathname === link.path}
+						data-sveltekit-prefetch
+						title={link.title}
+						on:click={() => {
+							showHamburger = false;
+						}}>{link.title}</a
+					><br />
+				{/if}
 			{/each}
 		</div>
 	{/if}

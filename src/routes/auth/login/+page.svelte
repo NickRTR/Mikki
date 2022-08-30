@@ -28,7 +28,7 @@
 
 <body>
 	<h1>Login</h1>
-	<form on:submit|preventDefault={login} method="post" autocomplete="off">
+	<form on:submit|preventDefault={login} method="POST" autocomplete="off">
 		<label for="email">E-mail: </label><br />
 		<input
 			type="email"

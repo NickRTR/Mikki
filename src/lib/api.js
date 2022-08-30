@@ -222,44 +222,13 @@ export async function has_valid_token() {
 	return json;
 }
 
-export async function login_account(login_obj) {
-	var result = await fetch(base_api + "/acc/login", {
-		body: JSON.stringify(login_obj),
-		method: "POST"
-	});
-
-	var json = await result.json();
-	throw_if_error(json);
-
-	var token = json.token;
-
-	save_api_token(token);
-
-	return token;
-}
-
-export async function create_account(login_obj) {
-	console.log(login_obj);
-
-	var result = await fetch(base_api + "/acc/create", {
-		body: JSON.stringify(login_obj),
-		method: "POST"
-	});
-
-	let json = await result.json();
-
-	throw_if_error(json);
-
-	var token = json.token;
-
-	return token;
-}
-
 export async function send(form) {
 	const res = await fetch(form.action, {
 		method: form.method,
 		body: new FormData(form),
 		headers: { accept: "application/json" }
 	});
+	// BUG: throws error: Uncaught (in promise) SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
+	// Even though it works
 	return await res.json();
 }

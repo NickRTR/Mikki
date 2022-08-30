@@ -8,7 +8,7 @@
 
 	export let error;
 
-	async function login(event) {
+	async function signup(event) {
 		const formEl = event.target;
 		const response = await send(formEl);
 
@@ -28,7 +28,7 @@
 
 <body>
 	<h1>Registrieren</h1>
-	<form on:submit|preventDefault={login} method="post" autocomplete="off">
+	<form on:submit|preventDefault={signup} method="post" autocomplete="off">
 		<label for="email">E-mail: </label><br />
 		<input
 			type="email"
