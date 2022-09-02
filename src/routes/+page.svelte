@@ -65,7 +65,7 @@
 				}}
 			/>
 			<label for={page.page_id}>▶︎</label>
-			<a href="/wiki/view#{page.page_id}" id={page.page_title} dsveltekit:prefetch
+			<a href="/wiki/view#{page.page_id}" id={page.page_title} data-sveltekit-prefetch
 				>{page.page_title}</a
 			>
 			<span

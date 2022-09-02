@@ -1,27 +1,28 @@
 <script>
-	import { get_api_token, has_valid_token, wiki_create } from "$lib/api.js";
-	import { redirect, toBase64 } from "$lib/helper.js";
+	import { toBase64 } from "$lib/helper.js";
+	import { page } from "$app/stores";
 
 	let title = "";
 	let text = "";
 
-	const save = () => {
+	const save = async () => {
 		if (title !== "") {
-			has_valid_token().then(async (result) => {
-				if (!result) {
-					alert("Sie müssen eingeloggt sein, um zu speichern.");
-					return;
-				}
-				if (!result) {
-					alert("Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.");
-					return;
-				}
-				let res = await wiki_create(get_api_token(), title, text).catch((err) => {
-					alert("Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?");
-				});
-				// window.location.href = "/wiki/view#" + res.page_id;
-				redirect("/wiki/view#" + res.page_id);
+			const res = await fetch("/api/createEntry", {
+				method: "POST",
+				body: JSON.stringify({
+					token: $page.data.user.token,
+					pageTitle: title,
+					pageText: text
+				})
 			});
+			const data = await res.json();
+
+			if (data.error) {
+				alert(
+					"Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß? \n Error: " +
+						data.error
+				);
+			}
 		} else {
 			alert("Der Titel darf nicht leer sein.");
 		}

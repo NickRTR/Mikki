@@ -27,7 +27,7 @@
 				alert("You need to login first!");
 				return;
 			}
-			if (await confirm("Seite löschen? Es gibt kein zurück mehr!")) {
+			if (confirm("Seite löschen? Es gibt kein zurück mehr!")) {
 				if (result) {
 					wiki_delete(get_api_token(), data.page_id).then(() => {
 						window.location.href = "/";

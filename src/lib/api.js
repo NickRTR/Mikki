@@ -1,4 +1,5 @@
-var base_api = "https://mikki.deno.dev/api/v2";
+export const base_api = "https://mikki.deno.dev/api/v2";
+export const baseApi = "https://mikki.deno.dev/api/v2";
 
 const escape_map = {
 	"\\\\": "\\\\",
@@ -20,6 +21,10 @@ export function process_response(data) {
 	data = decodeURIComponent(data);
 	data = JSON.parse(data);
 	return data;
+}
+
+export function encode(input) {
+	return btoa(encodeURIComponent(process_escapes(input)).replace(/%0[aA]/g, "\n"));
 }
 
 function throw_if_error(json) {

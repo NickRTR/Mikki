@@ -1,4 +1,5 @@
 import { redirect } from "@sveltejs/kit";
+import { baseApi } from "$lib/api";
 import * as cookie from "cookie";
 
 export async function load({ parent }) {
@@ -17,24 +18,22 @@ export async function POST({ request, setHeaders }) {
 
 	if (typeof email !== "string" || typeof password !== "string") {
 		return {
-			status: 400,
 			errors: {
-				error: "Enter a valid email and password."
+				message: "Enter a valid email and password."
 			}
 		};
 	}
 
 	if (!email || !password) {
 		return {
-			status: 400,
 			errors: {
-				error: "Email and password are required."
+				message: "Email and password are required."
 			}
 		};
 	}
 
-	const result = await fetch("https://mikki.deno.dev/api/v2/acc/create", {
-		body: JSON.stringify({ email, password }),
+	const result = await fetch(baseApi + "/acc/login", {
+		body: JSON.stringify({ username: email, password }),
 		method: "POST"
 	});
 
@@ -43,7 +42,7 @@ export async function POST({ request, setHeaders }) {
 	if (data.error) {
 		return {
 			errors: {
-				signup: data.error
+				message: data.error
 			}
 		};
 	} else {

@@ -12,8 +12,8 @@
 		const formEl = event.target;
 		const response = await send(formEl);
 
-		if (response.error) {
-			error = response.error;
+		if (response.errors) {
+			error = response.errors.message;
 		} else {
 			$page.data.user = response.user;
 		}
