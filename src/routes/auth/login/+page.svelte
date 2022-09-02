@@ -121,6 +121,7 @@
 	.viewPasswordLabel {
 		filter: opacity(50%);
 		border-radius: 100%;
+		margin-top: 0.5rem;
 	}
 
 	input[type="checkbox"]:checked + .viewPasswordLabel {
