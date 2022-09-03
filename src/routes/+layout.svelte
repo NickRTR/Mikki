@@ -1,10 +1,10 @@
 <script>
-	import { page } from "$app/stores";
-	import { wiki_cache } from "$lib/api.js";
-	import { run_update_notifier, copyToClipboard } from "$lib/helper";
-	import { onMount } from "svelte";
-	import { slide } from "svelte/transition";
-	import { SvelteToast } from "@zerodevx/svelte-toast";
+	import { page } from '$app/stores';
+	import { wiki_cache } from '$lib/api.js';
+	import { run_update_notifier, copyToClipboard } from '$lib/helper';
+	import { onMount } from 'svelte';
+	import { slide } from 'svelte/transition';
+	import { SvelteToast } from '@zerodevx/svelte-toast';
 
 	let innerWidth = 0;
 	let showHamburger = false;
@@ -12,23 +12,23 @@
 	let cacheRunning = true;
 
 	const nav = [
-		{ title: "Home", path: "/" },
-		{ title: "Erstellen", path: "/wiki/create" },
-		{ title: "Log", path: "/wiki/changes" },
-		{ title: "Einstellungen", path: "/settings" },
-		{ title: "Login", path: "/account/login" },
-		{ title: "Registrieren", path: "/account/create" }
+		{ title: 'Home', path: '/' },
+		{ title: 'Erstellen', path: '/wiki/create' },
+		{ title: 'Log', path: '/wiki/changes' },
+		{ title: 'Einstellungen', path: '/settings' },
+		{ title: 'Login', path: '/account/login' },
+		{ title: 'Registrieren', path: '/account/create' }
 	];
 
 	onMount(async () => {
-		if (localStorage.getItem("auto_cache") == "true") {
+		if (localStorage.getItem('auto_cache') == 'true') {
 			if (navigator.onLine) {
 				wiki_cache((p, m) => {
 					cacheRunning = true;
 					console.log(`Auto caching: ${p + 1} / ${m}`);
 				}).then(() => {
 					cacheRunning = false;
-					console.log("Auto caching done");
+					console.log('Auto caching done');
 				});
 			}
 		}
@@ -83,7 +83,7 @@
 			class="copyError"
 			title="application log kopieren"
 			on:click={() => {
-				var log = window.application_log.join("\n");
+				var log = window.application_log.join('\n');
 				copyToClipboard(log);
 			}}
 		>
@@ -94,7 +94,7 @@
 
 <style>
 	body {
-		font-family: "JetBrains Mono", monospace;
+		font-family: 'JetBrains Mono', monospace;
 		scroll-behavior: smooth;
 		background-color: var(--background);
 		margin: 0;
