@@ -42,14 +42,16 @@
 <body>
 	<SvelteToast />
 	<nav>
-		<a class="heading" class:running={cacheRunning} href="/" sveltekit:prefetch>AssemblerWiki</a>
+		<a class="heading" class:running={cacheRunning} href="/" data-sveltekit-prefetch
+			>AssemblerWiki</a
+		>
 		{#if innerWidth >= 850}
 			<div class="links">
 				{#each nav as link}
 					<a
 						href={link.path}
 						class:active={$page.url.pathname === link.path}
-						sveltekit:prefetch
+						data-sveltekit-prefetch
 						title={link.title}>{link.title}</a
 					>
 				{/each}
@@ -65,7 +67,7 @@
 				<a
 					href={link.path}
 					class:active={$page.url.pathname === link.path}
-					sveltekit:prefetch
+					data-sveltekit-prefetch
 					title={link.title}
 					on:click={() => {
 						showHamburger = false;
