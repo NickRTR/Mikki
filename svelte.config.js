@@ -11,12 +11,6 @@ export default {
 			fallback: null,
 			precompress: false
 		}),
-		prerender: {
-			default: true,
-			onError: ({ status, path, referrer, referenceType }) => {
-				console.log(status, path, referrer, referenceType);
-			}
-		},
 		trailingSlash: "always"
 	}
 };
