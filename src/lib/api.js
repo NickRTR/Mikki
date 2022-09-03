@@ -45,29 +45,35 @@ function throw_if_error_txt(txt) {
 	}
 }
 
-export async function wiki_get(page_id, wiki_list = []) {
+export async function fetchEntry(pageId, allEntries = []) {
 	if (navigator.onLine) {
-		let maybe_cached = localStorage.getItem("page_" + page_id);
-		if (maybe_cached) {
-			maybe_cached = JSON.parse(maybe_cached);
-			let wiki_list_entry = wiki_list.find((x) => x.page_id == page_id);
-			if (wiki_list_entry) {
-				if (wiki_list_entry.page_edited == maybe_cached.page_edited) {
-					return maybe_cached;
+		let maybeCache = localStorage.getItem("page_" + pageId);
+		if (maybeCache) {
+			maybeCache = JSON.parse(maybeCache);
+			let entry = allEntries.find((x) => x.pageId == pageId);
+			if (entry) {
+				if (entry.page_edited == maybeCache.page_edited) {
+					return maybeCache;
 				}
 			}
 		}
-		const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id);
+		const res = await fetch(baseApi + "/wiki/page/get?page_id=" + pageId);
 		let data = await res.text();
-		throw_if_error_txt(data);
-		return process_response(data);
+		data = decodeURIComponent(data);
+		data = JSON.parse(data);
+
+		if (data.error) {
+			alert(data.error);
+		} else {
+			return data;
+		}
 	} else {
-		return JSON.parse(localStorage.getItem("page_" + page_id));
+		return JSON.parse(localStorage.getItem("page_" + pageId));
 	}
 }
 
-export async function wiki_get_download(page_id) {
-	const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id + "&download");
+export async function fetchEntry_download(pageId) {
+	const res = await fetch(base_api + "/wiki/page/get?pageId=" + pageId + "&download");
 	let data = await res.text();
 	throw_if_error_txt(data);
 	data = process_response(data);
@@ -75,17 +81,6 @@ export async function wiki_get_download(page_id) {
 	data.download_url = new URL(base_api).origin + "/files/" + data.file_id;
 
 	return data;
-}
-
-export async function wiki_list() {
-	if (navigator.onLine) {
-		const res = await fetch(base_api + "/wiki/page/list");
-		let data = await res.text();
-		throw_if_error_txt(data);
-		return process_response(data);
-	} else {
-		return JSON.parse(localStorage.getItem("page_list")) || [];
-	}
 }
 
 export async function wiki_cache(progress_callback) {
@@ -119,8 +114,8 @@ export async function wiki_cache(progress_callback) {
 	for (let i = 0; i < current_pages.length; i++) {
 		progress_callback(i, current_pages.length);
 		localStorage.setItem(
-			"page_" + current_pages[i].page_id,
-			JSON.stringify(await wiki_get(current_pages[i].page_id))
+			"page_" + current_pages[i].pageId,
+			JSON.stringify(await fetchEntry(current_pages[i].pageId))
 		);
 	}
 

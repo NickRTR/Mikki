@@ -1,5 +1,5 @@
 <script>
-	import { wiki_get, baseApi } from "$lib/api.js";
+	import { fetchEntry, baseApi } from "$lib/api.js";
 	import { copyToClipboard, weburl, render_graph } from "$lib/helper";
 	import SvelteMarkdown from "svelte-markdown";
 	import { slide } from "svelte/transition";
@@ -44,7 +44,7 @@
 		data.forEach(async (element) => {
 			if (element.page_id === id) {
 				if (checked) {
-					const res = await wiki_get(id, data);
+					const res = await fetchEntry(id, data);
 					element["text"] = res.page_text;
 				} else {
 					delete element.text;

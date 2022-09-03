@@ -1,5 +1,5 @@
 <script>
-	import { wiki_get, wiki_get_download } from "$lib/api";
+	import { fetchEntry, fetchEntry_download } from "$lib/api";
 	import { dateToString, redirect, render_graph } from "$lib/helper.js";
 	import { page } from "$app/stores";
 	import { onMount } from "svelte";
@@ -13,7 +13,7 @@
 
 	onMount(async () => {
 		id = window.location.hash.substr(1);
-		pageData = await wiki_get(id);
+		pageData = await fetchEntry(id);
 	});
 
 	const deleteWiki = async () => {
@@ -39,7 +39,7 @@
 	};
 
 	const download = async () => {
-		let res = await wiki_get_download(pageData.page_id);
+		let res = await fetchEntry_download(pageData.page_id);
 
 		if (window.__TAURI__) {
 			window.__TAURI__.shell.open(res.download_url);

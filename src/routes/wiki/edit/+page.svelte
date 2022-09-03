@@ -1,5 +1,5 @@
 <script>
-	import { wiki_get } from "$lib/api.js";
+	import { fetchEntry } from "$lib/api.js";
 	import { toBase64 } from "$lib/helper.js";
 	import { onMount } from "svelte";
 	import { page } from "$app/stores";
@@ -12,7 +12,7 @@
 
 	onMount(() => {
 		id = window.location.hash.substr(1);
-		wiki_get(id).then((res) => {
+		fetchEntry(id).then((res) => {
 			pageEntry = res;
 			console.log(pageEntry);
 		});
