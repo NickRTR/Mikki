@@ -15,9 +15,11 @@ export async function load({ request }) {
 	}
 }
 
-export const prerender = {
-	default: true,
-	onError: ({ status, path, referrer, referenceType }) => {
-		console.log(status, path, referrer, referenceType);
-	}
-};
+// export const prerender = {
+// 	default: true,
+// 	onError: ({ status, path, referrer, referenceType }) => {
+// 		console.log(status, path, referrer, referenceType);
+// 	}
+// };
+
+export const prerender = true;
