@@ -22,4 +22,4 @@ export async function load({ request }) {
 // 	}
 // };
 
-export const prerender = false;
+export const prerender = true;

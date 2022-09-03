@@ -9,8 +9,6 @@ export async function load({ parent }) {
 	}
 }
 
-export const prerender = false;
-
 export async function POST({ request, setHeaders }) {
 	const form = await request.formData();
 	const email = form.get("email");
