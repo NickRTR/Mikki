@@ -1,10 +1,10 @@
-import adapter from "@sveltejs/adapter-static";
-//import node from "@sveltejs/adapter-node";
+// import adapter from "@sveltejs/adapter-static";
+import node from "@sveltejs/adapter-node";
 
 export default {
 	kit: {
 		//adapter: node()
-		adapter: adapter({
+		adapter: node({
 			// fallback: '200.html'
 			pages: "build",
 			assets: "build",
