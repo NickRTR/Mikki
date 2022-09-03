@@ -1,4 +1,16 @@
+import { toast } from "@zerodevx/svelte-toast";
+
 export const baseApi = "https://mikki.deno.dev/api/v2";
+
+function throwError(message) {
+	toast.push(message, {
+		theme: {
+			"--toastBackground": "#3A4750",
+			"--toastBarBackground": "#F6C90E"
+		}
+	});
+	throw new Error(message);
+}
 
 const escapeMap = {
 	"\\\\": "\\\\",
@@ -26,7 +38,7 @@ export async function fetchEntries() {
 		let data = await res.json();
 
 		if (data.error) {
-			alert(data.error);
+			throwError(data.error);
 		} else {
 			return data;
 		}
@@ -53,7 +65,7 @@ export async function fetchEntry(pageId, allEntries = []) {
 		data = JSON.parse(data);
 
 		if (data.error) {
-			alert(data.error);
+			throwError(data.error);
 		} else {
 			return data;
 		}
@@ -69,7 +81,7 @@ export async function fetchEntryDownload(pageId) {
 	data = JSON.parse(data);
 
 	if (data.error) {
-		alert(data.error);
+		throwError(data.error);
 	} else {
 		data.download_url = new URL(baseApi).origin + "/files/" + data.file_id;
 		return data;
@@ -82,7 +94,7 @@ export async function fetchChangelog() {
 		let data = await res.json();
 
 		if (data.error) {
-			alert(data.error);
+			throwError(data.error);
 		} else {
 			return data;
 		}
