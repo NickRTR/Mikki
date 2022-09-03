@@ -2,13 +2,6 @@ import { redirect } from "@sveltejs/kit";
 import { baseApi } from "$lib/api";
 import * as cookie from "cookie";
 
-export async function load({ parent }) {
-	const { user } = await parent();
-	if (user) {
-		throw redirect(307, "/");
-	}
-}
-
 export async function POST({ request, setHeaders }) {
 	const form = await request.formData();
 	const email = form.get("email");
