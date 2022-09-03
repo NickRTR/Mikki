@@ -16,7 +16,7 @@
 				changelog = data;
 			}
 		} else {
-			changelog = JSON.parse(localStorage.getItem("page_list")) || [];
+			changelog = JSON.parse(localStorage.getItem("changelog")) || [];
 		}
 	});
 </script>

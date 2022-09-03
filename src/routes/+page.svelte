@@ -1,5 +1,5 @@
 <script>
-	import { wiki_get, wiki_list } from "$lib/api.js";
+	import { wiki_get, baseApi } from "$lib/api.js";
 	import { copyToClipboard, weburl, render_graph } from "$lib/helper";
 	import SvelteMarkdown from "svelte-markdown";
 	import { slide } from "svelte/transition";
@@ -9,7 +9,18 @@
 	let oldData = [];
 
 	onMount(async () => {
-		data = await wiki_list();
+		if (navigator.onLine) {
+			const res = await fetch(baseApi + "/wiki/page/list");
+			let resData = await res.json();
+
+			if (resData.error) {
+				alert(resData.error);
+			} else {
+				data = resData;
+			}
+		} else {
+			data = JSON.parse(localStorage.getItem("page_list")) || [];
+		}
 		oldData = data;
 	});
 
