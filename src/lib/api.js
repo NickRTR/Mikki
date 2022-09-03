@@ -45,28 +45,6 @@ function throw_if_error_txt(txt) {
 	}
 }
 
-export async function wiki_create(token, page_title, page_text) {
-	var page_title_encoded = btoa(
-		encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, "\n")
-	);
-	var page_text_encoded = btoa(
-		encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, "\n")
-	);
-
-	const res = await fetch(
-		base_api + "/wiki/page/create?token=" + token + "&page_title=" + page_title_encoded,
-		{
-			method: "POST",
-			body: page_text_encoded
-		}
-	);
-	let data = await res.text();
-	throw_if_error_txt(data);
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
-}
-
 export async function wiki_get(page_id, wiki_list = []) {
 	if (navigator.onLine) {
 		let maybe_cached = localStorage.getItem("page_" + page_id);
@@ -134,13 +112,6 @@ export async function wiki_list() {
 	} else {
 		return JSON.parse(localStorage.getItem("page_list")) || [];
 	}
-}
-
-export async function wiki_delete(token, page_id) {
-	const res = await fetch(base_api + "/wiki/page/delete?token=" + token + "&page_id=" + page_id);
-	var json = await res.json();
-	throw_if_error(json);
-	return json;
 }
 
 export async function wiki_changelog() {

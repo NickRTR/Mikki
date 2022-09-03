@@ -47,7 +47,7 @@ export async function POST({ request, setHeaders }) {
 		};
 	} else {
 		setHeaders({
-			"set-cookie": cookie.serialize("auth", JSON.stringify(data.token), {
+			"set-cookie": cookie.serialize("auth", data.token, {
 				// send cookie for every page
 				path: "/",
 				// server side only cookie so you can"t use `document.cookie`

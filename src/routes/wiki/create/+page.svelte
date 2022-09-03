@@ -18,10 +18,9 @@
 			const data = await res.json();
 
 			if (data.error) {
-				alert(
-					"Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß? \n Error: " +
-						data.error
-				);
+				alert("Ups, die Datei konnte nicht gespeichert werden!\nError: " + data.error);
+			} else {
+				window.location = "/";
 			}
 		} else {
 			alert("Der Titel darf nicht leer sein.");

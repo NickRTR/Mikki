@@ -21,4 +21,6 @@ export async function POST({ request }) {
 	if (data.error) {
 		return new Response(JSON.stringify({ error: data.error }));
 	}
+
+	return new Response(JSON.stringify({ success: "success" }));
 }

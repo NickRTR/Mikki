@@ -86,7 +86,7 @@
 	<input type="text" placeholder="titel" bind:value={page.page_title} />
 	<textarea id="editor" placeholder="text" resi bind:value={page.page_text} />
 	<button type="submit" on:click={save} {disabled}>Speichern</button>
-	<button onclick="document.getElementById('uploaded_picture').click();">Bild hohchladen</button>
+	<button onclick="document.getElementById('uploaded_picture').click();">Bild hochladen</button>
 
 	<input
 		type="file"
