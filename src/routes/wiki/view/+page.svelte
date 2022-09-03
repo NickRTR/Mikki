@@ -1,5 +1,5 @@
 <script>
-	import { fetchEntry, fetchEntry_download } from "$lib/api";
+	import { fetchEntry, fetchEntryDownload } from "$lib/api";
 	import { dateToString, redirect, render_graph } from "$lib/helper.js";
 	import { page } from "$app/stores";
 	import { onMount } from "svelte";
@@ -39,7 +39,7 @@
 	};
 
 	const download = async () => {
-		let res = await fetchEntry_download(pageData.page_id);
+		let res = await fetchEntryDownload(pageData.page_id);
 
 		if (window.__TAURI__) {
 			window.__TAURI__.shell.open(res.download_url);

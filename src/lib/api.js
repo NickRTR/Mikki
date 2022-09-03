@@ -72,15 +72,18 @@ export async function fetchEntry(pageId, allEntries = []) {
 	}
 }
 
-export async function fetchEntry_download(pageId) {
-	const res = await fetch(base_api + "/wiki/page/get?pageId=" + pageId + "&download");
+export async function fetchEntryDownload(pageId) {
+	const res = await fetch(base_api + "/wiki/page/get?page_id=" + pageId + "&download");
 	let data = await res.text();
-	throw_if_error_txt(data);
-	data = process_response(data);
+	data = decodeURIComponent(data);
+	data = JSON.parse(data);
 
-	data.download_url = new URL(base_api).origin + "/files/" + data.file_id;
-
-	return data;
+	if (data.error) {
+		alert(data.error);
+	} else {
+		data.download_url = new URL(baseApi).origin + "/files/" + data.file_id;
+		return data;
+	}
 }
 
 export async function wiki_cache(progress_callback) {
