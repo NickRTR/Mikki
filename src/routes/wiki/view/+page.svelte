@@ -33,7 +33,7 @@
 			if (data.error) {
 				alert(data.error);
 			} else {
-				window.location = "/";
+				redirect("/");
 			}
 		}
 	};

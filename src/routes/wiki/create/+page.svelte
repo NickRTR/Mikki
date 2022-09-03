@@ -1,5 +1,5 @@
 <script>
-	import { toBase64 } from "$lib/helper.js";
+	import { toBase64, redirect } from "$lib/helper.js";
 	import { page } from "$app/stores";
 
 	let title = "";
@@ -20,7 +20,7 @@
 			if (data.error) {
 				alert("Ups, die Datei konnte nicht gespeichert werden!\nError: " + data.error);
 			} else {
-				window.location = "/";
+				redirect("/");
 			}
 		} else {
 			alert("Der Titel darf nicht leer sein.");

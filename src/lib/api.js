@@ -137,7 +137,5 @@ export async function send(form) {
 		body: new FormData(form),
 		headers: { accept: "application/json" }
 	});
-	// BUG: throws error: Uncaught (in promise) SyntaxError: Unexpected token '<', "<!DOCTYPE "... is not valid JSON
-	// Even though it works
 	return await res.json();
 }
