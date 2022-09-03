@@ -77,32 +77,6 @@ export async function wiki_get_download(page_id) {
 	return data;
 }
 
-export async function wiki_edit(token, page_id, page_title, page_text) {
-	var page_title_encoded = btoa(
-		encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, "\n")
-	);
-	var page_text_encoded = btoa(
-		encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, "\n")
-	);
-
-	const res = await fetch(
-		base_api +
-			"/wiki/page/edit?token=" +
-			token +
-			"&page_id=" +
-			page_id +
-			"&page_title=" +
-			page_title_encoded,
-		{
-			method: "POST",
-			body: page_text_encoded
-		}
-	);
-	let data = await res.text();
-	throw_if_error_txt(data);
-	return process_response(data);
-}
-
 export async function wiki_list() {
 	if (navigator.onLine) {
 		const res = await fetch(base_api + "/wiki/page/list");

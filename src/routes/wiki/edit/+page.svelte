@@ -1,10 +1,11 @@
 <script>
-	import { get_api_token, has_valid_token, wiki_edit, wiki_get } from "$lib/api.js";
-	import { redirect, toBase64 } from "$lib/helper.js";
+	import { wiki_get } from "$lib/api.js";
+	import { toBase64 } from "$lib/helper.js";
 	import { onMount } from "svelte";
+	import { page } from "$app/stores";
 
 	let id = "";
-	let page = {
+	let pageEntry = {
 		page_title: "",
 		page_text: ""
 	};
@@ -12,33 +13,31 @@
 	onMount(() => {
 		id = window.location.hash.substr(1);
 		wiki_get(id).then((res) => {
-			page = res;
-			console.log(page);
+			pageEntry = res;
+			console.log(pageEntry);
 		});
 	});
 
 	let disabled = "";
 
-	const save = () => {
-		if (page.page_title !== "") {
-			has_valid_token().then((result) => {
-				if (!result) {
-					alert("Sie müssen eingeloggt sein, um zu speichern.");
-					return;
-				}
-				if (!result) {
-					alert("Sie müssen Wiki Editor sein um diese Seite zu bearbeiten.");
-					return;
-				}
-				wiki_edit(get_api_token(), id, page.page_title, page.page_text)
-					.then(() => {
-						disabled = "disabled";
-						redirect("/");
-					})
-					.catch((e) => {
-						alert("Ups, die Datei konnte nicht gespeichert werden! Vielleicht ist sie zu groß?");
-					});
+	const save = async () => {
+		if (pageEntry.page_title !== "") {
+			const res = await fetch("/api/editEntry", {
+				method: "PATCH",
+				body: JSON.stringify({
+					token: $page.data.user.token,
+					id,
+					pageTitle: pageEntry.page_title,
+					pageText: pageEntry.page_text
+				})
 			});
+			const data = await res.json();
+
+			if (data.error) {
+				alert("Ups, die Datei konnte nicht gespeichert werden!\nError: " + data.error);
+			} else {
+				window.location = "/";
+			}
 		} else {
 			alert("Der Titel darf nicht leer sein.");
 		}
@@ -68,7 +67,7 @@
 					`![${element.files[0].name}](${res})\n` +
 					textarea.value.slice(textarea.selectionStart);
 				textarea.value = tmp;
-				page.page_text = tmp;
+				pageEntry.page_text = tmp;
 				textarea.focus();
 
 				delete element.files;
@@ -83,8 +82,8 @@
 
 <body>
 	<h2>Edit Page</h2>
-	<input type="text" placeholder="titel" bind:value={page.page_title} />
-	<textarea id="editor" placeholder="text" resi bind:value={page.page_text} />
+	<input type="text" placeholder="titel" bind:value={pageEntry.page_title} />
+	<textarea id="editor" placeholder="text" resi bind:value={pageEntry.page_text} />
 	<button type="submit" on:click={save} {disabled}>Speichern</button>
 	<button onclick="document.getElementById('uploaded_picture').click();">Bild hochladen</button>
 
