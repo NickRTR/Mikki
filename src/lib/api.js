@@ -88,17 +88,6 @@ export async function wiki_list() {
 	}
 }
 
-export async function wiki_changelog() {
-	if (navigator.onLine) {
-		const res = await fetch(base_api + "/wiki/page/changelog");
-		let data = await res.text();
-		throw_if_error_txt(data);
-		return process_response(data);
-	} else {
-		return JSON.parse(localStorage.getItem("page_changelog"));
-	}
-}
-
 export async function wiki_cache(progress_callback) {
 	let last_sync = localStorage.getItem("page_last_cache");
 	if (last_sync) {
@@ -137,39 +126,6 @@ export async function wiki_cache(progress_callback) {
 
 	localStorage.setItem("page_list", JSON.stringify(current_pages));
 	localStorage.setItem("page_changelog", JSON.stringify(await wiki_changelog()));
-}
-
-export async function api_request(url) {
-	var token = localStorage.getItem("token");
-
-	if (token) {
-		var res = await fetch(base_api + url + `${url.indexOf("?") != -1 ? "&" : "?"}token=${token}`);
-		var data = await res.text();
-		throw_if_error_txt(data);
-		return data;
-	} else {
-		return await (await fetch(base_api + url)).text();
-	}
-}
-
-export function get_api_token() {
-	return localStorage.getItem("token");
-}
-
-export function save_api_token(token) {
-	localStorage.setItem("token", token);
-}
-
-export async function has_valid_token() {
-	var result = await fetch(base_api + "/acc/check", {
-		body: get_api_token(),
-		method: "POST"
-	});
-
-	var json = await result.json();
-	throw_if_error(json);
-
-	return json;
 }
 
 export async function send(form) {

@@ -1,12 +1,23 @@
 <script>
 	import { dateToString } from "$lib/helper";
+	import { baseApi } from "$lib/api";
 	import { onMount } from "svelte";
-	import { wiki_changelog } from "$lib/api";
 
 	let changelog = [];
 
 	onMount(async () => {
-		changelog = await wiki_changelog();
+		if (navigator.onLine) {
+			const res = await fetch(baseApi + "/wiki/page/changelog");
+			let data = await res.json();
+
+			if (data.error) {
+				alert(data.error);
+			} else {
+				changelog = data;
+			}
+		} else {
+			changelog = JSON.parse(localStorage.getItem("page_list")) || [];
+		}
 	});
 </script>
 
