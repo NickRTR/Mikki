@@ -1,7 +1,6 @@
-export const base_api = "https://mikki.deno.dev/api/v2";
 export const baseApi = "https://mikki.deno.dev/api/v2";
 
-const escape_map = {
+const escapeMap = {
 	"\\\\": "\\\\",
 	'"': '\\"',
 	"\b": "\\b",
@@ -10,38 +9,29 @@ const escape_map = {
 	"\t": "\\t"
 };
 
-export function process_escapes(input) {
-	for (let escape in escape_map) {
-		input = input.replace(new RegExp(escape, "g"), escape_map[escape]);
+export function processEscapes(input) {
+	for (let escape in escapeMap) {
+		input = input.replace(new RegExp(escape, "g"), escapeMap[escape]);
 	}
 	return input;
 }
 
-export function process_response(data) {
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
-}
-
 export function encode(input) {
-	return btoa(encodeURIComponent(process_escapes(input)).replace(/%0[aA]/g, "\n"));
+	return btoa(encodeURIComponent(processEscapes(input)).replace(/%0[aA]/g, "\n"));
 }
 
-function throw_if_error(json) {
-	if (json.error) {
-		alert(json.error);
-		throw new Error(json.error);
-	}
-}
+export async function fetchEntries() {
+	if (navigator.onLine) {
+		const res = await fetch(baseApi + "/wiki/page/list");
+		let data = await res.json();
 
-function throw_if_error_txt(txt) {
-	var json;
-	try {
-		json = JSON.parse(txt);
-	} catch (e) {}
-
-	if (json) {
-		throw_if_error(json);
+		if (data.error) {
+			alert(data.error);
+		} else {
+			return data;
+		}
+	} else {
+		return JSON.parse(localStorage.getItem("page_list")) || [];
 	}
 }
 
@@ -73,7 +63,7 @@ export async function fetchEntry(pageId, allEntries = []) {
 }
 
 export async function fetchEntryDownload(pageId) {
-	const res = await fetch(base_api + "/wiki/page/get?page_id=" + pageId + "&download");
+	const res = await fetch(baseApi + "/wiki/page/get?page_id=" + pageId + "&download");
 	let data = await res.text();
 	data = decodeURIComponent(data);
 	data = JSON.parse(data);
@@ -86,7 +76,22 @@ export async function fetchEntryDownload(pageId) {
 	}
 }
 
-export async function wiki_cache(progress_callback) {
+export async function fetchChangelog() {
+	if (navigator.onLine) {
+		const res = await fetch(baseApi + "/wiki/page/changelog");
+		let data = await res.json();
+
+		if (data.error) {
+			alert(data.error);
+		} else {
+			return data;
+		}
+	} else {
+		return JSON.parse(localStorage.getItem("page_changelog")) || [];
+	}
+}
+
+export async function wikiCache(progressCallback) {
 	let last_sync = localStorage.getItem("page_last_cache");
 	if (last_sync) {
 		if (last_sync == "-1") {
@@ -112,18 +117,18 @@ export async function wiki_cache(progress_callback) {
 		}
 	}
 
-	let current_pages = await wiki_list();
+	let current_pages = await fetchEntries();
 
 	for (let i = 0; i < current_pages.length; i++) {
-		progress_callback(i, current_pages.length);
+		progressCallback(i, current_pages.length);
 		localStorage.setItem(
-			"page_" + current_pages[i].pageId,
-			JSON.stringify(await fetchEntry(current_pages[i].pageId))
+			"page_" + current_pages[i].page_id,
+			JSON.stringify(await fetchEntry(current_pages[i].page_id))
 		);
 	}
 
 	localStorage.setItem("page_list", JSON.stringify(current_pages));
-	localStorage.setItem("page_changelog", JSON.stringify(await wiki_changelog()));
+	localStorage.setItem("page_changelog", JSON.stringify(await fetchChangelog()));
 }
 
 export async function send(form) {

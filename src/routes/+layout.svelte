@@ -1,6 +1,6 @@
 <script>
 	import { page } from "$app/stores";
-	import { wiki_cache } from "$lib/api.js";
+	import { wikiCache } from "$lib/api.js";
 	import { run_update_notifier, copyToClipboard } from "$lib/helper";
 	import { onMount } from "svelte";
 	import { slide } from "svelte/transition";
@@ -28,7 +28,7 @@
 	onMount(async () => {
 		if (localStorage.getItem("auto_cache") == "true") {
 			if (navigator.onLine) {
-				wiki_cache((p, m) => {
+				wikiCache((p, m) => {
 					cacheRunning = true;
 					console.log(`Auto caching: ${p + 1} / ${m}`);
 				}).then(() => {

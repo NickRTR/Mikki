@@ -1,5 +1,5 @@
 <script>
-	import { wiki_cache } from "$lib/api";
+	import { wikiCache } from "$lib/api";
 	import { onMount } from "svelte";
 	import { tweened } from "svelte/motion";
 	import { cubicOut } from "svelte/easing";
@@ -22,7 +22,7 @@
 
 	const start_cache = async () => {
 		cacheDone = false;
-		await wiki_cache((p, m) => {
+		await wikiCache((p, m) => {
 			progress.set(p + 1);
 			max = m;
 		});

@@ -1,5 +1,5 @@
 <script>
-	import { fetchEntry, baseApi } from "$lib/api.js";
+	import { fetchEntries, fetchEntry, baseApi } from "$lib/api.js";
 	import { copyToClipboard, weburl, render_graph } from "$lib/helper";
 	import SvelteMarkdown from "svelte-markdown";
 	import { slide } from "svelte/transition";
@@ -9,18 +9,7 @@
 	let oldData = [];
 
 	onMount(async () => {
-		if (navigator.onLine) {
-			const res = await fetch(baseApi + "/wiki/page/list");
-			let resData = await res.json();
-
-			if (resData.error) {
-				alert(resData.error);
-			} else {
-				data = resData;
-			}
-		} else {
-			data = JSON.parse(localStorage.getItem("page_list")) || [];
-		}
+		data = await fetchEntries();
 		oldData = data;
 	});
 
