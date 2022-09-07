@@ -4,9 +4,9 @@
 	"author": "Glowman554 <glowman434@gmail.com>",
 	"description": "Mikki ist ein Wiki, erstellt um die Assemblerprogrammierung im Schulunterricht zu dokumentieren.",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
+		"dev": "node write_github_commit.js && vite dev",
+		"build": "node write_github_commit.js && vite build",
+		"preview": "node write_github_commit.js && vite preview",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
 		"tauri": "npm run build && tauri dev",
