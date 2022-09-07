@@ -96,7 +96,7 @@ export async function wiki_get_download(page_id) {
 	throw_if_error_txt(data);
 	data = process_response(data);
 
-	data.download_url = new URL(base_api).origin + '/files/' + data.file_id;
+	data.download_url = data.file_url;
 
 	return data;
 }
