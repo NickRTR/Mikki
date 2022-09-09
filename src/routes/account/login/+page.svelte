@@ -14,8 +14,9 @@
 			password: passwordInput
 		};
 		console.log(login);
-		login_account(login).then(console.log);
-		window.location = "/";
+		login_account(login).then(r => {
+			window.location = "/";
+		});
 	}
 </script>
 
