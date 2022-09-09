@@ -1,11 +1,17 @@
 <script>
 	import { onMount } from "svelte";
-	import { create_account } from "$lib/api.js";
+	import { create_account, get_api_token } from "$lib/api.js";
 
 	let emailInput;
 	let passwordInput;
 
-	onMount(() => {});
+	let logged_in = false;
+
+	onMount(() => {
+		if (get_api_token()) {
+			logged_in = true;
+		}
+	});
 	let showPassword = false;
 
 	async function signup() {
@@ -18,6 +24,11 @@
 			window.location = "/";
 		});
 	}
+
+	function logout() {
+		localStorage.removeItem("token");
+		location.reload();
+	}
 </script>
 
 <svelte:head>
@@ -26,40 +37,45 @@
 
 <body>
 	<h1>Registrieren</h1>
-	<form on:submit|preventDefault={signup} autocomplete="off">
-		<label for="email">E-mail: </label><br />
-		<input
-			type="email"
-			id="email"
-			name="email"
-			placeholder="email@email.com"
-			bind:value={emailInput}
-		/><br />
-		<label for="password">Passwort:</label><br />
-		<div class="password">
+	{ #if logged_in }
+		<p>Sie sind bereits angemeldet. Drücken Sie den unteren Button, um sich auszuloggen.</p>
+		<button on:click={logout}>Ausloggen</button>
+	{ :else }
+		<form on:submit|preventDefault={signup} autocomplete="off">
+			<label for="email">E-mail: </label><br />
 			<input
-				type="password"
-				id="password"
-				name="password"
-				placeholder="Passwort"
-				bind:value={passwordInput}
-			/>
-			<input
-				type="checkbox"
-				id="togglePassword"
-				class:show={showPassword}
-				bind:checked={showPassword}
-				on:change={() => {
-					document.querySelector("#password").type = showPassword ? "text" : "password";
-				}}
-			/>
-			<label class="viewPasswordLabel" for="togglePassword"
-				><img src="/showPassword.svg" alt="show" /></label
-			><br />
-		</div>
+				type="email"
+				id="email"
+				name="email"
+				placeholder="email@email.com"
+				bind:value={emailInput}
+			/><br />
+			<label for="password">Passwort:</label><br />
+			<div class="password">
+				<input
+					type="password"
+					id="password"
+					name="password"
+					placeholder="Passwort"
+					bind:value={passwordInput}
+				/>
+				<input
+					type="checkbox"
+					id="togglePassword"
+					class:show={showPassword}
+					bind:checked={showPassword}
+					on:change={() => {
+						document.querySelector("#password").type = showPassword ? "text" : "password";
+					}}
+				/>
+				<label class="viewPasswordLabel" for="togglePassword"
+					><img src="/showPassword.svg" alt="show" /></label
+				><br />
+			</div>
 
-		<button type="submit">Registrieren</button>
-	</form>
+			<button type="submit">Registrieren</button>
+		</form>
+	{ /if }
 </body>
 
 <style>
