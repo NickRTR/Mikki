@@ -1,15 +1,20 @@
 <script>
 	import { onMount } from "svelte";
-	import { create_account, get_api_token } from "$lib/api.js";
+	import { create_account, get_api_token, has_valid_token } from "$lib/api.js";
 
 	let emailInput;
 	let passwordInput;
 
 	let logged_in = false;
 
-	onMount(() => {
+	onMount(async () => {
 		if (get_api_token()) {
-			logged_in = true;
+			if (!(await has_valid_token(get_api_token()))) {
+				localStorage.removeItem("token");
+				location.reload();
+			} else {
+				logged_in = true;
+			}
 		}
 	});
 	let showPassword = false;

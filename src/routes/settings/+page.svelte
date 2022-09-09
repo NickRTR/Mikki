@@ -1,5 +1,5 @@
 <script>
-	import { wiki_cache } from '$lib/api';
+	import { wiki_cache, get_api_token, has_valid_token, get_account_info } from '$lib/api';
 	import { onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -15,9 +15,20 @@
 
 	let always_update_cache = false;
 
-	onMount(() => {
+	let editor = false;
+
+	onMount(async () => {
 		autocache = localStorage.getItem('auto_cache') == 'true' ? true : false;
 		always_update_cache = localStorage.getItem('page_last_cache') == '-1';
+
+		if (get_api_token()) {
+			if (await has_valid_token(get_api_token())) {
+				editor = (await get_account_info(get_api_token())).editor;
+			} else {
+				localStorage.removeItem("token");
+				location.reload();
+			}
+		}
 	});
 
 	const start_cache = async () => {
@@ -92,6 +103,12 @@
 					}}>aktivieren</button
 				>
 			{/if}
+
+			{ #if editor }
+				<p>Sie koennen die wiki Editieren</p>
+			{ :else }
+				<p>Sie koennen die wiki nicht editieren</p>
+			{ /if }
 		</div>
 	</div>
 </body>
