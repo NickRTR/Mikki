@@ -1,5 +1,5 @@
 <script>
-	import { wiki_cache, get_api_token, has_valid_token, get_account_info } from '$lib/api';
+	import { wiki_cache, get_api_token, has_valid_token, get_account_info, account_chpasswd } from '$lib/api';
 	import { onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -16,6 +16,10 @@
 	let always_update_cache = false;
 
 	let editor = false;
+	let logged_in = false;
+
+	let passwordInput;
+	let showPassword = false;
 
 	onMount(async () => {
 		autocache = localStorage.getItem('auto_cache') == 'true' ? true : false;
@@ -24,6 +28,7 @@
 		if (get_api_token()) {
 			if (await has_valid_token(get_api_token())) {
 				editor = (await get_account_info(get_api_token())).editor;
+				logged_in = true;
 			} else {
 				localStorage.removeItem("token");
 				location.reload();
@@ -40,6 +45,16 @@
 		cacheDone = true;
 		progress.set(0);
 	};
+
+	async function update_password() {
+		console.log(passwordInput);
+		if (await confirm("Wollen sie wirklich ihr password aendern?")) {
+			account_chpasswd(passwordInput).then(res => {
+				console.log(res);
+				location.reload();
+			});
+		}
+	}
 </script>
 
 <svelte:head>
@@ -104,10 +119,38 @@
 				>
 			{/if}
 
-			{ #if editor }
-				<p>Sie koennen die wiki Editieren</p>
-			{ :else }
-				<p>Sie koennen die wiki nicht editieren</p>
+			{ #if logged_in }
+			<form on:submit|preventDefault={update_password} autocomplete="off">
+
+				<label for="password">Neues password:</label><br />
+				<div class="password">
+					<input
+						type="password"
+						id="password"
+						name="password"
+						placeholder="Passwort"
+						bind:value={passwordInput}
+					/>
+					</div>
+					<input
+					type="checkbox"
+					id="togglePassword"
+					class:show={showPassword}
+					bind:checked={showPassword}
+					on:change={() => {
+						document.querySelector("#password").type = showPassword ? "text" : "password";
+					}}
+				/>
+				<label class="viewPasswordLabel" for="togglePassword"
+					><img src="/showPassword.svg" alt="show" /></label
+				><br />
+				<button type="submit">Password aendern</button>
+			</form>
+				{ #if editor }
+					<p>Sie koennen die wiki Editieren</p>
+				{ :else }
+					<p>Sie koennen die wiki nicht editieren</p>
+				{ /if }
 			{ /if }
 		</div>
 	</div>
@@ -157,5 +200,77 @@
 	progress {
 		background-color: var(--accent);
 		border-radius: 1rem;
+	}
+
+	form {
+		margin-top: 1rem;
+		font-weight: 600;
+	}
+
+	input {
+		outline: none;
+		border: 2px solid transparent;
+		transition: all 0.1s ease-in-out;
+		border-radius: 1rem;
+		font-size: 1.25rem;
+		font-weight: 600;
+		padding: 0 0.5rem;
+		margin: 0.5rem 0;
+		height: 2rem;
+	}
+
+	input:hover,
+	input:focus {
+		border-color: var(--accent);
+	}
+
+	input[type="password"] {
+		width: 268px;
+	}
+
+	input::placeholder {
+		font-size: 1rem;
+	}
+
+	.password {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	input[type="checkbox"] {
+		display: none;
+	}
+
+	.viewPasswordLabel {
+		filter: opacity(50%);
+		border-radius: 100%;
+		margin-top: 0.5rem;
+	}
+
+	input[type="checkbox"]:checked + .viewPasswordLabel {
+		filter: opacity(100%);
+	}
+
+	img {
+		width: 2rem;
+		cursor: pointer;
+	}
+
+	button {
+		font-size: 1rem;
+		outline: none;
+		border: 3px solid transparent;
+		transition: all 0.1s ease-in-out;
+		padding: 0.3rem 0.7rem;
+		margin-top: 0.5rem;
+		background-color: var(--accent);
+		font-weight: 600;
+		border-radius: 1rem;
+	}
+
+	button:hover,
+	button:focus {
+		border-color: var(--minor);
 	}
 </style>

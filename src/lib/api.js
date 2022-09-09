@@ -266,6 +266,25 @@ export async function delete_account() {
 	return json;
 }
 
+/**
+ * 
+ * @param {string} new_password 
+ * @returns {any}
+ */
+export async function account_chpasswd(new_password) {
+	var result = await fetch(base_api + '/acc/chpasswd', {
+		body: JSON.stringify({
+			token: get_api_token(),
+			password: new_password
+		}),
+		method: "POST"
+	});
+
+	var json = await result.json();
+	throw_if_error(json);
+
+	return json;
+}
 
 /**
  * 
