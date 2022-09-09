@@ -34,6 +34,13 @@
 		localStorage.removeItem("token");
 		location.reload();
 	}
+
+	async function _delete() {
+		if (await confirm('Account löschen? Es gibt kein zurück mehr!')) {
+			await delete_account();
+			location.reload();
+		}
+	}
 </script>
 
 <svelte:head>
@@ -45,6 +52,7 @@
 	{ #if logged_in }
 		<p>Sie sind bereits angemeldet. Drücken Sie den unteren Button, um sich auszuloggen.</p>
 		<button on:click={logout}>Ausloggen</button>
+		<button on:click={_delete}>Account löschen</button>
 	{ :else }
 		<form on:submit|preventDefault={signup} autocomplete="off">
 			<label for="email">E-mail: </label><br />

@@ -254,6 +254,18 @@ export async function get_account_info() {
 	return json;
 }
 
+export async function delete_account() {
+	var result = await fetch(base_api + '/acc/delete', {
+		body: get_api_token(),
+		method: "POST"
+	});
+
+	var json = await result.json();
+	throw_if_error(json);
+
+	return json;
+}
+
 
 /**
  * 

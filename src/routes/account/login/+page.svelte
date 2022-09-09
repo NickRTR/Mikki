@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { login_account, get_api_token, has_valid_token } from "$lib/api.js";
+	import { login_account, get_api_token, has_valid_token, delete_account } from "$lib/api.js";
 
 	let emailInput;
 	let passwordInput;
@@ -35,6 +35,13 @@
 		localStorage.removeItem("token");
 		location.reload();
 	}
+
+	async function _delete() {
+		if (await confirm('Account löschen? Es gibt kein zurück mehr!')) {
+			await delete_account();
+			location.reload();
+		}
+	}
 </script>
 
 <svelte:head>
@@ -47,6 +54,7 @@
 	{ #if logged_in }
 		<p>Sie sind bereits angemeldet. Drücken Sie den unteren Button, um sich auszuloggen.</p>
 		<button on:click={logout}>Ausloggen</button>
+		<button on:click={_delete}>Account löschen</button>
 	{ :else }
 		<form on:submit|preventDefault={login} autocomplete="off">
 			<label for="email">E-mail: </label><br />
