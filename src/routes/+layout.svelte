@@ -102,6 +102,7 @@
 	}
 
 	nav {
+		z-index: 1;
 		position: sticky;
 		top: 0;
 		color: white;
@@ -111,7 +112,6 @@
 		background-color: black;
 		padding: 1rem 1.5rem;
 		font-size: 1.5rem;
-		z-index: 1;
 	}
 
 	nav * {
@@ -175,6 +175,7 @@
 		padding-left: 1.5rem;
 		background-color: black;
 		padding-bottom: 0.5rem;
+		z-index: 1;
 	}
 
 	.hamburger a {

@@ -1,9 +1,9 @@
 <script>
-	import { wiki_get, wiki_list } from "$lib/api.js";
-	import { copyToClipboard, weburl, render_graph } from "$lib/helper";
-	import SvelteMarkdown from "svelte-markdown";
-	import { slide } from "svelte/transition";
-	import { onMount } from "svelte";
+	import { wiki_get, wiki_list } from '$lib/api.js';
+	import { copyToClipboard, weburl, render_graph } from '$lib/helper';
+	import SvelteMarkdown from 'svelte-markdown';
+	import { slide } from 'svelte/transition';
+	import { onMount } from 'svelte';
 
 	let data = [];
 	let oldData = [];
@@ -13,10 +13,10 @@
 		oldData = data;
 	});
 
-	let searchInput = "";
+	let searchInput = '';
 	$: {
 		data = [];
-		if (searchInput !== "") {
+		if (searchInput !== '') {
 			oldData.forEach((element) => {
 				if (element.page_title.toLowerCase().includes(searchInput.toLowerCase())) {
 					data = [...data, element];
@@ -34,7 +34,7 @@
 			if (element.page_id === id) {
 				if (checked) {
 					const res = await wiki_get(id, data);
-					element["text"] = res.page_text;
+					element['text'] = res.page_text;
 				} else {
 					delete element.text;
 				}
@@ -52,7 +52,7 @@
 	<h2>Wiki</h2>
 
 	<form>
-		<input style="" type="text" placeholder="search" bind:value={searchInput} />
+		<input type="text" placeholder="search" bind:value={searchInput} />
 	</form>
 	{#each data as page}
 		<div class="wiki_post_urls">
@@ -72,7 +72,7 @@
 				title="link kopieren"
 				on:click={() => {
 					copyToClipboard(
-						(window.__TAURI__ ? weburl : window.origin) + "/wiki/view#" + page.page_id
+						(window.__TAURI__ ? weburl : window.origin) + '/wiki/view#' + page.page_id
 					);
 				}}>📌</span
 			>
