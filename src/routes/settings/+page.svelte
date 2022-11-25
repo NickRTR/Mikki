@@ -118,41 +118,41 @@
 					}}>aktivieren</button
 				>
 			{/if}
-
-			{ #if logged_in }
-			<form on:submit|preventDefault={update_password} autocomplete="off">
-
-				<label for="password">Neues password:</label><br />
-				<div class="password">
-					<input
-						type="password"
-						id="password"
-						name="password"
-						placeholder="Passwort"
-						bind:value={passwordInput}
-					/>
+		</div>
+		<div class="change-password">
+			{#if logged_in}
+				<form on:submit|preventDefault={update_password} autocomplete="off">
+					<label for="password">Neues Passwort:</label><br />
+					<div class="password">
+						<input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="Passwort"
+							bind:value={passwordInput}
+						/>
+						<input
+							type="checkbox"
+							id="togglePassword"
+							class:show={showPassword}
+							bind:checked={showPassword}
+							on:change={() => {
+								document.querySelector("#password").type = showPassword ? "text" : "password";
+							}}
+						/>
+						<label class="viewPasswordLabel" for="togglePassword"
+						><img src="/showPassword.svg" alt="show" /></label>
 					</div>
-					<input
-					type="checkbox"
-					id="togglePassword"
-					class:show={showPassword}
-					bind:checked={showPassword}
-					on:change={() => {
-						document.querySelector("#password").type = showPassword ? "text" : "password";
-					}}
-				/>
-				<label class="viewPasswordLabel" for="togglePassword"
-					><img src="/showPassword.svg" alt="show" /></label
-				><br />
-				<button type="submit">Password aendern</button>
-			</form>
-				{ #if editor }
-					<p>Sie koennen die wiki Editieren</p>
-				{ :else }
-					<p>Sie koennen die wiki nicht editieren</p>
-				{ /if }
+					<button type="submit">Password ändern</button>
+				</form>
 			{ /if }
 		</div>
+		{ #if editor }
+			<p>Sie haben Editor Rechte.</p>
+		{ :else }
+			<p>Sie haben keine Editor Rechte.</p>
+		{ /if }
+		<hr>
 	</div>
 </body>
 
@@ -272,5 +272,9 @@
 	button:hover,
 	button:focus {
 		border-color: var(--minor);
+	}
+
+	.password {
+		display: flex;
 	}
 </style>
