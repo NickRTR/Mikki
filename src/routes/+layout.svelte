@@ -78,7 +78,7 @@
 	{/if}
 	<main><slot /></main>
 	<footer>
-		<p>©2022 Janick Voss, Nick Reutlinger</p>
+		<p>©2023 Janick Voss, Nick Reutlinger</p>
 		<p
 			class="copyError"
 			title="application log kopieren"
