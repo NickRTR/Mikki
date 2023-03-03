@@ -23,8 +23,8 @@ export function process_response(data) {
 }
 
 /**
- * 
- * @param {{error?: string}} json 
+ *
+ * @param {{error?: string}} json
  */
 function throw_if_error(json) {
 	if (json.error) {
@@ -34,8 +34,8 @@ function throw_if_error(json) {
 }
 
 /**
- * 
- * @param {string} txt 
+ *
+ * @param {string} txt
  */
 function throw_if_error_txt(txt) {
 	var json;
@@ -210,7 +210,7 @@ export async function api_request(url) {
 }
 
 /**
- * 
+ *
  * @returns {string}
  */
 
@@ -219,21 +219,21 @@ export function get_api_token() {
 }
 
 /**
- * 
- * @param {string} token 
+ *
+ * @param {string} token
  */
 export function save_api_token(token) {
 	localStorage.setItem('token', token);
 }
 
 /**
- * 
+ *
  * @returns {Promise<boolean>}
  */
 export async function has_valid_token() {
 	var result = await fetch(base_api + '/acc/check', {
 		body: get_api_token(),
-		method: "POST"
+		method: 'POST'
 	});
 
 	var json = await result.json();
@@ -245,7 +245,7 @@ export async function has_valid_token() {
 export async function get_account_info() {
 	var result = await fetch(base_api + '/acc/info', {
 		body: get_api_token(),
-		method: "POST"
+		method: 'POST'
 	});
 
 	var json = await result.json();
@@ -257,7 +257,7 @@ export async function get_account_info() {
 export async function delete_account() {
 	var result = await fetch(base_api + '/acc/delete', {
 		body: get_api_token(),
-		method: "POST"
+		method: 'POST'
 	});
 
 	var json = await result.json();
@@ -267,8 +267,8 @@ export async function delete_account() {
 }
 
 /**
- * 
- * @param {string} new_password 
+ *
+ * @param {string} new_password
  * @returns {any}
  */
 export async function account_chpasswd(new_password) {
@@ -277,7 +277,7 @@ export async function account_chpasswd(new_password) {
 			token: get_api_token(),
 			password: new_password
 		}),
-		method: "POST"
+		method: 'POST'
 	});
 
 	var json = await result.json();
@@ -287,14 +287,14 @@ export async function account_chpasswd(new_password) {
 }
 
 /**
- * 
- * @param {{username: string, password: string}} login_obj 
+ *
+ * @param {{username: string, password: string}} login_obj
  * @return {Promise<string>}
  */
 export async function login_account(login_obj) {
 	var result = await fetch(base_api + '/acc/login', {
 		body: JSON.stringify(login_obj),
-		method: "POST"
+		method: 'POST'
 	});
 
 	var json = await result.json();
@@ -308,14 +308,14 @@ export async function login_account(login_obj) {
 }
 
 /**
- * 
- * @param {{username: string, password: string}} login_obj 
+ *
+ * @param {{username: string, password: string}} login_obj
  * @return {Promise<string>}
  */
 export async function create_account(login_obj) {
 	var result = await fetch(base_api + '/acc/create', {
 		body: JSON.stringify(login_obj),
-		method: "POST"
+		method: 'POST'
 	});
 
 	var json = await result.json();

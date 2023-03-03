@@ -1,5 +1,11 @@
 <script>
-	import { wiki_cache, get_api_token, has_valid_token, get_account_info, account_chpasswd } from '$lib/api';
+	import {
+		wiki_cache,
+		get_api_token,
+		has_valid_token,
+		get_account_info,
+		account_chpasswd
+	} from '$lib/api';
 	import { onMount } from 'svelte';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -30,7 +36,7 @@
 				editor = (await get_account_info(get_api_token())).editor;
 				logged_in = true;
 			} else {
-				localStorage.removeItem("token");
+				localStorage.removeItem('token');
 				location.reload();
 			}
 		}
@@ -48,8 +54,8 @@
 
 	async function update_password() {
 		console.log(passwordInput);
-		if (await confirm("Wollen sie wirklich ihr password aendern?")) {
-			account_chpasswd(passwordInput).then(res => {
+		if (await confirm('Wollen sie wirklich ihr password aendern?')) {
+			account_chpasswd(passwordInput).then((res) => {
 				console.log(res);
 				location.reload();
 			});
@@ -137,22 +143,23 @@
 							class:show={showPassword}
 							bind:checked={showPassword}
 							on:change={() => {
-								document.querySelector("#password").type = showPassword ? "text" : "password";
+								document.querySelector('#password').type = showPassword ? 'text' : 'password';
 							}}
 						/>
 						<label class="viewPasswordLabel" for="togglePassword"
-						><img src="/showPassword.svg" alt="show" /></label>
+							><img src="/showPassword.svg" alt="show" /></label
+						>
 					</div>
 					<button type="submit">Password ändern</button>
 				</form>
-			{ /if }
+			{/if}
 		</div>
-		{ #if editor }
+		{#if editor}
 			<p>Sie haben Editor Rechte.</p>
-		{ :else }
+		{:else}
 			<p>Sie haben keine Editor Rechte.</p>
-		{ /if }
-		<hr>
+		{/if}
+		<hr />
 	</div>
 </body>
 
@@ -224,7 +231,7 @@
 		border-color: var(--accent);
 	}
 
-	input[type="password"] {
+	input[type='password'] {
 		width: 268px;
 	}
 
@@ -238,7 +245,7 @@
 		justify-content: center;
 	}
 
-	input[type="checkbox"] {
+	input[type='checkbox'] {
 		display: none;
 	}
 
@@ -248,7 +255,7 @@
 		margin-top: 0.5rem;
 	}
 
-	input[type="checkbox"]:checked + .viewPasswordLabel {
+	input[type='checkbox']:checked + .viewPasswordLabel {
 		filter: opacity(100%);
 	}
 

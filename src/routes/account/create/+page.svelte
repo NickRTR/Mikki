@@ -1,6 +1,6 @@
 <script>
-	import { onMount } from "svelte";
-	import { create_account, get_api_token, has_valid_token } from "$lib/api.js";
+	import { onMount } from 'svelte';
+	import { create_account, get_api_token, has_valid_token } from '$lib/api.js';
 
 	let emailInput;
 	let passwordInput;
@@ -10,7 +10,7 @@
 	onMount(async () => {
 		if (get_api_token()) {
 			if (!(await has_valid_token(get_api_token()))) {
-				localStorage.removeItem("token");
+				localStorage.removeItem('token');
 				location.reload();
 			} else {
 				logged_in = true;
@@ -25,13 +25,13 @@
 			password: passwordInput
 		};
 		console.log(login);
-		create_account(login).then(r => {
-			window.location = "/";
+		create_account(login).then((r) => {
+			window.location = '/';
 		});
 	}
 
 	function logout() {
-		localStorage.removeItem("token");
+		localStorage.removeItem('token');
 		location.reload();
 	}
 
@@ -49,11 +49,11 @@
 
 <body>
 	<h1>Registrieren</h1>
-	{ #if logged_in }
+	{#if logged_in}
 		<p>Sie sind bereits angemeldet. Drücken Sie den unteren Button, um sich auszuloggen.</p>
 		<button on:click={logout}>Ausloggen</button>
 		<button on:click={_delete}>Account löschen</button>
-	{ :else }
+	{:else}
 		<form on:submit|preventDefault={signup} autocomplete="off">
 			<label for="email">E-mail: </label><br />
 			<input
@@ -78,7 +78,7 @@
 					class:show={showPassword}
 					bind:checked={showPassword}
 					on:change={() => {
-						document.querySelector("#password").type = showPassword ? "text" : "password";
+						document.querySelector('#password').type = showPassword ? 'text' : 'password';
 					}}
 				/>
 				<label class="viewPasswordLabel" for="togglePassword"
@@ -88,7 +88,7 @@
 
 			<button type="submit">Registrieren</button>
 		</form>
-	{ /if }
+	{/if}
 </body>
 
 <style>
@@ -119,11 +119,11 @@
 		border-color: var(--accent);
 	}
 
-	input[type="email"] {
+	input[type='email'] {
 		width: 300px;
 	}
 
-	input[type="password"] {
+	input[type='password'] {
 		width: 268px;
 	}
 
@@ -137,7 +137,7 @@
 		justify-content: center;
 	}
 
-	input[type="checkbox"] {
+	input[type='checkbox'] {
 		display: none;
 	}
 
@@ -147,7 +147,7 @@
 		margin-top: 0.5rem;
 	}
 
-	input[type="checkbox"]:checked + .viewPasswordLabel {
+	input[type='checkbox']:checked + .viewPasswordLabel {
 		filter: opacity(100%);
 	}
 
